@@ -11,6 +11,7 @@
       <li><a href="{{ url('/toernooien') }}">Toernooien</a></li>
       <li><a href="{{ url('/inschrijven') }}">Inschrijven</a></li>
       <li><a href="{{ url('/login') }}">Login</a></li>
+      <li><a href="{{ url('/login') }}">Admin</a></li>
     </ul>
   </nav>
 </header>
