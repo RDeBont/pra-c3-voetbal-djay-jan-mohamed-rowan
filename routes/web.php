@@ -13,3 +13,7 @@ Route::get('/toernooien', function () {
 Route::get('/inschrijven', function () {
     return view('inschrijven');
 });
+
+Route::get('/admin', function () {
+    return view('admin');
+});

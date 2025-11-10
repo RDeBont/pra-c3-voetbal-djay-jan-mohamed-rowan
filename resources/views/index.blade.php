@@ -1,7 +1,5 @@
 <x-base-layout>
-
   
-
   <main class="homepage">
     <section class="hero">
       <h1>Schrijf je school nu in!</h1>
