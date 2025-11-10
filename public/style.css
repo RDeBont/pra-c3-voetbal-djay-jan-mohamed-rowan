@@ -1,0 +1,206 @@
+/* Navbar */
+.navbar {
+  background-color: #ffffff;
+  padding: 16px 32px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 200px;
+}
+
+.logo-img {
+  height: 40px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 100px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* Hero section */
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: #f8f9fa;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 40px;
+}
+
+/* Inschrijven knop */
+.btn-inschrijven {
+  display: inline-block;
+  background-color: #548350;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 16px 32px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-inschrijven:hover {
+  background-color: #3e6a3e;
+}
+
+/* Pagina-opmaak */
+.toernooien-page {
+  padding: 60px 20px;
+  background-color: #f8f9fa;
+  font-family: sans-serif;
+}
+
+.toernooi-header h1 {
+  font-size: 2rem;
+  color: #222;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Filterformulier */
+.filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto 40px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.filter-form label {
+  font-weight: 600;
+  color: #333;
+  margin-right: 8px;
+}
+
+.filter-form select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.filter-form button {
+  padding: 12px 24px;
+  background-color: #3e6a3e;
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-form button:hover {
+  background-color: #2f512f;
+}
+
+/* Tabel */
+.toernooi-lijst {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.toernooi-tabel {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 60px;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(153, 153, 153, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.toernooi-tabel th,
+.toernooi-tabel td {
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 1px solid #9ad7a7;
+  font-size: 1rem;
+  color: #333;
+}
+
+.toernooi-tabel th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+.toernooi-tabel td:last-child {
+  text-align: center;
+}
+
+.toernooi-tabel a.btn-details {
+  background-color: #3e6a3e;
+  color: rgb(248, 248, 248);
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.toernooi-tabel a.btn-details:hover {
+  background-color: #2f512f;
+}
+
+/* Info-blok boven de tabel (optioneel) */
+.toernooi-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.toernooi-info h2 {
+  font-size: 2rem;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+.info-tags {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  font-size: 1rem;
+  color: #f7f4f4;
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #222;
+  margin-bottom: 40px;
+}

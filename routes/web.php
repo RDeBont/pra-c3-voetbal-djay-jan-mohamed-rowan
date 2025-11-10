@@ -2,6 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-route::get('/', function () {
-    return view('home');
+Route::get('/', function () {
+    return view('index');
+});
+
+Route::get('/toernooien', function () {
+    return view('toernooien');
+});
+
+Route::get('/inschrijven', function () {
+    return view('inschrijven');
 });
