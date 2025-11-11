@@ -18,56 +18,112 @@
             >
         </div>
 
-        <!-- Naam Coach -->
+        <!-- Adres School -->
         <div class="signupform-group">
-            <label for="coach_naam">Naam Coach</label>
+            <label for="school_adres">Adres School</label>
             <input 
                 type="text" 
-                name="coach_naam" 
-                id="coach_naam" 
+                name="school_adres" 
+                id="school_adres" 
                 class="signupform-control" 
-                placeholder="Bijv. Jan de Vries"
+                placeholder="Bijv. Schoolstraat 12, 4811 AB Breda"
                 required
             >
         </div>
 
-        <!-- Emailadres School -->
+        <!-- Mailadres Contactpersoon (Coach) -->
         <div class="signupform-group">
-            <label for="school_email">E-mailadres School</label>
+            <label for="coach_email">E-mailadres Contactpersoon (Coach)</label>
             <input 
                 type="email" 
-                name="school_email" 
-                id="school_email" 
+                name="coach_email" 
+                id="coach_email" 
                 class="signupform-control" 
-                placeholder="Bijv. info@school.nl"
+                placeholder="Bijv. jan.devries@school.nl"
                 required
             >
         </div>
 
-        <!-- Sport (Dropdown) -->
+        <!-- E-mailadres van scheidsrechter -->
         <div class="signupform-group">
-            <label for="sport">Sport</label>
-            <select name="sport" id="sport" class="signupform-control" required>
-                <option value="">-- Kies een sport --</option>
-                <option value="voetbal">Voetbal</option>
-                <option value="lijnbal">Lijnbal</option>
-            </select>
+            <label for="scheidsrechter_email">E-mailadres van Scheidsrechter</label>
+            <input 
+                type="email" 
+                name="scheidsrechter_email" 
+                id="scheidsrechter_email" 
+                class="signupform-control" 
+                placeholder="Bijv. pietjanssen@scheids.nl"
+                required
+            >
         </div>
 
-        <!-- Groep -->
+        <!-- Toernooien -->
         <div class="signupform-group">
-            <label for="groep">Groep</label>
-            <select name="groep" id="groep" class="signupform-control" required>
-                <option value="">-- Kies een groep --</option>
-                <option value="groep_1">Groep 1</option>
-                <option value="groep_2">Groep 2</option>
-                <option value="groep_3">Groep 3</option>
-                <option value="groep_4">Groep 4</option>
-            </select>
+            <label>Toernooien</label>
+
+            <!-- Groep 3/4 -->
+            <div signupform-group>
+                <input type="checkbox" id="toernooi_groep_34" name="toernooien[]" value="groep_34">
+                <label for="toernooi_groep_34">Groep 3/4 Voetbal</label>
+                <select name="aantal_groep_34" class="signupform-control mt-1" >
+                    <option value="">Aantal teams</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+
+            <!-- Groep 7/8 -->
+            <div class="mt-2">
+                <input type="checkbox" id="toernooi_groep_78" name="toernooien[]" value="groep_78">
+                <label for="toernooi_groep_78">Groep 7/8 Voetbal</label>
+                <select name="aantal_groep_78" class="signupform-control mt-1" >
+                    <option value="">Aantal teams</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+
+            <!-- Middelbare school -->
+            <div class="mt-2">
+                <input type="checkbox" id="toernooi_middelbare" name="toernooien[]" value="middelbare">
+                <label for="toernooi_middelbare">Middelbare school Voetbal</label>
+                <select name="aantal_middelbare" class="signupform-control mt-1" >
+                    <option value="">Aantal teams</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+
+            <!-- Meiden Lijnbal -->
+            <div class="mt-2">
+                <input type="checkbox" id="toernooi_meiden_lijnbal" name="toernooien[]" value="meiden_lijnbal">
+                <label for="toernooi_meiden_lijnbal">Meiden Lijnbal (alle groepen)</label>
+                <select name="aantal_meiden_lijnbal" class="signupform-control mt-1" >
+                    <option value="">Aantal teams</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
         </div>
 
         <!-- Submit -->
         <button type="submit" class="signupform-btn mt-3">Inschrijven</button>
     </form>
 </section>
+
+
+
+
 </x-base-layout>

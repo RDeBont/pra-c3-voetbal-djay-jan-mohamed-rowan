@@ -208,13 +208,6 @@ h1 {
 
 /* Inschrijf formulier */
 
-.body {
-    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f6f9;
-    margin: 0;
-    padding: 0;
-}
-
 /* ---------- Wrapper ---------- */
 .signupform-wrapper {
     display: flex;
@@ -247,6 +240,8 @@ h1 {
     gap: 1.2rem;
 }
 
+
+
 /* ---------- Formulier groepen ---------- */
 .signupform-group {
     display: flex;
@@ -262,7 +257,7 @@ h1 {
 
 /* ---------- Inputs & Select ---------- */
 .signupform-control {
-    width: 100%;
+    width: 90%;
     padding: 0.65rem 0.8rem;
     border: 1px solid #ccc;
     border-radius: 6px;
@@ -290,6 +285,8 @@ h1 {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
+
 
 .signupform-btn:hover {
     background-color: #2f512f;
