@@ -2,7 +2,7 @@
 .navbar {
   background-color: #ffffff;
   padding: 16px 32px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .nav-container {
@@ -92,7 +92,7 @@
   padding: 20px;
   background-color: #f8f9fa;
   border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .filter-form label {
@@ -209,107 +209,108 @@ h1 {
 /* Inschrijf formulier */
 
 .body {
-    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f6f9;
-    margin: 0;
-    padding: 0;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f9;
+  margin: 0;
+  padding: 0;
 }
 
 /* ---------- Wrapper ---------- */
 .signupform-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
 }
 
 /* ---------- Titel ---------- */
 .ins {
-    font-size: 2.2rem;
-    color: #222;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    text-align: center;
+  font-size: 2.2rem;
+  color: #222;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
 /* ---------- Formulier ---------- */
 .signupform {
-    background-color: #fff;
-    padding: 2.5rem 2rem;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 450px;
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
+  background-color: #fff;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 
 /* ---------- Formulier groepen ---------- */
 .signupform-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 /* ---------- Labels ---------- */
 .signupform-group label {
-    font-weight: 600;
-    color: #333;
+  font-weight: 600;
+  color: #333;
 }
 
 /* ---------- Inputs & Select ---------- */
 .signupform-control {
-    width: 100%;
-    padding: 0.65rem 0.8rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1rem;
-    transition: all 0.25s ease;
-    background-color: #fafafa;
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.25s ease;
+  background-color: #fafafa;
 }
 
 .signupform-control:focus {
-    border-color: #007bff;
-    background-color: #fff;
-    box-shadow: 0 0 6px rgba(0, 123, 255, 0.25);
-    outline: none;
+  border-color: #007bff;
+  background-color: #fff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.25);
+  outline: none;
 }
 
 /* ---------- Knop ---------- */
 .signupform-btn {
-    background-color: #548350;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 0.75rem;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  background-color: #548350;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .signupform-btn:hover {
-    background-color: #2f512f;
+  background-color: #2f512f;
 }
 
 /* ---------- Extra marge ---------- */
 .mt-3 {
-    margin-top: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 /* ---------- Responsief ---------- */
 @media (max-width: 480px) {
-    .ins {
-        font-size: 1.8rem;
-    }
+  .ins {
+    font-size: 1.8rem;
+  }
 
-    .signupform {
-        padding: 2rem 1.2rem;
-    }
+  .signupform {
+    padding: 2rem 1.2rem;
+  }
 }
+
 .adminPage {
   padding: 60px 20px;
   /* background-color: #f8f9fa; */
@@ -341,14 +342,16 @@ h1 {
 
 }
 
-.wedstrijdCard{
- background-color: white; ;
- border-radius: 20px;
- padding: 20px;
- text-align: center;
+.wedstrijdCard {
+  background-color: white;
+  ;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
   margin: 20px;
 }
-.wedstrijdCard button{
+
+.wedstrijdCard button {
   margin-top: 10px;
   background-color: white;
   color: #548350;
@@ -360,32 +363,33 @@ h1 {
 }
 
 
-.blackLine{
+.blackLine {
   width: 100%;
   height: 2px;
   background-color: #222;
   margin: 20px 0;
 }
 
-.userCard{
-  background-color: white; ;
+.userCard {
+  background-color: white;
+  ;
   border-radius: 20px;
   padding: 20px;
   text-align: center;
-   margin: 20px;
- }
- .userCard button{
-   margin-top: 10px;
-   background-color: white;
-   color: #548350;
-   font-weight: bold;
-   padding: 10px 20px;
-   border: none;
-   border-radius: 10px;
-   cursor: pointer;
- }
+  margin: 20px;
+}
 
-/* Account Form Styling */
+.userCard button {
+  margin-top: 10px;
+  background-color: white;
+  color: #548350;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 .accountForm {
   display: flex;
   flex-direction: column;
@@ -429,5 +433,57 @@ h1 {
 }
 
 .accountForm button[type="submit"]:hover {
+  background-color: #3e6a3e;
+}
+
+.container{
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.loginForm{
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 100px 20px;
+  border: #222 1px solid;
+  border-radius: 10px;
+  margin: 100px auto !important;
+}
+.loginForm label {
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #333;
+}
+
+.loginForm input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.loginForm input:focus {
+  outline: none;
+  border-color: #548350;
+
+}
+
+.loginForm button[type="submit"] {
+  background-color: #548350;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.loginForm button[type="submit"]:hover {
   background-color: #3e6a3e;
 }
