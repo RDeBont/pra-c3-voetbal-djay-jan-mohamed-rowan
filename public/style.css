@@ -2,7 +2,7 @@
 .navbar {
   background-color: #ffffff;
   padding: 16px 32px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .nav-container {
@@ -92,7 +92,7 @@
   padding: 20px;
   background-color: #f8f9fa;
   border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .filter-form label {
@@ -210,49 +210,49 @@ h1 {
 
 /* ---------- Wrapper ---------- */
 .signupform-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
 }
 
 /* ---------- Titel ---------- */
 .ins {
-    font-size: 2.2rem;
-    color: #222;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    text-align: center;
+  font-size: 2.2rem;
+  color: #222;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
 /* ---------- Formulier ---------- */
 .signupform {
-    background-color: #fff;
-    padding: 2.5rem 2rem;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 450px;
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
+  background-color: #fff;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 
 
 
 /* ---------- Formulier groepen ---------- */
 .signupform-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 /* ---------- Labels ---------- */
 .signupform-group label {
-    font-weight: 600;
-    color: #333;
+  font-weight: 600;
+  color: #333;
 }
 
 /* ---------- Inputs & Select ---------- */
@@ -267,46 +267,47 @@ h1 {
 }
 
 .signupform-control:focus {
-    border-color: #007bff;
-    background-color: #fff;
-    box-shadow: 0 0 6px rgba(0, 123, 255, 0.25);
-    outline: none;
+  border-color: #007bff;
+  background-color: #fff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.25);
+  outline: none;
 }
 
 /* ---------- Knop ---------- */
 .signupform-btn {
-    background-color: #548350;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 0.75rem;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  background-color: #548350;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 
 
 .signupform-btn:hover {
-    background-color: #2f512f;
+  background-color: #2f512f;
 }
 
 /* ---------- Extra marge ---------- */
 .mt-3 {
-    margin-top: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 /* ---------- Responsief ---------- */
 @media (max-width: 480px) {
-    .ins {
-        font-size: 1.8rem;
-    }
+  .ins {
+    font-size: 1.8rem;
+  }
 
-    .signupform {
-        padding: 2rem 1.2rem;
-    }
+  .signupform {
+    padding: 2rem 1.2rem;
+  }
 }
+
 .adminPage {
   padding: 60px 20px;
   /* background-color: #f8f9fa; */
@@ -338,14 +339,16 @@ h1 {
 
 }
 
-.wedstrijdCard{
- background-color: white; ;
- border-radius: 20px;
- padding: 20px;
- text-align: center;
+.wedstrijdCard {
+  background-color: white;
+  ;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
   margin: 20px;
 }
-.wedstrijdCard button{
+
+.wedstrijdCard button {
   margin-top: 10px;
   background-color: white;
   color: #548350;
@@ -357,32 +360,103 @@ h1 {
 }
 
 
-.blackLine{
-  width: 100%;
-  height: 2px;
-  background-color: #222;
-  margin: 20px 0;
+.footer {
+    background-color: #f8f9fa;
+    padding-top: 20px;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    width: 100%;
+    color: #222;
 }
 
-.userCard{
-  background-color: white; ;
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex; /* stack sections vertically */
+    justify-content: center; /* center vertically */
+    align-items: center; /* center horizontally */
+    gap: 40px;
+}
+
+.footer-container_2 {
+    max-width: 1100px;
+    margin: 0 auto;
+    margin-top: 20px;
+    display: flex; /* stack sections vertically */
+    justify-content: center; /* center vertically */
+    align-items: center; /* center horizontally */
+    gap: 40px;
+}
+
+.footer-section {
+    width: 100%;
+    max-width: 600px; /* control the width of centered content */
+    text-align: center; /* center text within each section */
+}
+
+.footer h1 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.footer h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #111;
+}
+
+.footer p {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.footer .logo {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.footer .logo-img {
+    height: 60px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.footer .logo-img:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* Optional: thin dividing line */
+.blackLine {
+    height: 2px;
+    background-color: #222;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.userCard {
+  background-color: white;
+  ;
   border-radius: 20px;
   padding: 20px;
   text-align: center;
-   margin: 20px;
- }
- .userCard button{
-   margin-top: 10px;
-   background-color: white;
-   color: #548350;
-   font-weight: bold;
-   padding: 10px 20px;
-   border: none;
-   border-radius: 10px;
-   cursor: pointer;
- }
+  margin: 20px;
+}
 
-/* Account Form Styling */
+.userCard button {
+  margin-top: 10px;
+  background-color: white;
+  color: #548350;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 .accountForm {
   display: flex;
   flex-direction: column;

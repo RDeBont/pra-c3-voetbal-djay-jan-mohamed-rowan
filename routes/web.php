@@ -18,6 +18,9 @@ Route::get('/admin', function () {
     return view('admin');
 });
 
+Route::get('/spelregels', function () {
+    return view('spelregels');
+});
 
 Route::get('/login', function () {
     return view('login');
