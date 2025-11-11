@@ -326,3 +326,31 @@ h1 {
 .accountForm button[type="submit"]:hover {
   background-color: #3e6a3e;
 }
+
+.btn-spelregels {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #3e6a3e; /* Paars */
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.btn-spelregels:hover {
+  background-color: #315231;
+}
+
+.btn-spelregels {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #3e6a3e;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+  margin-top: -150px;   /* beweegt iets omhoog */
+  margin-left: 160px;   /* duwt naar rechts */
+  margin-right: 0;
+}

@@ -2,6 +2,8 @@
   <main class="toernooien-page">
     <h1>Toernooien</h1>
 
+    <a href="{{ url('/spelregels') }}" class="btn-spelregels">Spelregels</a>
+
     <form class="filter-form">
       <label for="sport">Sportsoort:</label>
       <select id="sport" name="sport">
