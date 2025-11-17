@@ -555,3 +555,34 @@ h1 {
 .loginForm button[type="submit"]:hover {
   background-color: #3e6a3e;
 }
+
+
+/* CSS */
+.btn-spelregels {
+  display: inline-block;
+  padding: 10px 16px;
+  background-color: #3e6a3e;  
+  color: #fff;                 /* witte tekst */
+  font-weight: 500;
+  text-decoration: none;        /* geen underline */
+  border-radius: 6px;           /* afgeronde hoeken */
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+/* hover: kleur en lichte beweging */
+.btn-spelregels:hover {
+  background-color: #2c4b2c;
+  transform: translateY(-2px);
+}
+
+/* focus: toegankelijkheid */
+.btn-spelregels:focus {
+  outline: 2px solid #5b9dd9;
+  outline-offset: 2px;
+}
+
+/* active: klik feedback */
+.btn-spelregels:active {
+  background-color: #16324a;
+  transform: translateY(0);
+}
