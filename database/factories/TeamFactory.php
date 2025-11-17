@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Team;
+use App\Models\School;
+use App\Models\Pool;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,15 +12,20 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TeamFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = Team::class;
+
+    public function definition()
     {
         return [
-            //
+            'school_id' => School::inRandomOrder()->first()->id
+                ?? School::factory()->create()->id,
+
+            'pool_id'   => Pool::inRandomOrder()->first()->id
+                ?? Pool::factory()->create()->id,
+
+            'name'      => $this->faker->unique()->city . ' Team',
+
+            'referee'   => $this->faker->name(),
         ];
     }
 }

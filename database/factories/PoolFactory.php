@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Pool;
+use App\Models\Tournament;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,15 +11,14 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PoolFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = Pool::class;
+
+    public function definition()
     {
         return [
-            //
+            'tournament_id' => Tournament::inRandomOrder()->first()->id
+                ?? Tournament::factory()->create()->id,
+            'name'          => 'Pool ' . $this->faker->unique()->randomLetter(),
         ];
     }
 }

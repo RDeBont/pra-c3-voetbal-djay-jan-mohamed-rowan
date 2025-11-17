@@ -1,7 +1,8 @@
 <?php
 
 namespace Database\Factories;
-
+use App\Models\School;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,15 +10,14 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class SchoolFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = School::class;
+
+    public function definition()
     {
         return [
-            //
+            'name'       => $this->faker->unique()->company . ' School',
+            'creator_id' => User::inRandomOrder()->first()->id
+                            ?? User::factory()->create()->id,
         ];
     }
 }
