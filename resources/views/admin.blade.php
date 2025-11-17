@@ -5,7 +5,7 @@
             <p>Hier kunt u wedstrijden beheren en aanmaken.</p>
         </div>
         <div class="butten">
-            <a href="{{ url('/')}}">Maak wedstrijd</a>
+            <a href="{{ route('admin.create') }}">Maak toernooi</a>
         </div>
 
         <div class="infoContainer">
@@ -88,8 +88,8 @@
                     <option value="user">User</option>
                 </select>
 
-                <button type="submit">Maak account aan</button>
-            </form>
+</form>
+        </div>
 
     </main>
 </x-base-layout>
