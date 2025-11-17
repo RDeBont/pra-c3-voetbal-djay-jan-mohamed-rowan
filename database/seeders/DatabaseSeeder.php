@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
         // -----------------------------
         Pool::all()->each(function (Pool $pool) use ($schools) {
             Team::factory()
-                ->count(4) // adjust as needed
+                ->count(2) // adjust as needed
                 ->create([
                     'pool_id'   => $pool->id,
                     'school_id' => $schools->random()->id,

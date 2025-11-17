@@ -8,7 +8,7 @@
     <ul class="nav-links">
       <li><a href="{{ url('/') }}">Home</a></li>
       <li><a href="{{ url('/contact') }}">Contact</a></li>
-      <li><a href="{{ url('/toernooien') }}">Toernooien</a></li>
+      <li><a href="{{ route('tournaments.index')}}">Toernooien</a></li>
       <li><a href="{{ url('/inschrijven') }}">Inschrijven</a></li>
       <li><a href="{{ url('/login') }}">Login</a></li>
       <li><a href="{{ url('/admin') }}">Admin</a></li>

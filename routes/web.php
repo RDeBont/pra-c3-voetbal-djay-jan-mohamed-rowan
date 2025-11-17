@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TournamentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TournamentCreateController;
 
@@ -7,9 +8,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/toernooien', function () {
-    return view('toernooien');
-});
+
 
 Route::get('/inschrijven', function () {
     return view('inschrijven');
@@ -28,5 +27,4 @@ Route::get('/login', function () {
 });
 
 
-Route::get('/admin/create', [TournamentCreateController::class, 'create'])->name('admin.create');
-Route::post('/admin/store', [TournamentCreateController::class, 'store'])->name('admin.store');
+Route::resource('tournaments', TournamentController::class);

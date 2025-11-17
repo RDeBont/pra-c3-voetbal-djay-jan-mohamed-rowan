@@ -5,7 +5,7 @@
             <p>Hier kunt u wedstrijden beheren en aanmaken.</p>
         </div>
         <div class="butten">
-            <a href="{{ route('admin.create') }}">Maak toernooi</a>
+            <a href="{{ route('tournaments.create') }}">Maak toernooi</a>
         </div>
 
         <div class="infoContainer">
