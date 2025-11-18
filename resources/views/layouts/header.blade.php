@@ -11,7 +11,7 @@
       <li><a href="{{ route('tournaments.index')}}">Toernooien</a></li>
       <li><a href="{{ url('/inschrijven') }}">Inschrijven</a></li>
       <li><a href="{{ url('/login') }}">Login</a></li>
-      <li><a href="{{ url('/admin') }}">Admin</a></li>
+      <li><a href="{{ route('admin.index')}}">Admin</a></li>
     </ul>
   </nav>
 </header>
