@@ -593,3 +593,67 @@ h1 {
   background-color: #16324a;
   transform: translateY(0);
 }
+
+/* Container */
+.dropdowns {
+  margin: 20px 0;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;   /* mobiel: dropdowns breken naar nieuwe regel */
+  align-items: center;
+}
+
+/* Labels */
+.dropdowns label {
+  font-weight: 600;
+  margin-right: 8px;
+  color: #1f3b5b;
+}
+
+/* Dropdown zelf */
+.dropdowns select {
+  padding: 8px 12px;
+  border: 1px solid #ccd6e0;
+  border-radius: 6px;
+  background-color: #f7fafc;
+  font-size: 14px;
+  color: #1f3b5b;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover/focus states */
+.dropdowns select:hover {
+  border-color: #2a4f7a;
+}
+
+.dropdowns select:focus {
+  outline: none;
+  border-color: #5b9dd9;
+  box-shadow: 0 0 0 2px rgba(91, 157, 217, 0.3);
+}
+
+
+/* Zorg dat de laatste kolom een vaste breedte heeft */
+.toernooi-tabel td:last-child,
+.toernooi-tabel th:last-child {
+  width: 160px; /* pas aan indien nodig */
+  text-align: center;
+}
+
+/* Knop zelf */
+.toernooi-tabel a.btn-details {
+  display: inline-block;
+  background-color: #3e6a3e;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap; /* voorkomt afbreken */
+  transition: background-color 0.3s ease;
+}
+
+.toernooi-tabel a.btn-details:hover {
+  background-color: #2f512f;
+}
