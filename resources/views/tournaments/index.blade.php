@@ -32,23 +32,18 @@
                 <thead>
                     <tr>
                         <th>Naam Tournament</th>
-                        <th>Score</th>
-                        <th>Start-time</th>
-                        <th>Date</th>
                         <th>Details</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @foreach ($fixtures as $fixture)
+                    @foreach ($tournaments as $tournament)
                         <tr>
-                            <td>{{ $fixture->tournament->name }}</td>
-                            <td>{{ $fixture->team_1_score}}-{{ $fixture->team_2_score }}</td>
-                            <td>{{ $fixture->start_time }}</td>
-                            <td>{{ $fixture->tournament->date }}</td>
+                            <td>{{ $tournament->name }}</td>
+            
 
                             <td>
-                                <a href="{{ route('tournaments.show', $fixture->tournament) }}" class="btn-details">
+                                <a href="{{ route('tournaments.show', $tournament->id) }}" class="btn-details">
                                     Bekijk details
                                 </a>
                             </td>

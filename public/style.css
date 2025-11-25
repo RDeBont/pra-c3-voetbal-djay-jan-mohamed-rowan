@@ -657,3 +657,33 @@ h1 {
 .toernooi-tabel a.btn-details:hover {
   background-color: #2f512f;
 }
+
+.wn {
+  text-align: center;
+}
+
+.edit-button-wrapper {
+    text-align: center;
+    margin: 20px 0 40px 0;
+}
+
+
+.edit-button {
+    background-color: #3e6a3e;
+    
+    color: white;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-size: 14px;
+    border: 1px solid #3e6a3e;
+    display: inline-block;
+}
+
+.edit-button:hover {
+    background-color: #2f512f; ;
+    border-color: #2f512f;
+}
+
+
+  

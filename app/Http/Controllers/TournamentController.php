@@ -15,9 +15,9 @@ class TournamentController extends Controller
      */
     public function index()
     {
-        $fixtures = Fixture::with(['tournament', 'team1', 'team2'])->get();
+        $tournaments = Tournament::all();
 
-        return view('tournaments.index', compact('fixtures'));
+        return view('tournaments.index', compact('tournaments'));
     }
 
     /**
@@ -41,7 +41,14 @@ class TournamentController extends Controller
      */
     public function show(Tournament $tournament)
     {
-        return view('tournaments.show', compact('tournament'));
+        $tournament = Tournament::with(['fixtures.team1', 'fixtures.team2'])
+        ->find($tournament->id);
+
+        $fixtures = $tournament->fixtures;
+
+        return view('tournaments.show', compact('tournament', 'fixtures'));
+
+
     }
 
 

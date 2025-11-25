@@ -1,26 +1,55 @@
 <x-base-layout>
     <main class="toernooi-detail-page">
         <h1>{{ $tournament->name }}</h1>
+        <div class="wn">
+            <h2>Alle Wedstrijden</h2>
+        </div>
+        
 
-        <table class="toernooi-tabel">
-            <tbody>
-                <tr>
-                    <th>Datum Plaatsvinding</th>
-                    <td>{{ $tournament->date }}</td>
-                </tr>
-                <tr>
-                    <th>Veldnummer</th>
-                    <td>{{ $tournament->fields_amount }}</td>
-                </tr>
-                <tr>
-                    <th>Tijdsduur</th>
-                    <td>{{ $tournament->game_length_minutes }}</td>
-                </tr>
-                <tr>
-                    <th>Teamnummer</th>
-                    <td>{{ $tournament->amount_teams_pool }}</td>
-                </tr>
-            </tbody>
-        </table>
+        @foreach ($fixtures as $fixture)
+            <table class="toernooi-tabel" style="margin-bottom: 20px;">
+                <tbody>
+                    <tr>
+                        <th>Team 1:</th>
+                        <td>{{ $fixture->team1->name }}</td>
+                        <td>{{ $fixture->team_1_id }}</td>
+                        
+                    </tr>
+                    <tr>
+                    <th>Score:</th>
+                        <td>{{ $fixture->team_1_score }} - {{ $fixture->team_2_score }}</td>
+                        <td></td>
+                    
+                    </tr>
+                    <tr>
+                        <th>Team 2:</th>
+                        <td>{{ $fixture->team2->name }}</td>
+                        <td>{{ $fixture->team_2_id }}</td>
+                        
+                    </tr>
+                    <tr>
+                        <th>StartTijd</th>
+                        <td>{{ $fixture->start_time }}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Fase</th>
+                        <td>{{ $fixture->type }}</td>
+                        <td></td>
+        
+                        
+                </tbody>
+            </table>
+
+        
+        {{--@auth  --}}
+        <div class="edit-button-wrapper">
+        <a href="{{ route('fixtures.edit', $fixture->id) }}" class="edit-button">
+        Wedstrijd aanpassen
+        </a>
+        </div>
+        {{-- @endauth --}}
+        @endforeach
+
     </main>
 </x-base-layout>
