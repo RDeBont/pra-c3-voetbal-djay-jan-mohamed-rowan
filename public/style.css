@@ -564,17 +564,26 @@ h1 {
 }
 
 
-/* CSS */
+.knop-container {
+  position: relative;   /* referentiegebied voor de knop */
+}
+
+
+/*spelregelknop*/
 .btn-spelregels {
-  display: inline-block;
+  position: absolute;   /* knop losmaken van de layout */
+  top: 250px;           /* omhoog/omlaag */
+  left: 120px;           /* links/rechts */
+
   padding: 10px 16px;
-  background-color: #3e6a3e;  
-  color: #fff;                 /* witte tekst */
+  background-color: #3e6a3e;
+  color: #fff;
   font-weight: 500;
-  text-decoration: none;        /* geen underline */
-  border-radius: 6px;           /* afgeronde hoeken */
+  text-decoration: none;
+  border-radius: 60px;
   transition: background 0.2s ease, transform 0.1s ease;
 }
+
 
 /* hover: kleur en lichte beweging */
 .btn-spelregels:hover {

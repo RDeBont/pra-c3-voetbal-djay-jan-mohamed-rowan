@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TournamentController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TournamentCreateController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FixtureController;
+
 
 Route::get('/', function () {
     return view('index');
@@ -18,11 +21,25 @@ Route::get('/spelregels', function () {
     return view('spelregels');
 });
 
-Route::get('/login', function () {
-    return view('login');
-});
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
 
+Route::post('/contact-verzenden', [ContactController::class, 'verzenden'])
+    ->name('contact.verzenden');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('tournaments', TournamentController::class);
-Route::resource('admin', AdminController::class);
-Route::resource('fixtures', FixtureController::class);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('admin', AdminController::class);
+    Route::resource('fixtures', FixtureController::class)->only(['edit', 'update']);
+});
+
+require __DIR__ . '/auth.php';
