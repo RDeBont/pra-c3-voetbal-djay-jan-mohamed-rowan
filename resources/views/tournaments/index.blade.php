@@ -32,26 +32,29 @@
                 <thead>
                     <tr>
                         <th>Naam Tournament</th>
-                        <th>Datum Plaatsvinding</th>
-                        <th>Veldnummer</th>
-                        <th>Tijdsduur</th>
-                        <th>Teamnummer</th>
+                        <th>Score</th>
+                        <th>Start-time</th>
+                        <th>Date</th>
                         <th>Details</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($tournaments as $tournament)
-                        <tr>
-                            <td>{{ $tournament->name }}</td>
-                            <td>{{ $tournament->date }}</td>
-                            <td>{{ $tournament->fields_amount }}</td>
-                            <td>{{ $tournament->game_length_minutes}}</td>
-                            <td>{{ $tournament->amount_teams_pool}}</td>
-                            <td><a href="{{ url('/toernooi-detail') }}" class="btn-details">Bekijk details</a></td>
 
+                <tbody>
+                    @foreach ($fixtures as $fixture)
+                        <tr>
+                            <td>{{ $fixture->tournament->name }}</td>
+                            <td>{{ $fixture->team_1_score}}-{{ $fixture->team_2_score }}</td>
+                            <td>{{ $fixture->start_time }}</td>
+                            <td>{{ $fixture->tournament->date }}</td>
+
+                            <td>
+                                <a href="{{ route('tournaments.show', $fixture->tournament) }}" class="btn-details">
+                                    Bekijk details
+                                </a>
+                            </td>
                         </tr>
+                    @endforeach
                 </tbody>
-                @endforeach
             </table>
         </section>
     </main>

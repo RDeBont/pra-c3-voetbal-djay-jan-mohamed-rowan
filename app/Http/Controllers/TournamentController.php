@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fixture;
 use App\Models\Tournament;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTournamentRequest;
@@ -14,9 +15,9 @@ class TournamentController extends Controller
      */
     public function index()
     {
-        $tournaments = Tournament::all();
-        return view('tournaments.index', compact('tournaments'));
+        $fixtures = Fixture::with(['tournament', 'team1', 'team2'])->get();
 
+        return view('tournaments.index', compact('fixtures'));
     }
 
     /**
@@ -40,8 +41,11 @@ class TournamentController extends Controller
      */
     public function show(Tournament $tournament)
     {
-        //
+        return view('tournaments.show', compact('tournament'));
     }
+
+
+
 
     /**
      * Show the form for editing the specified resource.
