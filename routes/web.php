@@ -5,9 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\TournamentCreateController;
+<<<<<<< Updated upstream
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FixtureController;
 
+=======
+>>>>>>> Stashed changes
 
 Route::get('/', function () {
     return view('index');
@@ -21,6 +24,7 @@ Route::get('/spelregels', function () {
     return view('spelregels');
 });
 
+<<<<<<< Updated upstream
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
@@ -28,6 +32,8 @@ Route::get('/contact', function () {
 Route::post('/contact-verzenden', [ContactController::class, 'verzenden'])
     ->name('contact.verzenden');
 
+=======
+>>>>>>> Stashed changes
 Route::get('/dashboard', function () {
     return view('index');
 })->middleware(['auth', 'verified'])->name('dashboard');
