@@ -29,7 +29,7 @@ Route::post('/contact-verzenden', [ContactController::class, 'verzenden'])
     ->name('contact.verzenden');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('tournaments', TournamentController::class);
@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('admin', AdminController::class);
-    Route::resource('fixtures', FixtureController::class)->only(['edit', 'update']);
+    Route::resource('fixtures', FixtureController::class);
 });
 
 require __DIR__ . '/auth.php';
