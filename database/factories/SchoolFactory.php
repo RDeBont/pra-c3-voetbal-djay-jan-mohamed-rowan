@@ -18,6 +18,11 @@ class SchoolFactory extends Factory
             'name'       => $this->faker->unique()->company . ' School',
             'creator_id' => User::inRandomOrder()->first()->id
                             ?? User::factory()->create()->id,
+            'email'      => $this->faker->unique()->safeEmail,
+            'address'    => $this->faker->address,
+            'typeSchool' => $this->faker->randomElement(['basisschool', 'middelbare school ',]),
+            'accepted'   => 0,
+            
         ];
     }
 }

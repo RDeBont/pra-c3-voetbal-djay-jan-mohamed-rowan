@@ -15,6 +15,10 @@ class School extends Model
     protected $fillable = [
         'name',
         'creator_id',
+        'email',
+        'address',
+        'typeSchool',
+        'accepted',
     ];
 
     public function creator(): BelongsTo

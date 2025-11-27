@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\School;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -10,8 +10,64 @@ class AdminController extends Controller
      * Display a listing of the resource.
      */
     public function index()
+    {   
+        $user = auth()->user();
+        $schoolsAccepted = School::all()->where('accepted', 1);
+        $schools = School::all()->where('accepted', 0);
+        return view('admin.index' , compact('schools', "schoolsAccepted" ,'user') );
+    }
+
+    /**
+     * Accept a school registration.
+     */
+    public function accept(string $id)
     {
-        return view('admin.index');
+        $school = School::findOrFail($id);
+        $school->accepted = 1;
+        $school->save();
+
+        // Create 3 user accounts for this school and send credentials to the school's contact email
+        $accounts = [];
+        for ($i = 1; $i <= 3; $i++) {
+            // generate a unique email for the account within the app domain
+            $email = 'school' . $school->id . '_user' . $i . '@' . request()->getHost();
+            $password_plain = bin2hex(random_bytes(4)); // 8 hex chars
+
+            $user = \App\Models\User::create([
+                'name' => $school->name . ' - Account ' . $i,
+                'email' => $email,
+                'password' => bcrypt($password_plain),
+                'school_id' => $school->id,
+            ]);
+
+            $accounts[] = [
+                'email' => $email,
+                'password_plain' => $password_plain,
+            ];
+        }
+
+        try {
+            \Illuminate\Support\Facades\Mail::to($school->email)->send(new \App\Mail\SchoolAccepted($school, $accounts));
+        } catch (\Exception $e) {
+            // Log mail failure but continue
+            \Log::error('Failed to send acceptance email: ' . $e->getMessage());
+        }
+
+        return redirect()->route('admin.index')->with('success', 'School is geaccepteerd en accounts zijn aangemaakt.');
+    }
+
+    /**
+     * Reject a school registration.
+     */
+    public function reject(string $id)
+    {
+        $school = School::findOrFail($id);
+
+
+        $school->delete();
+
+
+        return redirect()->route('admin.index')->with('success', 'School is geweigerd.');
     }
 
     /**

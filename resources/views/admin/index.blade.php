@@ -35,6 +35,52 @@
         <div class="blackLine"></div>
 
         <div class="tInfoContainer">
+            <h2>Ingeschreven scholen</h2>
+        </div>
+        <div class="infoContainer">
+            @forelse($schools as $school)
+                <div class="userCard">
+                    <h3>{{ $school->name }}</h3>
+                    <p>Email: {{ $school->email }}</p>
+                    <p>Type school: {{ $school->typeSchool }}</p>
+                    <p>Address: {{ $school->address }}</p>
+                    <form method="POST" action="{{ route('admin.schools.accept', $school->id) }}" style="display:inline">
+                        @csrf
+                        <button type="submit">Accepteer</button>
+                    </form>
+                    <form method="POST" action="{{ route('admin.schools.reject', $school->id) }}" style="display:inline">
+                        @csrf
+                        <button type="submit">Weiger</button>
+                    </form>
+                </div>
+            @empty
+                <p>Geen nieuwe aanmeldingen.</p>
+            @endforelse
+        </div>
+
+        <div class="blackLine"></div>
+        <div class="infoContainer">
+            <h2>Goedgekeurde scholen</h2>
+            @if(isset($schoolsAccepted) && $schoolsAccepted->count())
+                @foreach($schoolsAccepted as $s)
+                    <div class="userCard">
+                        <h3>{{ $s->name }}</h3>
+                        <p>Email: {{ $s->email }}</p>
+                        <p>Type school: {{ $s->typeSchool }}</p>
+                        <p>Address: {{ $s->address }}</p>
+
+                        <form method="POST" action="{{ route('admin.schools.reject', $s->id) }}" style="display:inline">
+                            @csrf
+                            <button type="submit">Weiger</button>
+                        </form>
+                    </div>
+                @endforeach
+            @else
+                <p>Geen goedgekeurde scholen.</p>
+            @endif
+        </div>
+
+        <div class="tInfoContainer">
             <h2>Alle Accounts</h2>
         </div>
 
@@ -71,6 +117,7 @@
             <h2>Account aanmaak</h2>
         </div>
 
+
         <div class="infoContainer">
             <form class="accountForm">
                 <label for="name">Naam:</label>
@@ -88,7 +135,7 @@
                     <option value="user">User</option>
                 </select>
 
-</form>
+            </form>
         </div>
 
     </main>

@@ -17,6 +17,7 @@ class User extends Authenticatable
         'password',
         'is_admin',
         'phonenumber',
+        'school_id',
     ];
 
     protected $hidden = [
@@ -30,6 +31,6 @@ class User extends Authenticatable
 
     public function school(): HasOne
     {
-        return $this->hasOne(School::class, 'creator_id');
+        return $this->belongsTo(School::class, 'school_id');
     }
 }
