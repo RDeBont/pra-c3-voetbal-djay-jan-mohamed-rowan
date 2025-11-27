@@ -21,10 +21,11 @@
 
             <!-- Email -->
             <div class="signupform-group">
-                <label for="email">E-mailadres</label>
+                <label for="email">E-mailadres van de persoon waar we contact mee moeten hebbben</label>
                 <input type="email" name="email" id="email" class="signupform-control"
                     placeholder="Bijv. contact@school.nl" value="{{ old('email') }}" required>
             </div>
+
 
             <!-- School Type -->
             <div class="signupform-group">

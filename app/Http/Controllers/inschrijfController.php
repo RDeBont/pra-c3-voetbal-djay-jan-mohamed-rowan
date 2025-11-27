@@ -12,7 +12,7 @@ class inschrijfController extends Controller
      */
     public function index()
     {
-        return view('inschrijven', ) ;
+        return view('inschrijven');
 
     }
 

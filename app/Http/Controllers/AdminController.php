@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 use App\Models\School;
 use Illuminate\Http\Request;
-
+use App\Models\User;
+use App\Mail\SchoolAccepted;
+use Illuminate\Support\Facades\Mail;
 class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {   
-        $user = auth()->user();
+    {
+
+        $users = User::all();
         $schoolsAccepted = School::all()->where('accepted', 1);
         $schools = School::all()->where('accepted', 0);
-        return view('admin.index' , compact('schools', "schoolsAccepted" ,'user') );
+        return view('admin.index', compact('schools', "schoolsAccepted", 'users'));
     }
 
     /**
@@ -29,25 +32,24 @@ class AdminController extends Controller
         // Create 3 user accounts for this school and send credentials to the school's contact email
         $accounts = [];
         for ($i = 1; $i <= 3; $i++) {
-            // generate a unique email for the account within the app domain
-            $email = 'school' . $school->id . '_user' . $i . '@' . request()->getHost();
+
             $password_plain = bin2hex(random_bytes(4)); // 8 hex chars
 
-            $user = \App\Models\User::create([
+            $user = user::create([
                 'name' => $school->name . ' - Account ' . $i,
-                'email' => $email,
+                'email' => $school->email,
                 'password' => bcrypt($password_plain),
                 'school_id' => $school->id,
             ]);
 
             $accounts[] = [
-                'email' => $email,
+                'email' => $school->email, 
                 'password_plain' => $password_plain,
             ];
         }
 
         try {
-            \Illuminate\Support\Facades\Mail::to($school->email)->send(new \App\Mail\SchoolAccepted($school, $accounts));
+            Mail::to($school->email)->send(new SchoolAccepted($school, $accounts));
         } catch (\Exception $e) {
             // Log mail failure but continue
             \Log::error('Failed to send acceptance email: ' . $e->getMessage());
@@ -63,12 +65,13 @@ class AdminController extends Controller
     {
         $school = School::findOrFail($id);
 
+        User::where('school_id', $school->id)->delete();
 
         $school->delete();
 
-
-        return redirect()->route('admin.index')->with('success', 'School is geweigerd.');
+        return redirect()->route('admin.index')->with('success', 'School en gekoppelde gebruikers zijn verwijderd.');
     }
+
 
     /**
      * Show the form for creating a new resource.

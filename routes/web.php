@@ -15,18 +15,15 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/inschrijven', function () {
-    return view('inschrijven');
-})->name('inschrijven.index');
-
+Route::get('/inschrijven', [inschrijfController::class, 'index'])->name('inschrijven.index');
 Route::post('/inschrijven', [inschrijfController::class, 'store'])->name('inschrijven.store');
+
 
 Route::get('/team', function () {
     return view('team');
 })->name('team.index');
 
 Route::resource('team', teamController::class);
-
 
 
 
@@ -52,10 +49,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('admin', AdminController::class);
-    // Accept / reject school registrations
     Route::post('admin/schools/{id}/accept', [AdminController::class, 'accept'])->name('admin.schools.accept');
     Route::post('admin/schools/{id}/reject', [AdminController::class, 'reject'])->name('admin.schools.reject');
     Route::resource('fixtures', FixtureController::class);
+    Route::resource('team', teamController::class);
+
 });
 
 require __DIR__ . '/auth.php';

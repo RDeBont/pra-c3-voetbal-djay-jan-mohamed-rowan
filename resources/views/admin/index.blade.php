@@ -59,8 +59,12 @@
         </div>
 
         <div class="blackLine"></div>
-        <div class="infoContainer">
+
+        <div class="tInfoContainer">
             <h2>Goedgekeurde scholen</h2>
+        </div>
+        <div class="infoContainer">
+
             @if(isset($schoolsAccepted) && $schoolsAccepted->count())
                 @foreach($schoolsAccepted as $s)
                     <div class="userCard">
@@ -80,36 +84,35 @@
             @endif
         </div>
 
+        <div class="blackLine"></div>
+
+
         <div class="tInfoContainer">
             <h2>Alle Accounts</h2>
         </div>
 
         <div class="infoContainer">
-            <div class="userCard">
-                <h3>Gebruiker 1</h3>
-                <p>Email:</p>
-                <P>Rol:</P>
-                <button>Bewerk</button>
-                <button>Verwijder</button>
+            @foreach ($users as $user)
 
-            </div>
-            <div class="userCard">
-                <h3>Gebruiker 2</h3>
-                <p>Email:</p>
-                <P>Rol:</P>
-                <button>Bewerk</button>
-                <button>Verwijder</button>
+                <div class="userCard">
+                    <h3>User: {{ $user->name }}</h3>
+                    <p>Email: {{ $user->email }}</p>
 
-            </div>
-            <div class="userCard">
-                <h3>Gebruiker 3</h3>
-                <p>Email:</p>
-                <P>Rol:</P>
-                <button>Bewerk</button>
-                <button>Verwijder</button>
+                    <p>Rol:
+                        @if ($user->role == 1)
+                            Admin
+                        @else
+                            School
+                        @endif
+                    </p>
 
-            </div>
+                    <button>Bewerk</button>
+                    <button>Verwijder</button>
+                </div>
+
+            @endforeach
         </div>
+
 
         <div class="blackLine"></div>
 
