@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
+     
+        $this->call(AdminUserSeeder::class);
         // Create users for school creators
         \App\Models\User::factory()->count(10)->create();
 
