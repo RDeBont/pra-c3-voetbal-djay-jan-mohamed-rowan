@@ -873,6 +873,72 @@ h1 {
   background-color: #48bb78;
 }
 
+/* Fixturesedit pagina */
+.fixture-edit {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 30px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  font-family: sans-serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.fixture-edit h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+.fixture-edit h2,
+.fixture-edit h3 {
+  text-align: center;
+  color: #3e6a3e;
+  margin-bottom: 10px;
+}
+
+/* Formulier */
+.fixture-edit form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.form-group input {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+/* Update knop */
+.btn-update-score {
+  background-color: #3e6a3e;
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-update-score:hover {
+  background-color: #2f512f;
+}
+
 
 @media screen and (max-width: 1024px) {
   .nav-container {
