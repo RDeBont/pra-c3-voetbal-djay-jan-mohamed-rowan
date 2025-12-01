@@ -54,8 +54,8 @@ class FixtureController extends Controller
     public function update(Request $request, Fixture $fixture)
     {
         $validatedData = $request->validate([
-            'team_1_score' => 'required|integer|min:0',
-            'team_2_score' => 'required|integer|min:0',
+            'team_1_score' => 'required|integer|min:0|max:100',
+            'team_2_score' => 'required|integer|min:0|max:100',
         ]);
 
         $fixture->update($validatedData);

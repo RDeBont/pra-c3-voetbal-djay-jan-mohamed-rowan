@@ -42,10 +42,10 @@
             </table>
 
         
-        {{--@auth  --}}
+        {{--@auth  --}} 
         <div class="edit-button-wrapper">
         <a href="{{ route('fixtures.edit', $fixture->id) }}" class="edit-button">
-        Wedstrijd aanpassen
+        Score Aanpassen
         </a>
         </div>
         {{-- @endauth --}}

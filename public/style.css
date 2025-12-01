@@ -722,7 +722,6 @@ h1 {
 
 .edit-button {
   background-color: #3e6a3e;
-
   color: white;
   text-decoration: none;
   padding: 8px 14px;
@@ -736,4 +735,31 @@ h1 {
   background-color: #2f512f;
   ;
   border-color: #2f512f;
+}
+
+.admin-message {
+  background-color: #d4edda;
+  /* lichtgroen */
+  color: #155724;
+  /* donkergroen */
+  border: 1px solid #c3e6cb;
+  /* subtiele rand */
+  padding: 12px 18px;
+  border-radius: 6px;
+  margin: 15px 0;
+  font-size: 15px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.btn-edit {
+  display: inline-block;
+  text-decoration: none;
+  margin-top: 10px;
+  color: #548350;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
 }

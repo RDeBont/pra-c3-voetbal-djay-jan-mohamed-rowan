@@ -1,5 +1,13 @@
 <x-base-layout>
     <main class="adminPage">
+         @if (session('success'))
+        <div class="admin-message">
+        {{ session('success') }}
+
+        @endif
+        </div>
+
+
         <div class="tInfoContainer">
             <h2>Admin Panel</h2>
             <p>Hier kunt u wedstrijden beheren en aanmaken.</p>
@@ -99,15 +107,23 @@
                     <p>Email: {{ $user->email }}</p>
 
                     <p>Rol:
-                        @if ($user->role == 1)
+                        @if ($user->is_admin == 1)
                             Admin
                         @else
                             School
                         @endif
                     </p>
+                    <a href="{{ route('users.edit', $user->id) }}" class="btn-edit">Bewerk</a>
+                    <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display:inline" onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
+                        @csrf
+                         @method('DELETE')
+                        <button type="submit">Verwijder</button>
+                    </form>
 
-                    <button>Bewerk</button>
-                    <button>Verwijder</button>
+
+
+                
+
                 </div>
 
             @endforeach

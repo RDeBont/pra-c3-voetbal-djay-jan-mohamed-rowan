@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\teamController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TournamentController;
@@ -43,6 +44,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('tournaments', TournamentController::class);
+Route::resource('users', UserController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -53,6 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::post('admin/schools/{id}/reject', [AdminController::class, 'reject'])->name('admin.schools.reject');
     Route::resource('fixtures', FixtureController::class);
     Route::resource('team', teamController::class);
+   
 
 });
 
