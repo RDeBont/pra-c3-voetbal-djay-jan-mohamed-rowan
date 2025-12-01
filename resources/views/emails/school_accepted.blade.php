@@ -3,7 +3,7 @@
 <p>Uw inschrijving is geaccepteerd. Hieronder staan de drie accounts die zijn aangemaakt en gekoppeld aan uw school. Gebruik deze inloggegevens om in te loggen en teams/activiteiten te beheren.</p>
 <ul>
     @foreach($accounts as $acc)
-        <li><strong>{{ $acc['email'] }}</strong> — wachtwoord: <code>{{ $acc['password_plain'] }}</code></li>
+        <li>{{ $acc['email'] }} — wachtwoord: <code>{{ $acc['password_plain'] }}</code></li>
     @endforeach
 </ul>
 <p>Met vriendelijke groet,<br>Organisatie</p>

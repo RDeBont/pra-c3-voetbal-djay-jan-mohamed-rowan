@@ -5,17 +5,29 @@
         <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo-img">
       </a>
     </div>
-    <ul class="nav-links">
+    <ul class="nav-mid">
       <li><a href="{{ url('/') }}">Home</a></li>
       <li><a href="{{ url('/contact') }}">Contact</a></li>
       <li><a href="{{ route('tournaments.index')}}">Toernooien</a></li>
       @guest
-      <li><a href="{{ url('/inschrijven') }}">Inschrijven</a></li>
+        <li><a href="{{ url('/inschrijven') }}">Inschrijven</a></li>
       @endguest
 
       @auth
-        <li><a href="{{ route('team.index') }}">Team aanmelden</a></li>
+        @if(auth()->user()->is_admin == 0)
+
+          <li><a href="{{ route('team.index') }}">Team aanmelden</a></li>
+        @endif
       @endauth
+
+      @auth
+        @if(auth()->user()->is_admin == 1)
+          <li><a href="{{ route('admin.index') }}">Admin</a></li>
+        @endif
+      @endauth
+    </ul>
+
+    <ul class="nav-right">
 
       @guest
         <li><a href="{{ url('/login') }}">Login</a></li>
@@ -32,13 +44,9 @@
         </form>
       @endauth
 
-      @auth
-        @if(auth()->user()->is_admin == 1)
-          <li><a href="{{ route('admin.index') }}">Admin</a></li>
-        @endif
-      @endauth
-
 
     </ul>
+
+
   </nav>
 </header>

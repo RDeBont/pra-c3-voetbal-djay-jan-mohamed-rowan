@@ -16,8 +16,15 @@ class teamController extends Controller
      */
     public function index()
     {
+
         $user = auth()->user();
-        $school = School::where('id', $user->school_id)->first(); // 1 record
+        if (!$user || $user->role != 0) {
+            return redirect('/')->with('error', 'Geen toegang tot team.');
+        }
+        $school = School::where('id', $user->school_id)->first();
+        if (!$school) {
+            return redirect('/')->with('error', 'Je hebt geen school gekoppeld, geen toegang tot team.');
+        }
         return view('team', compact('school'));
     }
     /**
@@ -44,10 +51,12 @@ class teamController extends Controller
         $aantalScheids = $request->input('hoeveel_scheid');
         for ($i = 1; $i <= $aantalScheids; $i++) {
             $email = $request->input('scheidsrechter_email_' . $i);
+            $name = $request->input('scheidsrechter_name_' . $i);
             if ($email) {
                 Scheidsrechter::create([
                     'school_id' => $school->id,
-                    'name' => $email,
+                    'name' => $name,
+                    'email' => $email,
                 ]);
             }
         }
@@ -63,6 +72,7 @@ class teamController extends Controller
                         'name' => $teamData['name'],
                         'sport' => $teamData['sport'],
                         'group' => $teamData['group'],
+                        'teamsort' => $teamData['teamsort'],
                         'referee' => null,
                         'pool_id' => null,
                     ]);

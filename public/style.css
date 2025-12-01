@@ -1,64 +1,119 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
 /* Navbar */
 .navbar {
   background-color: #ffffff;
-  padding: 16px 32px;
+  padding: 16px 80px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .nav-container {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 300px;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.logo {
+  flex: 0 0 auto;
 }
 
 .logo-img {
   height: 40px;
 }
 
-.nav-links {
+.nav-mid {
   list-style: none;
   display: flex;
-  gap: 100px;
+  gap: 40px;
   margin: 0;
   padding: 0;
+  flex: 0;
+  justify-content: center;
 }
 
-.nav-links a {
-  transition: 1s;
+.nav-mid a,
+.nav-right a {
   color: #333;
   text-decoration: none;
   font-weight: 500;
   font-size: 1rem;
+  transition: 0.3s;
 }
 
-.nav-links a:hover {
+.nav-mid a:hover {
   color: #3e6a3e;
-  transition: 1s;
-  font-size: 18px;
+  font-size: 1.05rem;
 }
+
+.nav-right {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  flex: 0 0 auto;
+}
+
+.nav-right a:hover {
+  color: #3e6a3e;
+  font-size: 1.05rem;
+}
+
 
 /* Hero section */
 .hero {
+  position: relative;
+  width: 100%;
+  height: 92vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 80px 20px;
-  background-color: #f8f9fa;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hero-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+
 }
 
 .hero h1 {
   font-size: 2.5rem;
-  color: #222;
+  color: white;
   margin-bottom: 20px;
 }
 
 .hero p {
   font-size: 1.2rem;
-  color: #555;
+  color: white;
   margin-bottom: 40px;
 }
 
-/* Inschrijven knop */
+.hero h1,
+.hero p,
 .btn-inschrijven {
+  position: relative;
+  z-index: 1;
+}
+
+/* Inschrijven knop */
+.btn-tournaments {
   display: inline-block;
   background-color: #548350;
   color: white;
@@ -70,9 +125,30 @@
   transition: background-color 0.3s ease;
 }
 
-.btn-inschrijven:hover {
+.btn-tournaments:hover {
   background-color: #3e6a3e;
 }
+
+.welcome {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 0 20px;
+  text-align: left;
+}
+
+.welcome h2 {
+  color: #3e6a3e;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #3e6a3e;
+  padding-bottom: 5px;
+}
+
+.welcome p {
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+
 
 /* Pagina-opmaak */
 .toernooien-page {
@@ -294,7 +370,7 @@ h1 {
 }
 
 .signupform-group {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   display: flex;
   gap: 10px;
 
@@ -643,6 +719,39 @@ h1 {
   transform: translateY(0);
 }
 
+
+.spelregels-page {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.spelregels-page h1 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.spelregels-page section {
+  margin-bottom: 50px;
+}
+
+.spelregels-page h2 {
+  color: #3e6a3e;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #3e6a3e;
+  padding-bottom: 5px;
+}
+
+.spelregels-page ol {
+  padding-left: 20px;
+}
+
+.spelregels-page ol li {
+  margin-bottom: 12px;
+}
+
 /* Container */
 .dropdowns {
   margin: 20px 0;
@@ -737,29 +846,165 @@ h1 {
   border-color: #2f512f;
 }
 
-.admin-message {
-  background-color: #d4edda;
-  /* lichtgroen */
-  color: #155724;
-  /* donkergroen */
-  border: 1px solid #c3e6cb;
-  /* subtiele rand */
-  padding: 12px 18px;
-  border-radius: 6px;
-  margin: 15px 0;
-  font-size: 15px;
-  font-weight: 500;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+/* Globale alert bubble */
+.alert-bubble {
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: 15px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+  max-width: 90%;
+  text-align: center;
 }
 
-.btn-edit {
-  display: inline-block;
-  text-decoration: none;
-  margin-top: 10px;
-  color: #548350;
-  font-weight: bold;
-  padding: 10px 20px;
+.alert-bubble.error {
+  background-color: #f56565;
+}
+
+.alert-bubble.success {
+  background-color: #48bb78;
+}
+
+/* Fixturesedit pagina */
+.fixture-edit {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 30px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  font-family: sans-serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.fixture-edit h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+.fixture-edit h2,
+.fixture-edit h3 {
+  text-align: center;
+  color: #3e6a3e;
+  margin-bottom: 10px;
+}
+
+/* Formulier */
+.fixture-edit form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.form-group input {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+/* Update knop */
+.btn-update-score {
+  background-color: #3e6a3e;
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 24px;
   border: none;
-  border-radius: 10px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-update-score:hover {
+  background-color: #2f512f;
+}
+
+.site-footer {
+  background-color: #f5f3f3de;
+color: #333;
+  margin-top: 40px;
+  padding: 20px 0;
+  font-family: sans-serif;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-col {
+  flex: 1 1 300px;
+  margin: 10px;
+}
+
+.footer-col h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+.footer-col p {
+  margin: 6px 0;
+}
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  margin-top: 20px;
+  padding-top: 10px;
+  font-size: 0.95rem;
+}
+
+
+
+@media screen and (max-width: 1024px) {
+  .nav-container {
+    justify-content: center;
+  }
+
+  .nav-mid {
+    gap: 20px;
+    flex-basis: 100%;
+    justify-content: center;
+    margin: 10px 0;
+  }
+
+  .nav-right {
+    justify-content: center;
+    flex-basis: 100%;
+    margin: 10px 0;
+  }
+}
+
+
+.footer-bottom {
+  border-bottom: 1px solid #ccc; /* streep onder de algemene info */
+  text-align: center;
+  padding: 10px 0;
+  margin-bottom: 20px; /* ruimte tussen streep en de kopjes */
+  font-size: 0.95rem;
+  color: #333;
 }
