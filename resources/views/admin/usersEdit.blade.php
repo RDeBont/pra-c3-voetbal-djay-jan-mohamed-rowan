@@ -2,11 +2,7 @@
     <main class="user-edit-page">
         <h1>Bewerk Gebruiker</h1>
 
-        <!-- Success message -->
-        @if(session('success'))
-            <div class="admin-message">{{ session('success') }}</div>
-        @endif
-
+        
         <!-- Foutmeldingen -->
         @if($errors->any())
             <div class="admin-message" style="background-color:#f8d7da; color:#721c24; border:1px solid #f5c6cb;">

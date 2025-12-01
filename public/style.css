@@ -415,6 +415,8 @@ h1 {
   text-align: center;
 }
 
+
+
 .butten a {
   display: inline-block;
   background-color: #548350;
@@ -466,6 +468,19 @@ h1 {
   border: none;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.btn-edit{
+  margin-top: 10px;
+  background-color: white;
+  color: #548350;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 
@@ -1008,3 +1023,6 @@ color: #333;
   font-size: 0.95rem;
   color: #333;
 }
+
+
+

@@ -1,5 +1,19 @@
 <x-base-layout>
+
+    
     <main class="fixture-edit">
+
+         <!-- Foutmeldingen -->
+        @if($errors->any())
+            <div class="admin-message" style="background-color:#f8d7da; color:#721c24; border:1px solid #f5c6cb;">
+                <ul style="list-style:none; padding:0; margin:0;">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        
         <h1>Score Aanpassen</h1>
         <h2>{{ $fixture->team1->name }} vs {{ $fixture->team2->name }}</h1>
         <h3>{{ $fixture->type  }}</h1>

@@ -63,6 +63,14 @@ class UserController extends Controller
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed', 
             'is_admin' => 'required|boolean',
+        ], [
+            'name.required' => 'De naam is verplicht.',
+            'email.required' => 'Het e-mailadres is verplicht.',
+            'email.email' => 'Vul een geldig e-mailadres in.',
+            'email.unique' => 'Dit e-mailadres is al in gebruik.',
+            'password.min' => 'Het wachtwoord moet minimaal 8 tekens bevatten.',
+            'password.confirmed' => 'De wachtwoorden komen niet overeen.',
+            'is_admin.required' => 'Geef aan of de gebruiker admin-rechten heeft.',
         ]);
 
         // Update velden
