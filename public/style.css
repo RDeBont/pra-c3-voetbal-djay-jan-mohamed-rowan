@@ -829,3 +829,44 @@ h1 {
 .btn-update-score:hover {
   background-color: #2f512f;
 }
+
+.site-footer {
+  background-color: #f5f3f3de;
+color: #333;
+  margin-top: 40px;
+  padding: 20px 0;
+  font-family: sans-serif;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-col {
+  flex: 1 1 300px;
+  margin: 10px;
+}
+
+.footer-col h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+.footer-col p {
+  margin: 6px 0;
+}
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  margin-top: 20px;
+  padding-top: 10px;
+  font-size: 0.95rem;
+}
+
