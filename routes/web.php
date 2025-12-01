@@ -44,7 +44,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('tournaments', TournamentController::class);
-Route::resource('users', UserController::class);
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -56,6 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::post('admin/schools/{id}/reject', [AdminController::class, 'reject'])->name('admin.schools.reject');
     Route::resource('fixtures', FixtureController::class);
     Route::resource('team', teamController::class);
+    Route::resource('users', UserController::class);
    
 
 });

@@ -1,11 +1,6 @@
 <x-base-layout>
     <main class="adminPage">
-         @if (session('success'))
-        <div class="admin-message">
-        {{ session('success') }}
-
-        @endif
-        </div>
+        
 
 
         <div class="tInfoContainer">
@@ -136,26 +131,51 @@
             <h2>Account aanmaak</h2>
         </div>
 
+        
 
         <div class="infoContainer">
-            <form class="accountForm">
+        @if($errors->any())
+            <div class="admin-message" style="background-color:#f8d7da; color:#721c24; border:1px solid #f5c6cb;">
+                <ul style="list-style:none; padding:0; margin:0;">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+       
+        
+    
+          <form action="{{ route('users.store') }}" method="POST" class="create-user-form">
+            @csrf
+            <div class="form-group">
                 <label for="name">Naam:</label>
                 <input type="text" id="name" name="name" required>
+            </div>
 
+            <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
+            </div>
 
+            <div class="form-group>
                 <label for="password">Wachtwoord:</label>
                 <input type="password" id="password" name="password" required>
-
-                <label for="role">Rol:</label>
-                <select id="role" name="role">
-                    <option value="admin">Admin</option>
-                    <option value="user">User</option>
+            </div>
+            <div class="form-group">
+                <label for="password_confirmation">Bevestig Wachtwoord:</label>
+                <input type="password" id="password_confirmation" name="password_confirmation" required>
+            <div class="form-group">
+                <label for="is_admin">Rol:</label>
+                <select id="is_admin" name="is_admin" required>
+                    <option value="1">Admin</option>
+                    <option value="0">School</option>
                 </select>
-
-            </form>
+            </div>
         </div>
+
+            <button type="submit" class="btn-create-user">Maak Gebruiker aan</button>
+          </form>
 
     </main>
 </x-base-layout>

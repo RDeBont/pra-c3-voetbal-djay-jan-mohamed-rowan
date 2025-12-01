@@ -30,7 +30,30 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+            'is_admin' => 'required|boolean',
+        ], [
+            'name.required' => 'De naam is verplicht.',
+            'email.required' => 'Het e-mailadres is verplicht.',
+            'email.email' => 'Vul een geldig e-mailadres in.',
+            'email.unique' => 'Dit e-mailadres is al in gebruik.',
+            'password.required' => 'Het wachtwoord is verplicht.',
+            'password.min' => 'Het wachtwoord moet minimaal 8 tekens bevatten.',
+            'password.confirmed' => 'De wachtwoorden komen niet overeen.',
+            'is_admin.required' => 'Geef aan of de gebruiker admin-rechten heeft.',
+        ]);
+        
+        User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+            'is_admin' => $validatedData['is_admin'],
+        ]);
+        return redirect()->route('admin.index')->with('success', 'Gebruiker succesvol aangemaakt!');
+
     }
 
     /**
@@ -73,12 +96,11 @@ class UserController extends Controller
             'is_admin.required' => 'Geef aan of de gebruiker admin-rechten heeft.',
         ]);
 
-        // Update velden
         $user->name = $request->name;
         $user->email = $request->email;
         $user->is_admin = $request->is_admin;
 
-        // Alleen updaten als een nieuw wachtwoord is ingevuld
+        
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
