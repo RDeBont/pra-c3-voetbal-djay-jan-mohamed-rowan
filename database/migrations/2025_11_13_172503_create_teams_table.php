@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('sport')->nullable();
             $table->string('group')->nullable();
+            $table->string('teamsort')->nullable();
             $table->foreignId('pool_id')->nullable()->constrained('pools')->onDelete('set null');
             $table->timestamps();
         });

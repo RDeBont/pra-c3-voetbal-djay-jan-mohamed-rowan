@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('scheidsrechters', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable(); // Naam van de scheidsrechter (optioneel)
+            $table->string('email')->nullable(); // E-mailadres van de scheidsrechter
             $table->foreignId('school_id')->constrained()->onDelete('cascade'); // Verwijzing naar school
             $table->timestamps();
         });
