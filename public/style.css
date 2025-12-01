@@ -737,3 +737,29 @@ h1 {
   ;
   border-color: #2f512f;
 }
+
+/* Globale alert bubble */
+.alert-bubble {
+    position: fixed;
+    top: 70px; 
+    left: 50%; 
+    transform: translateX(-50%);
+    z-index: 9999;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    max-width: 90%;
+    text-align: center;
+}
+
+.alert-bubble.error {
+    background-color: #f56565; 
+}
+
+.alert-bubble.success {
+    background-color: #48bb78; 
+}

@@ -10,11 +10,14 @@
       <li><a href="{{ url('/contact') }}">Contact</a></li>
       <li><a href="{{ route('tournaments.index')}}">Toernooien</a></li>
       @guest
-      <li><a href="{{ url('/inschrijven') }}">Inschrijven</a></li>
+        <li><a href="{{ url('/inschrijven') }}">Inschrijven</a></li>
       @endguest
 
       @auth
-        <li><a href="{{ route('team.index') }}">Team aanmelden</a></li>
+        @if(auth()->user()->is_admin == 0)
+
+          <li><a href="{{ route('team.index') }}">Team aanmelden</a></li>
+        @endif
       @endauth
 
       @guest

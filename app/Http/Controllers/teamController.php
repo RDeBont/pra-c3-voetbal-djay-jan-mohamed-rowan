@@ -16,8 +16,15 @@ class teamController extends Controller
      */
     public function index()
     {
+
         $user = auth()->user();
-        $school = School::where('id', $user->school_id)->first(); // 1 record
+        if (!$user || $user->role != 0) {
+            return redirect('/')->with('error', 'Geen toegang tot team.');
+        }
+        $school = School::where('id', $user->school_id)->first();
+        if (!$school) {
+            return redirect('/')->with('error', 'Je hebt geen school gekoppeld, geen toegang tot team.');
+        }
         return view('team', compact('school'));
     }
     /**
