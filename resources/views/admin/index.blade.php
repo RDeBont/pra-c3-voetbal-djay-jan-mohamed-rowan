@@ -1,6 +1,6 @@
 <x-base-layout>
     <main class="adminPage">
-        
+
 
 
         <div class="tInfoContainer">
@@ -11,29 +11,7 @@
             <a href="{{ route('tournaments.create') }}">Maak toernooi</a>
         </div>
 
-        <div class="infoContainer">
-            <div class="wedstrijdCard">
-                <h3>Wedstrijd 1</h3>
-                <p>Datum: 15 maart 2024</p>
-                <p>Locatie: Sportpark Rozenoord</p>
-                <button>Bewerk</button>
-                <button>Verwijder</button>
-            </div>
-            <div class="wedstrijdCard">
-                <h3>Wedstrijd 1</h3>
-                <p>Datum: 15 maart 2024</p>
-                <p>Locatie: Sportpark Rozenoord</p>
-                <button>Bewerk</button>
-                <button>Verwijder</button>
-            </div>
-            <div class="wedstrijdCard">
-                <h3>Wedstrijd 1</h3>
-                <p>Datum: 15 maart 2024</p>
-                <p>Locatie: Sportpark Rozenoord</p>
-                <button>Bewerk</button>
-                <button>Verwijder</button>
-            </div>
-        </div>
+
 
         <div class="blackLine"></div>
 
@@ -109,15 +87,16 @@
                         @endif
                     </p>
                     <a href="{{ route('users.edit', $user->id) }}" class="btn-edit">Bewerk</a>
-                    <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display:inline" onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
+                    <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display:inline"
+                        onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
                         @csrf
-                         @method('DELETE')
+                        @method('DELETE')
                         <button type="submit">Verwijder</button>
                     </form>
 
 
 
-                
+
 
                 </div>
 
@@ -131,51 +110,54 @@
             <h2>Account aanmaak</h2>
         </div>
 
-        
+
 
         <div class="infoContainer">
-        @if($errors->any())
-            <div class="admin-message" style="background-color:#f8d7da; color:#721c24; border:1px solid #f5c6cb;">
-                <ul style="list-style:none; padding:0; margin:0;">
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-       
-        
-    
-          <form action="{{ route('users.store') }}" method="POST" class="create-user-form">
-            @csrf
-            <div class="form-group">
-                <label for="name">Naam:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
 
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
 
-            <div class="form-group>
-                <label for="password">Wachtwoord:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <label for="password_confirmation">Bevestig Wachtwoord:</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" required>
-            <div class="form-group">
-                <label for="is_admin">Rol:</label>
-                <select id="is_admin" name="is_admin" required>
-                    <option value="1">Admin</option>
-                    <option value="0">School</option>
-                </select>
-            </div>
+
+            <section id="aanmaak"></section>
+            <form action="{{ route('users.store') }}" method="POST" class="create-user-form">
+                @csrf
+                <div class="form-group">
+                    <label for="name">Naam:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Wachtwoord:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="password_confirmation">Bevestig Wachtwoord:</label>
+                    <input type="password" id="password_confirmation" name="password_confirmation" required>
+                    <div class="form-group">
+                        <label for="is_admin">Rol:</label>
+                        <select id="is_admin" name="is_admin" required>
+                            <option value="1">Admin</option>
+                            <option value="0">School</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="school_id">School: (mag leeg blijven)</label>
+                    <select id="school_id" name="school_id">
+                        <option value=""></option>
+                        @foreach ($schools as $s)
+                            <option value="{{ $s->id }}">{{ $s->name }}</option>
+                        @endforeach
+
+                    </select>
+                </div>
+                <button type="submit" class="btn-create-user">Maak Gebruiker aan</button>
+            </form>
         </div>
-
-            <button type="submit" class="btn-create-user">Maak Gebruiker aan</button>
-          </form>
 
     </main>
 </x-base-layout>

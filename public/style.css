@@ -35,7 +35,7 @@ body {
   gap: 40px;
   margin: 0;
   padding: 0;
-  flex: 0;
+  flex: 1;
   justify-content: center;
 }
 
@@ -922,6 +922,7 @@ h1 {
 .form-group {
   display: flex;
   flex-direction: column;
+  margin-bottom: 16px; 
 }
 
 .form-group label {
@@ -930,14 +931,34 @@ h1 {
   color: #333;
 }
 
-.form-group input {
+.form-group input,
+.form-group select {
   padding: 10px 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 1rem;
+  background-color: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-/* Update knop */
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+}
+
+.btn-create-user {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  background-color: #3e6a3e;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+
+
 .btn-update-score {
   background-color: #3e6a3e;
   color: #fff;

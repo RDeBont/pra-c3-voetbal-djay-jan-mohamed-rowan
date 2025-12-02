@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TournamentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TournamentCreateController;
 use App\Http\Controllers\inschrijfController;
 use App\Http\Controllers\FixtureController;
@@ -23,7 +24,12 @@ Route::get('/team', function () {
 
 Route::resource('team', teamController::class);
 
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
 
+Route::post('/contact-verzenden', [ContactController::class, 'verzenden'])
+    ->name('contact.verzenden');
 
 Route::get('/spelregels', function () {
     return view('spelregels');

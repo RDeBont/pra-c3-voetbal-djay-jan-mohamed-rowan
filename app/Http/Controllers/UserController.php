@@ -35,6 +35,7 @@ class UserController extends Controller
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
             'is_admin' => 'required|boolean',
+            'school_id' => 'nullable|integer|exists:schools,id',
         ], [
             'name.required' => 'De naam is verplicht.',
             'email.required' => 'Het e-mailadres is verplicht.',
@@ -45,12 +46,13 @@ class UserController extends Controller
             'password.confirmed' => 'De wachtwoorden komen niet overeen.',
             'is_admin.required' => 'Geef aan of de gebruiker admin-rechten heeft.',
         ]);
-        
+
         User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
             'is_admin' => $validatedData['is_admin'],
+            'school_id' => $validatedData['school_id'] ?? null, 
         ]);
         return redirect()->route('admin.index')->with('success', 'Gebruiker succesvol aangemaakt!');
 
@@ -84,7 +86,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8|confirmed', 
+            'password' => 'nullable|string|min:8|confirmed',
             'is_admin' => 'required|boolean',
         ], [
             'name.required' => 'De naam is verplicht.',
@@ -100,7 +102,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->is_admin = $request->is_admin;
 
-        
+
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
@@ -109,7 +111,7 @@ class UserController extends Controller
 
         return redirect()->route('admin.index')->with('success', 'Gebruiker succesvol bijgewerkt!');
     }
-    
+
 
     /**
      * Remove the specified resource from storage.

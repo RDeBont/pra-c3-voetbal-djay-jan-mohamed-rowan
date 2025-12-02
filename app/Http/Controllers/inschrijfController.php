@@ -21,7 +21,7 @@ class inschrijfController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -31,14 +31,15 @@ class inschrijfController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|max:255|unique:schools,email',
             'address' => 'required|string|max:255',
             'typeSchool' => 'required|string|in:basisschool,middelbare school',
         ]);
-        
-        // Map schoolNaam to name for database
 
-        
+
+
+
+
         School::create($validatedData);
         return redirect('/')->with('success', 'School succesvol ingeschreven! het kan even duren voordat uw school is goedgekeurd.');
 

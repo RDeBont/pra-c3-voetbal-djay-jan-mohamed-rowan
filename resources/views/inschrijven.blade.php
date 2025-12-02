@@ -2,6 +2,8 @@
     <section class="signupform-wrapper">
         <h2 class="ins">Inschrijven</h2>
 
+
+
         <form method="POST" action="{{ route('inschrijven.store') }}" class="signupform">
             @csrf
 
@@ -32,8 +34,10 @@
                 <label for="typeSchool">School soort</label>
                 <select name="typeSchool" id="typeSchool" class="signupform-control" required>
                     <option value="">Selecteer school soort</option>
-                    <option value="basisschool" {{ old('typeSchool') === 'basisschool' ? 'selected' : '' }}>Basisschool</option>
-                    <option value="middelbare school" {{ old('typeSchool') === 'middelbare school' ? 'selected' : '' }}>Middelbare school</option>
+                    <option value="basisschool" {{ old('typeSchool') === 'basisschool' ? 'selected' : '' }}>Basisschool
+                    </option>
+                    <option value="middelbare school" {{ old('typeSchool') === 'middelbare school' ? 'selected' : '' }}>
+                        Middelbare school</option>
                 </select>
             </div>
 

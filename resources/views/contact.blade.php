@@ -48,8 +48,6 @@
             <button type="submit" class="signupform-btn mt-3">Verzenden</button>
         </form>
 
-        @if(session('success'))
-            <p class="success-message">{{ session('success') }}</p>
-        @endif
+
     </section>
 </x-base-layout>
