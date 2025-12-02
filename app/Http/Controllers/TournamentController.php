@@ -7,7 +7,11 @@ use App\Models\Tournament;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTournamentRequest;
 use App\Http\Requests\UpdateTournamentRequest;
-
+use App\Models\School;
+use App\Models\Team;
+use App\Models\User;
+use App\Models\Scheidsrechter;
+use Illuminate\Http\Request;
 class TournamentController extends Controller
 {
     /**
@@ -25,7 +29,9 @@ class TournamentController extends Controller
      */
     public function create()
     {
-        //
+        $all = $this->getAllData();
+        return view('tournaments..createTournament', compact('all'));
+        
     }
 
     /**
@@ -77,4 +83,19 @@ class TournamentController extends Controller
     {
         //
     }
+
+    public function getAllData()
+{
+    $schools = School::all();
+    $teams = Team::all();
+    $users = User::all();
+    $scheidsrechters = Scheidsrechter::all();
+
+    return [
+        'schools' => $schools,
+        'teams' => $teams,
+        'users' => $users,
+        'scheidsrechters' => $scheidsrechters,
+    ];
+}
 }
