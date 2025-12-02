@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Tournament;
-use App\Models\Pool;
 use App\Models\School;
 use App\Models\Team;
 use App\Models\Fixture;
@@ -29,11 +28,6 @@ class DatabaseSeeder extends Seeder
         // 2️⃣ Create Pools for each Tournament
         // -----------------------------
         $tournaments->each(function (Tournament $tournament) {
-            Pool::factory()
-                ->count(4) // adjust pools per tournament
-                ->create([
-                    'tournament_id' => $tournament->id,
-                ]);
         });
 
         // -----------------------------
@@ -47,29 +41,26 @@ class DatabaseSeeder extends Seeder
         // 4️⃣ Create Teams for each Pool & School
         //    Ensures valid school_id + pool_id
         // -----------------------------
-        Pool::all()->each(function (Pool $pool) use ($schools) {
-            Team::factory()
-                ->count(2) // adjust as needed
-                ->create([
-                    'pool_id'   => $pool->id,
-                    'school_id' => $schools->random()->id,
-                ]);
-        });
+
+        $teams = Team::factory()
+            ->count(4)
+            ->create();
 
         // -----------------------------
         // 5️⃣ Create Fixtures for each Tournament
         // -----------------------------
-        Tournament::all()->each(function (Tournament $tournament) {
-            $teams = $tournament->pools->flatMap->teams; // teams in all pools
 
-            // Generate fixtures only if enough teams exist
+        Tournament::all()->each(function (Tournament $tournament) {
+            $teams = Team::all(); // or Team::count()
+
             if ($teams->count() >= 2) {
                 Fixture::factory()
-                    ->count(10) // adjust amount of matches
+                    ->count(10)
                     ->create([
                         'tournament_id' => $tournament->id,
                     ]);
             }
         });
+
     }
 }

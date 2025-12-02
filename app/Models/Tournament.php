@@ -20,11 +20,6 @@ class Tournament extends Model
         'archived',
     ];
 
-    public function pools(): HasMany
-    {
-        return $this->hasMany(Pool::class, 'tournament_id');
-    }
-
     public function fixtures(): HasMany
     {
         return $this->hasMany(Fixture::class, 'tournament_id');

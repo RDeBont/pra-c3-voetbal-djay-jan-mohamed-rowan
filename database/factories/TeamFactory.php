@@ -20,9 +20,6 @@ class TeamFactory extends Factory
             'school_id' => School::inRandomOrder()->first()->id
                 ?? School::factory()->create()->id,
 
-            'pool_id'   => Pool::inRandomOrder()->first()->id
-                ?? Pool::factory()->create()->id,
-
             'name'      => $this->faker->unique()->city . ' Team',
 
             'referee'   => $this->faker->name(),

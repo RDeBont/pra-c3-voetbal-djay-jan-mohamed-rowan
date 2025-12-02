@@ -11,12 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pools', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('tournament_id')->constrained('tournaments')->onDelete('cascade');
-            $table->string('name');
-            $table->timestamps();
-        });
     }
 
     /**

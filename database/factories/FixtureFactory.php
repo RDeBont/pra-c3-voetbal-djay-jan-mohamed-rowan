@@ -25,7 +25,7 @@ class FixtureFactory extends Factory
             'team_2_score'  => $this->faker->numberBetween(0, 8),
             'field'         => $this->faker->numberBetween(0, 5),
             'start_time'    => $this->faker->dateTimeBetween('+1 day', '+1 month'),
-            'type'          => $this->faker->randomElement(['group', 'semi-final', 'final']),
+            'type'          => $this->faker->randomElement(['Group', 'Semi-Final', 'Final']),
             'tournament_id' => Tournament::inRandomOrder()->first()->id
                                ?? Tournament::factory()->create()->id,
         ];
