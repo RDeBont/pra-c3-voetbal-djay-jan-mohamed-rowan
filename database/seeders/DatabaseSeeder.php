@@ -8,13 +8,15 @@ use App\Models\Pool;
 use App\Models\School;
 use App\Models\Team;
 use App\Models\Fixture;
-
+use App\Models\User;
 class DatabaseSeeder extends Seeder
 {
     public function run()
     {
+     
+        $this->call(AdminUserSeeder::class);
         // Create users for school creators
-        \App\Models\User::factory()->count(10)->create();
+        User::factory()->count(10)->create();
 
         // -----------------------------
         // 1️⃣ Create Tournaments

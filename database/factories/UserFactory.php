@@ -20,6 +20,7 @@ class UserFactory extends Factory
             'password'   => Hash::make('password'), // default password
             'is_admin'   => false,
             'phonenumber'=> $this->faker->phoneNumber(),
+            
         ];
     }
 

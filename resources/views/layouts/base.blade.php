@@ -22,6 +22,7 @@
     <header>
         @include('layouts.header')
     </header>
+    @include('components.alert')
 
     <main>
         {{ $slot }}
@@ -31,5 +32,15 @@
         @include('layouts.footer')
     </footer>
 </body>
+<script>
+
+    setTimeout(function () {
+        const bubble = document.getElementById('alert-bubble');
+        if (bubble) {
+            bubble.style.opacity = '0';
+            setTimeout(() => bubble.remove(), 500);
+        }
+    }, 5000);
+</script>
 
 </html>

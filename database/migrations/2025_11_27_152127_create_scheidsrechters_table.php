@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('schools', function (Blueprint $table) {
+        Schema::create('scheidsrechters', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignId('creator_id')->nullable()->constrained('users')->onDelete('cascade');
-            $table->string('email')->unique();
-            $table->string('address');
-            $table->string('typeSchool');
-            $table->integer('accepted')->default(0);
+            $table->string('name')->nullable(); // Naam van de scheidsrechter (optioneel)
+            $table->string('email')->nullable(); // E-mailadres van de scheidsrechter
+            $table->foreignId('school_id')->constrained()->onDelete('cascade'); // Verwijzing naar school
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('schools');
+        Schema::dropIfExists('scheidsrechters');
     }
 };

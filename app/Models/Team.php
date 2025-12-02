@@ -11,12 +11,8 @@ class Team extends Model
 {
     /** @use HasFactory<\Database\Factories\TeamFactory> */
     use HasFactory;
-    protected $fillable = [
-        'school_id',
-        'referee',
-        'name',
-        'pool_id',
-    ];
+    protected $fillable = ['school_id', 'name', 'sport', 'group', 'teamsort', 'referee', 'pool_id'];
+
 
     public function school(): BelongsTo
     {

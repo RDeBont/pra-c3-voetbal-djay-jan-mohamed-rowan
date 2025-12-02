@@ -42,13 +42,13 @@
             </table>
 
         
-        {{--@auth  --}}
+        @if (Auth::check() && Auth::user()->is_admin)
         <div class="edit-button-wrapper">
         <a href="{{ route('fixtures.edit', $fixture->id) }}" class="edit-button">
-        Wedstrijd aanpassen
+        Score Aanpassen
         </a>
         </div>
-        {{-- @endauth --}}
+        @endif
         @endforeach
 
     </main>
