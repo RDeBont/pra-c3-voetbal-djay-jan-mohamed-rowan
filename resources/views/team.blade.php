@@ -20,10 +20,11 @@
             <div id="scheidsrechters_container"></div>
 
             @php
-                $isMiddelbare = $school->type === 'middelbare';
+                $isMiddelbare = trim(strtolower($school->typeSchool)) === 'middelbare school';
             @endphp
 
-            <!-- Lijnbal -->
+
+            <!-- Lijnbal -->    
             <div class="signupform-group">
                 <div class="signupform-control">
                     <label for="chk_lijnbal">Lijnbal</label>
