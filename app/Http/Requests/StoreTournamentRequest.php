@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Tournament;
 
 class StoreTournamentRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreTournamentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**

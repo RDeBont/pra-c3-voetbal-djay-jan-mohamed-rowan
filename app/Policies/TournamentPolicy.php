@@ -29,7 +29,9 @@ class TournamentPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        if ($user->role === 'admin') {
+            return true;
+        }
     }
 
     /**
@@ -63,4 +65,6 @@ class TournamentPolicy
     {
         return false;
     }
+
+    
 }

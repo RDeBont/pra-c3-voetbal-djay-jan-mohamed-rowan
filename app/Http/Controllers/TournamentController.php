@@ -30,7 +30,7 @@ class TournamentController extends Controller
     public function create()
     {
         $all = $this->getAllData();
-        return view('tournaments..createTournament', compact('all'));
+        return view('tournaments.createTournament', compact('all'));
         
     }
 
@@ -39,8 +39,82 @@ class TournamentController extends Controller
      */
     public function store(StoreTournamentRequest $request)
     {
-        //
+      
+        $data = $request->validate([
+            'name' => 'required|string',
+            'sport' => 'required|in:voetbal,lijnbal',
+            'group' => 'required|in:groep3/4,groep5/6,groep7/8,klas1_jongens,klas1_meiden',
+        ]);
+
+        if (Tournament::where('name', $data['name'])->exists()) {
+            return redirect()->back()->withErrors(['name' => 'Er bestaat al een toernooi met deze naam.'])->withInput();
+        }
+        else {
+
+            $tournament = Tournament::create([
+                'name' => $data['name'],
+                'date' => now()->toDateString(),
+                'fields_amount' => 4,
+                'game_length_minutes' => 10,
+                'amount_teams_pool' => 4,
+                'archived' => false,
+            ]);
+
+            // pools maken
+            $teamsPerPool = $tournament->amount_teams_pool ?? 4;
+            $teams = Team::where('sport', $data['sport'])
+                ->where('group', $data['group'])
+                ->get()
+                ->shuffle();
+
+            foreach ($teams->values() as $index => $team) {
+                $poolNumber = (int) floor($index / $teamsPerPool) + 1;
+                $team->update([
+                    'pool' => $poolNumber,
+                    'tournament_id' => $tournament->id,
+                ]);
+            }
+
+           
+            $field = 1;
+            $startTime = '08:00';
+            $gameLength = $tournament->game_length_minutes;
+
+            $teamsByPool = $teams->groupBy('pool');
+
+            foreach ($teamsByPool as $poolTeams) {
+                $poolTeamsList = $poolTeams->values()->all();
+
+                //Zorgt ervoor dat iedereen indezelfde pool tegen elkaar speelt
+                for ($i = 0; $i < count($poolTeamsList); $i++) {
+                    for ($j = $i + 1; $j < count($poolTeamsList); $j++) {
+                        Fixture::create([
+                            'team_1_id' => $poolTeamsList[$i]->id,
+                            'team_2_id' => $poolTeamsList[$j]->id,
+                            'team_1_score' => 0,
+                            'team_2_score' => 0,
+                            'field' => $field,
+                            'start_time' => $startTime,
+                            'type' => 'pool',
+                            'tournament_id' => $tournament->id,
+                        ]);
+                    }
+                }
+            }
+
+            return redirect()->route('admin.index')->with('success', 'Toernooi succesvol aangemaakt!');
+
+        }
+
+      
+
+        
+
+
     }
+
+    
+    
 
     /**
      * Display the specified resource.

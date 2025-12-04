@@ -56,6 +56,7 @@ class FixtureController extends Controller
         $validatedData = $request->validate([
             'team_1_score' => 'required|integer|min:0|max:100',
             'team_2_score' => 'required|integer|min:0|max:100',
+            'start_time' => 'required|date_format:H:i',
         ], [
             'team_1_score.required' => 'De score voor Team 1 is verplicht.',
             'team_1_score.integer' => 'De score voor Team 1 moet een geheel getal zijn.',
@@ -65,12 +66,14 @@ class FixtureController extends Controller
             'team_2_score.integer' => 'De score voor Team 2 moet een geheel getal zijn.',
             'team_2_score.min' => 'De score voor Team 2 mag niet negatief zijn.',
             'team_2_score.max' => 'De score voor Team 2 mag niet hoger zijn dan 100.',
+            'start_time.required' => 'De starttijd is verplicht.',
+            'start_time.date' => 'De starttijd moet een geldige tijd zijn.',
         ]);
 
         $fixture->update($validatedData);
 
         return redirect()->route('tournaments.show', $fixture->tournament_id)
-            ->with('success', 'Wedstrijdscore succesvol bijgewerkt.');
+            ->with('success', 'Wedstrijd succesvol bijgewerkt.');
     }
 
     /**

@@ -25,5 +25,10 @@ class Tournament extends Model
         return $this->hasMany(Fixture::class, 'tournament_id');
     }
 
+    public function teams(): HasMany
+    {
+        return $this->hasMany(Team::class, 'tournament_id');
+    }
+
 
 }

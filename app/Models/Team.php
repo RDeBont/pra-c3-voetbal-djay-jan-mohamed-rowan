@@ -16,7 +16,9 @@ class Team extends Model
     'sport', 
     'group', 
     'teamsort', 
-    'referee', ];
+    'referee',
+    'pool',
+    'tournament_id'];
 
 
     public function school(): BelongsTo
@@ -32,5 +34,10 @@ class Team extends Model
     public function fixturesAsTeam2(): HasMany
     {
         return $this->hasMany(Fixture::class, 'team_2_id');
+    }
+
+    public function tournament(): BelongsTo
+    {
+        return $this->belongsTo(Tournament::class, 'tournament_id');
     }
 }

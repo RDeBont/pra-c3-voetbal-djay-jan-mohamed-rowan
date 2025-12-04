@@ -3,7 +3,7 @@
     
     <main class="fixture-edit">
         
-        <h1>Score Aanpassen</h1>
+        <h1>Wedstrijd aanpassen</h1>
         <h2>{{ $fixture->team1->name }} vs {{ $fixture->team2->name }}</h1>
         <h3>{{ $fixture->type  }}</h1>
 
@@ -20,7 +20,11 @@
                 <label for="team_2_score">Score Team 2:</label>
                 <input type="number" id="team_2_score" name="team_2_score" value="{{ $fixture->team_2_score }}" required>
             </div>
-            <button type="submit" class="btn-update-score">Update Score</button>
+            <div class="form-group">
+                <label for="start_time">Start Tijd:</label>
+               <input type="time" id="start_time" name="start_time" value="{{ date('H:i', strtotime($fixture->start_time)) }}" required>
+            </div>
+            <button type="submit" class="btn-update-score">Update Wedstrijd</button>
         </form>
                 
     </main>

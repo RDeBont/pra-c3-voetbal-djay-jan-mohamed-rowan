@@ -21,7 +21,7 @@
         <div class="flex flex-col items-center">
             <a href="/"
                 class="inline-block mb-3 px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium">
-                ← Go back
+                ← Ga terug
             </a>
         </div>
 

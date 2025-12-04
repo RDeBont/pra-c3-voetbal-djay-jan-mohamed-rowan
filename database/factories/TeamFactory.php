@@ -23,6 +23,8 @@ class TeamFactory extends Factory
             'name'      => $this->faker->unique()->city . ' Team',
 
             'referee'   => $this->faker->name(),
+
+            'tournament_id' => null,
         ];
     }
 }

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('sport')->nullable();
             $table->string('group')->nullable();
             $table->string('teamsort')->nullable();
+            $table->integer('pool')->nullable();
+            $table->foreignId('tournament_id')->nullable()->constrained('tournaments')->onDelete('cascade');
             $table->timestamps();
         });
     }

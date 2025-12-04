@@ -39,7 +39,7 @@ Route::get('/dashboard', function () {
     return view('index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('tournaments', TournamentController::class);
+
 
 
 Route::middleware('auth')->group(function () {
@@ -53,8 +53,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('fixtures', FixtureController::class);
     Route::resource('team', teamController::class);
     Route::resource('users', UserController::class);
+    Route::resource('tournaments', TournamentController::class)->except(['index', 'show']);
 
 
 });
+
+Route::resource('tournaments', TournamentController::class)->only(['index', 'show']);
 
 require __DIR__ . '/auth.php';
