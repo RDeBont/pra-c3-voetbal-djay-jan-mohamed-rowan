@@ -67,6 +67,12 @@ class TournamentController extends Controller
                 ->get()
                 ->shuffle();
 
+            $teamCount = $teams->count();
+                
+
+            if ($teamCount < $teamsPerPool) {
+                return redirect()->back()->withErrors(['team' => 'Er zijn niet genoeg teams beschikbaar voor dit toernooi.'])->withInput();
+            }
             foreach ($teams->values() as $index => $team) {
                 $poolNumber = (int) floor($index / $teamsPerPool) + 1;
                 $team->update([
