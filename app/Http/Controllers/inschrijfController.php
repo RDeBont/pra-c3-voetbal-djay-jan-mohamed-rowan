@@ -34,6 +34,15 @@ class inschrijfController extends Controller
             'email' => 'required|email|max:255|unique:schools,email',
             'address' => 'required|string|max:255',
             'typeSchool' => 'required|string|in:basisschool,middelbare school',
+            
+        ],[
+            'name.required' => 'De naam van de school is verplicht.',
+            'email.required' => 'Het e-mailadres is verplicht.',
+            'email.email' => 'Vul een geldig e-mailadres in.',
+            'email.unique' => 'Dit e-mailadres is al in gebruik.',
+            'address.required' => 'Het adres is verplicht.',
+            'typeSchool.required' => 'Het type school is verplicht.',
+            'typeSchool.in' => 'Ongeldig type school geselecteerd.',
         ]);
 
 
