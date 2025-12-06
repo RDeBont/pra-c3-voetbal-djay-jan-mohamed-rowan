@@ -51,16 +51,7 @@ class TournamentController extends Controller
         }
         else {
 
-            $tournament = Tournament::create([
-                'name' => $data['name'],
-                'date' => now()->toDateString(),
-                'fields_amount' => 4,
-                'game_length_minutes' => 10,
-                'amount_teams_pool' => 4,
-                'archived' => false,
-            ]);
 
-            // pools maken
             $teamsPerPool = $tournament->amount_teams_pool ?? 4;
             $teams = Team::where('sport', $data['sport'])
                 ->where('group', $data['group'])
@@ -73,6 +64,18 @@ class TournamentController extends Controller
             if ($teamCount < $teamsPerPool) {
                 return redirect()->back()->withErrors(['team' => 'Er zijn niet genoeg teams beschikbaar voor dit toernooi.'])->withInput();
             }
+
+            $tournament = Tournament::create([
+                'name' => $data['name'],
+                'date' => now()->toDateString(),
+                'fields_amount' => 4,
+                'game_length_minutes' => 10,
+                'amount_teams_pool' => 4,
+                'archived' => false,
+            ]);
+
+            // pools maken
+            
             foreach ($teams->values() as $index => $team) {
                 $poolNumber = (int) floor($index / $teamsPerPool) + 1;
                 $team->update([
