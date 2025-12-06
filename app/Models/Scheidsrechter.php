@@ -11,6 +11,7 @@ class Scheidsrechter extends Model
     use HasFactory;
     protected $fillable = [
         'name',
+        'email',
         'school_id',
     ];
 
