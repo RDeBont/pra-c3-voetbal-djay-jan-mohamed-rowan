@@ -23,6 +23,7 @@ class SchoolFactory extends Factory
             'typeSchool' => $this->faker->randomElement(['basisschool', 'middelbare school ',]),
             'accepted'   => 0,
             
+            
         ];
     }
 }
