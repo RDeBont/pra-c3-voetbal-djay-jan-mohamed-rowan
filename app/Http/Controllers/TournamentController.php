@@ -44,6 +44,14 @@ class TournamentController extends Controller
         'name' => 'required|string',
         'sport' => 'required|in:voetbal,lijnbal',
         'group' => 'required|in:groep3/4,groep5/6,groep7/8,klas1_jongens,klas1_meiden',
+        [
+            'name.required' => 'De naam van het toernooi is verplicht.',
+            'sport.required' => 'De sport is verplicht.',
+            'group.required' => 'De groep is verplicht.',
+            'name.string' => 'De naam van het toernooi moet een geldige tekst zijn.',
+            'sport.in' => 'De geselecteerde sport is ongeldig.',
+            'group.in' => 'De geselecteerde groep is ongeldig.',
+        ]
     ]);
 
     // Check of toernooi al bestaat
@@ -58,7 +66,7 @@ class TournamentController extends Controller
         ->get()
         ->shuffle();
 
-
+    // Bepaal aantal velden op basis van sport en groep
     if ($data['sport'] === 'lijnbal') {
     $fields = 4;
     } else {
@@ -82,9 +90,11 @@ class TournamentController extends Controller
         }
     }
 
+    // Aantal teams per poule
     $teamsPerPool = 4;
     $teamCount = $teams->count();
 
+    // Controleer of er genoeg teams zijn
     if ($teamCount < $teamsPerPool) {
         return redirect()->back()->withErrors(['team' => 'Er zijn niet genoeg teams beschikbaar voor dit toernooi.'])->withInput();
     }
@@ -127,10 +137,12 @@ class TournamentController extends Controller
     }
 
     
+    // Alle teams in een enkele collectie
     $teams = collect($poules)->flatten();
 
 
 
+    // Teams toewijzen aan poules
     foreach ($teams->values() as $index => $team) {
         $poolNumber = (int) floor($index / $teamsPerPool) + 1;
         $team->update([
@@ -141,6 +153,7 @@ class TournamentController extends Controller
 
    
 
+    // Wedstrijden aanmaken
     $startTime = '08:00';
     $gameLength = $tournament->game_length_minutes;
 
