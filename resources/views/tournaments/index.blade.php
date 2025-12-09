@@ -46,27 +46,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($tournaments as $tournament)
-                        <tr>
-                            <td>{{ $tournament->name }}</td>
-                            <td>
-                                <a href="{{ route('tournaments.show', $tournament->id) }}" class="btn-details">
-                                    Bekijk details
-                                </a>
-                            </td>
-                            @auth
-                                @if(auth()->user()->is_admin)
-                                    <td>
-                                        <form method="POST" action="{{ route('tournaments.destroy', $tournament->id) }}"
-                                            onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn-fixture delete">Verwijder</button>
-                                        </form>
-                                    </td>
-                                @endif
-                            @endauth
-
                     @forelse ($tournaments as $tournament)
                         @php
                             $ok = true;
@@ -108,6 +87,18 @@
                                         Bekijk details
                                     </a>
                                 </td>
+                                @auth
+                                    @if(auth()->user()->is_admin)
+                                        <td>
+                                            <form method="POST" action="{{ route('tournaments.destroy', $tournament->id) }}"
+                                                onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn-fixture delete">Verwijder</button>
+                                            </form>
+                                        </td>
+                                    @endif
+                                @endauth
                             </tr>
                         @endif
                     @empty
