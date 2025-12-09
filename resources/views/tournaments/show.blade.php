@@ -10,6 +10,7 @@
             <label for="pool-filter" style="font-weight: bold; margin-right: 10px; ">Filter op Poule:</label>
             <select id="pool-filter" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
                 <option value="">Alle Poules</option>
+                //chatgpt
                 @php
                     $pools = collect($fixtures)->map(fn($f) => $f->team1->pool)->unique()->sort();
                 @endphp
@@ -17,6 +18,8 @@
                     <option value="{{ $pool }}">Poule {{ $pool }}</option>
                 @endforeach
             </select>
+            <a href="{{ route('tournaments.standings', $tournament) }}" class="btn-goback" style="margin-left: 20px;">Stand</a>
+        
         </div>
 
         @foreach ($fixtures as $fixture)
@@ -81,6 +84,7 @@
     </main>
 
     <script>
+        //chatgpt
         document.getElementById('pool-filter').addEventListener('change', function () {
             const selectedPool = this.value;
             const fixtures = document.querySelectorAll('.fixture-wrapper');

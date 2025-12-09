@@ -241,4 +241,15 @@ class TournamentController extends Controller
             'scheidsrechters' => $scheidsrechters,
         ];
     }
+
+    public function standings(Tournament $tournament)
+    {
+        $teams = Team::where('tournament_id', $tournament->id)
+            ->orderByDesc('poulePoints')
+            ->get();
+
+        $stand = $teams->groupBy('pool')->sortkeys();
+
+        return view('tournaments.standings', compact('tournament', 'teams', 'stand'));
+    }
 }
