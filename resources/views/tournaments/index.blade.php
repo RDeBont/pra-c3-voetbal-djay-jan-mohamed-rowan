@@ -1,7 +1,5 @@
 <x-base-layout>
     <main class="toernooien-page">
-        <a href="{{ url('/') }}" class="btn-goback">Ga terug</a>
-
         <h1>Toernooien</h1>
 
         <form class="filter-form" method="GET" action="{{ route('tournaments.index') }}">
@@ -15,8 +13,13 @@
             <label for="groep">Groep:</label>
             <select id="groep" name="groep">
                 <option value="">-- Alles --</option>
+
+                <option value="groep3_4" {{ request('groep') == 'groep3_4' ? 'selected' : '' }}>Groep 3/4</option>
+                <option value="groep5_6" {{ request('groep') == 'groep5_6' ? 'selected' : '' }}>Groep 5/6</option>
                 <option value="groep7" {{ request('groep') == 'groep7' ? 'selected' : '' }}>Groep 7/8</option>
-                <option value="brugklas" {{ request('groep') == 'brugklas' ? 'selected' : '' }}>Brugklas</option>
+
+                <option value="klas1_jongens" {{ request('groep') == 'klas1_jongens' ? 'selected' : '' }}>Klas 1 (Jongens)</option>
+                <option value="klas1_meiden" {{ request('groep') == 'klas1_meiden' ? 'selected' : '' }}>Klas 1 (Meiden)</option>
             </select>
 
             <label for="geslacht">Geslacht:</label>
@@ -30,6 +33,7 @@
             <a href="{{ url('/spelregels') }}" class="btn-spelregels">Spelregels</a>
         </form>
 
+
         <section class="toernooi-lijst">
             <table class="toernooi-tabel">
                 <thead>
@@ -39,6 +43,7 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     @forelse ($tournaments as $tournament)
                         @php
                             $ok = true;
@@ -48,19 +53,38 @@
                                 $ok = false;
                             }
 
-                            // GROEP FILTER (Groep 7 + 8 gecombineerd)
+                            // GROEP FILTER – inclusief combinatie Groep 7/8
                             if (request('groep')) {
-                                $filterGroep = request('groep');
+                                $filter = request('groep');
                                 $groep = strtolower($tournament->group);
 
-                                if ($filterGroep === 'groep7') {
-                                    // Laat zowel groep7 als groep8 zien
+                                // Groep 7/8 = groep7 + groep8 tonen
+                                if ($filter === 'groep7') {
                                     if (!in_array($groep, ['groep7', 'groep8'])) {
                                         $ok = false;
                                     }
-                                } else {
-                                    // Normale match
-                                    if ($groep !== $filterGroep) {
+                                }
+                                // groep3/4
+                                else if ($filter === 'groep3_4') {
+                                    if (!in_array($groep, ['groep3', 'groep4'])) {
+                                        $ok = false;
+                                    }
+                                }
+                                // groep5/6
+                                else if ($filter === 'groep5_6') {
+                                    if (!in_array($groep, ['groep5', 'groep6'])) {
+                                        $ok = false;
+                                    }
+                                }
+                                // klas 1 jongens
+                                else if ($filter === 'klas1_jongens') {
+                                    if ($groep !== 'klas1_jongens') {
+                                        $ok = false;
+                                    }
+                                }
+                                // klas 1 meiden
+                                else if ($filter === 'klas1_meiden') {
+                                    if ($groep !== 'klas1_meiden') {
                                         $ok = false;
                                     }
                                 }
@@ -82,13 +106,16 @@
                                 </td>
                             </tr>
                         @endif
+
                     @empty
                         <tr>
                             <td colspan="2">Geen toernooien gevonden.</td>
                         </tr>
                     @endforelse
+
                 </tbody>
             </table>
         </section>
+
     </main>
 </x-base-layout>
