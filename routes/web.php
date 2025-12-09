@@ -47,13 +47,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('admin', AdminController::class);
-
+    Route::delete('/tournaments/{id}', [TournamentController::class, 'destroy']);
     Route::post('admin/schools/{id}/accept', [AdminController::class, 'accept'])->name('admin.schools.accept');
     Route::post('admin/schools/{id}/reject', [AdminController::class, 'reject'])->name('admin.schools.reject');
     Route::resource('fixtures', FixtureController::class);
     Route::resource('team', teamController::class);
     Route::resource('users', UserController::class);
     Route::resource('tournaments', TournamentController::class)->except(['index', 'show']);
+    Route::resource('fixtures', FixtureController::class);
+    Route::resource('fixtures', FixtureController::class)->middleware('auth');
+    Route::resource('tournaments', TournamentController::class);
 
 
 });

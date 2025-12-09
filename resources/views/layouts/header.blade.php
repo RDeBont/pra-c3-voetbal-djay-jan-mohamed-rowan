@@ -21,7 +21,7 @@
       @endauth
 
       @auth
-        @if(auth()->user()->is_admin == 1)
+        @if(auth()->user()->is_admin)
           <li><a href="{{ route('admin.index') }}">Admin</a></li>
         @endif
       @endauth

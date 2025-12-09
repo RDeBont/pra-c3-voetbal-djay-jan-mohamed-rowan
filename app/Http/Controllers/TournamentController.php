@@ -31,7 +31,7 @@ class TournamentController extends Controller
     {
         $all = $this->getAllData();
         return view('tournaments.createTournament', compact('all'));
-        
+
     }
 
     /**
@@ -39,7 +39,7 @@ class TournamentController extends Controller
      */
     public function store(StoreTournamentRequest $request)
     {
-      
+
         $data = $request->validate([
             'name' => 'required|string',
             'sport' => 'required|in:voetbal,lijnbal',
@@ -48,8 +48,7 @@ class TournamentController extends Controller
 
         if (Tournament::where('name', $data['name'])->exists()) {
             return redirect()->back()->withErrors(['name' => 'Er bestaat al een toernooi met deze naam.'])->withInput();
-        }
-        else {
+        } else {
 
 
             $teamsPerPool = $tournament->amount_teams_pool ?? 4;
@@ -59,7 +58,7 @@ class TournamentController extends Controller
                 ->shuffle();
 
             $teamCount = $teams->count();
-                
+
 
             if ($teamCount < $teamsPerPool) {
                 return redirect()->back()->withErrors(['team' => 'Er zijn niet genoeg teams beschikbaar voor dit toernooi.'])->withInput();
@@ -75,7 +74,7 @@ class TournamentController extends Controller
             ]);
 
             // pools maken
-            
+
             foreach ($teams->values() as $index => $team) {
                 $poolNumber = (int) floor($index / $teamsPerPool) + 1;
                 $team->update([
@@ -84,7 +83,7 @@ class TournamentController extends Controller
                 ]);
             }
 
-           
+
             $field = 1;
             $startTime = '08:00';
             $gameLength = $tournament->game_length_minutes;
@@ -115,15 +114,15 @@ class TournamentController extends Controller
 
         }
 
-      
 
-        
+
+
 
 
     }
 
-    
-    
+
+
 
     /**
      * Display the specified resource.
@@ -131,7 +130,7 @@ class TournamentController extends Controller
     public function show(Tournament $tournament)
     {
         $tournament = Tournament::with(['fixtures.team1', 'fixtures.team2'])
-        ->find($tournament->id);
+            ->find($tournament->id);
 
         $fixtures = $tournament->fixtures;
 
@@ -162,23 +161,26 @@ class TournamentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tournament $tournament)
+    public function destroy($id)
     {
-        //
+        $tournament = Tournament::findOrFail($id);
+        $tournament->delete();
+
+        return redirect()->route('tournaments.index')->with('success', 'Toernooi succesvol verwijderd.');
     }
 
     public function getAllData()
-{
-    $schools = School::all();
-    $teams = Team::all();
-    $users = User::all();
-    $scheidsrechters = Scheidsrechter::all();
+    {
+        $schools = School::all();
+        $teams = Team::all();
+        $users = User::all();
+        $scheidsrechters = Scheidsrechter::all();
 
-    return [
-        'schools' => $schools,
-        'teams' => $teams,
-        'users' => $users,
-        'scheidsrechters' => $scheidsrechters,
-    ];
-}
+        return [
+            'schools' => $schools,
+            'teams' => $teams,
+            'users' => $users,
+            'scheidsrechters' => $scheidsrechters,
+        ];
+    }
 }
