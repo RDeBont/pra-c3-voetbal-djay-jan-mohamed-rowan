@@ -13,8 +13,7 @@
             <label for="groep">Groep:</label>
             <select id="groep" name="groep">
                 <option value="">-- Alles --</option>
-                <option value="groep7" {{ request('groep') == 'groep7' ? 'selected' : '' }}>Groep 7</option>
-                <option value="groep8" {{ request('groep') == 'groep8' ? 'selected' : '' }}>Groep 8</option>
+                <option value="groep7" {{ request('groep') == 'groep7' ? 'selected' : '' }}>Groep 7/8</option>
                 <option value="brugklas" {{ request('groep') == 'brugklas' ? 'selected' : '' }}>Brugklas</option>
             </select>
 
