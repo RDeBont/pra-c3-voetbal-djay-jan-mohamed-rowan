@@ -66,7 +66,7 @@ class teamController extends Controller
         foreach ($teams as $sport => $groups) {
             foreach ($groups as $groupName => $teamList) {
                 foreach ($teamList as $teamData) {
-                    // dd($teamData); 
+                    // dd($teamData);
                     Team::create([
                         'school_id' => $school->id,
                         'name' => $teamData['name'],
@@ -110,8 +110,10 @@ class teamController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Team $team)
     {
-        //
+        $team->delete();
+
+        return redirect()->back()->with('success', 'Team succesvol verwijderd.');
     }
 }
