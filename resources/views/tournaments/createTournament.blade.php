@@ -66,7 +66,7 @@
                     { value: "groep7/8", label: "Groep 7/8 (gemengd)" }
                 ],
                 lijnbal: [
-                    { value: "groep7/8_meiden", label: "Groep 7/8 Lijnbal Meiden" }
+                    { value: "groep7/8", label: "Groep 7/8 Lijnbal Meiden" }
                 ]
             },
             middelbare: {
