@@ -20,60 +20,68 @@
         </div>
 
         @foreach ($fixtures as $fixture)
-        
-        <!-- WRAPPER die tabel + knop bevat -->
-        <div class="fixture-wrapper" data-fixture-pool="{{ $fixture->team1->pool }}" style="margin-bottom: 20px;">
 
-            <table class="toernooi-tabel" style="margin-bottom: 10px;">
-                <tbody>
-                    <tr>
-                        <th>Team 1:</th>
-                        <td>{{ $fixture->team1->name }}</td>
-                        <td>{{ $fixture->team_1_id }}</td>
-                    </tr>
-                    <tr>
-                        <th>Score:</th>
-                        <td>{{ $fixture->team_1_score }} - {{ $fixture->team_2_score }}</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>Team 2:</th>
-                        <td>{{ $fixture->team2->name }}</td>
-                        <td>{{ $fixture->team_2_id }}</td>
-                    </tr>
-                    <tr>
-                        <th>StartTijd</th>
-                        <td>{{ $fixture->start_time }}</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>Veld</th>
-                        <td>{{ $fixture->field }}</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>Poule</th>
-                        <td>{{ $fixture->team1->pool }}</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
+            <!-- WRAPPER die tabel + knop bevat -->
+            <div class="fixture-wrapper" data-fixture-pool="{{ $fixture->team1->pool }}" style="margin-bottom: 20px;">
 
-            @if (Auth::check() && Auth::user()->is_admin)
-            <div class="edit-button-wrapper">
-                <a href="{{ route('fixtures.edit', $fixture->id) }}" class="edit-button">
-                    Wedstrijd Aanpassen/Punten Toekennen
-                </a>
+                <table class="toernooi-tabel" style="margin-bottom: 10px;">
+                    <tbody>
+                        <tr>
+                            <th>Team 1:</th>
+                            <td>{{ $fixture->team1->name }}</td>
+                            <td>{{ $fixture->team_1_id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Score:</th>
+                            <td>{{ $fixture->team_1_score }} - {{ $fixture->team_2_score }}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Team 2:</th>
+                            <td>{{ $fixture->team2->name }}</td>
+                            <td>{{ $fixture->team_2_id }}</td>
+                        </tr>
+                        <tr>
+                            <th>StartTijd</th>
+                            <td>{{ $fixture->start_time }}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Veld</th>
+                            <td>{{ $fixture->field }}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Poule</th>
+                            <td>{{ $fixture->team1->pool }}</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                @auth
+                    @if(auth()->user()->is_admin)
+                        <div class="fixture-buttons">
+                            <a href="{{ route('fixtures.edit', $fixture->id) }}" class="btn-fixture edit">
+                                Aanpassen
+                            </a>
+
+                            <form method="POST" action="{{ route('fixtures.destroy', $fixture->id) }}"
+                                onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-fixture delete">Verwijderen</button>
+                            </form>
+                        </div>
+                    @endif
+                @endauth
+
             </div>
-            @endif
-
-        </div>
         @endforeach
 
     </main>
 
     <script>
-        document.getElementById('pool-filter').addEventListener('change', function() {
+        document.getElementById('pool-filter').addEventListener('change', function () {
             const selectedPool = this.value;
             const fixtures = document.querySelectorAll('.fixture-wrapper');
 

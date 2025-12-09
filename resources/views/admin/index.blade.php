@@ -106,6 +106,34 @@
 
         <div class="blackLine"></div>
 
+
+        <div class="tInfoContainer">
+            <h2>Alle Teams</h2>
+        </div>
+
+        <div class="infoContainer">
+            @foreach ($teams as $team)
+
+                <div class="userCard">
+                    <h3>Team: {{ $team->name }}</h3>
+                    <form method="POST" action="{{ route('team.destroy', $team->id) }}" style="display:inline"
+                        onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Verwijder</button>
+                    </form>
+
+
+
+
+
+                </div>
+
+            @endforeach
+        </div>
+
+        <div class="blackLine"></div>
+
         <div class="tInfoContainer">
             <h2>Account aanmaak</h2>
         </div>
