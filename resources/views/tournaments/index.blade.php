@@ -2,7 +2,6 @@
     <main class="toernooien-page">
         <h1>Toernooien</h1>
 
-        <a href="{{ url('/spelregels') }}" class="btn-spelregels">Spelregels</a>
 
         <form class="filter-form">
             <label for="sport">Sportsoort:</label>
@@ -23,8 +22,9 @@
                 <option>Jongens</option>
                 <option>Meisjes</option>
             </select>
-
             <button type="submit">Filter</button>
+            <a href="{{ url('/spelregels') }}" class="btn-spelregels">Spelregels</a>
+
         </form>
 
         <section class="toernooi-lijst">
@@ -40,7 +40,7 @@
                     @foreach ($tournaments as $tournament)
                         <tr>
                             <td>{{ $tournament->name }}</td>
-            
+
 
                             <td>
                                 <a href="{{ route('tournaments.show', $tournament->id) }}" class="btn-details">
