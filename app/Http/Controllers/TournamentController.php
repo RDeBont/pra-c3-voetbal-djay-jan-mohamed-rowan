@@ -188,11 +188,11 @@ class TournamentController extends Controller
     public function show(Tournament $tournament)
     {
         $tournament = Tournament::with(['fixtures.team1', 'fixtures.team2'])
-        ->find($tournament->id);
+            ->findOrFail($tournament->id);
 
         $fixtures = $tournament->fixtures;
 
-        return view('tournaments.show', compact('tournament', 'fixtures'));
+        return view('tournaments.show', compact('tournament', 'fixtures'));;
 
 
     }

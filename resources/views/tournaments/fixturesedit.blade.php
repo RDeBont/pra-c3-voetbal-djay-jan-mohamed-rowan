@@ -17,8 +17,16 @@
                 <input type="number" id="team_1_score" name="team_1_score" value="{{ $fixture->team_1_score }}" required>
             </div>
             <div class="form-group">
+                <label for="team_1_points">Punten Toekenning:</label>
+                <input type="number" id="team_1_points" name="team_1_points" value="{{ $fixture->team1->poulePoints }}" required>
+            </div>
+            <div class="form-group">
                 <label for="team_2_score">Score Team 2:</label>
                 <input type="number" id="team_2_score" name="team_2_score" value="{{ $fixture->team_2_score }}" required>
+            </div>
+            <div class="form-group">
+                <label for="team_2_points">Punten Toekenning:</label>
+                <input type="number" id="team_2_points" name="team_2_points" value="{{ $fixture->team2->poulePoints }}" required>
             </div>
             <div class="form-group">
                 <label for="start_time">Start Tijd:</label>
