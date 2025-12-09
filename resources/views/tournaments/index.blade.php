@@ -1,5 +1,7 @@
 <x-base-layout>
     <main class="toernooien-page">
+        <a href="{{ url('/') }}" class="btn-goback">Ga terug</a>
+
         <h1>Toernooien</h1>
 
         <form class="filter-form" method="GET" action="{{ route('tournaments.index') }}">

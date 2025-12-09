@@ -1038,5 +1038,16 @@ color: #333;
   color: #333;
 }
 
+.btn-goback{
+    margin-left: 43.2rem;
+  padding: 10px 16px;
+  background-color: #3e6a3e;
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 60px;
+  text-align: center;
+}
+
 
 
