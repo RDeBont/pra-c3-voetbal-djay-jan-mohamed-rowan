@@ -5,6 +5,7 @@ use App\Models\School;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Mail\SchoolAccepted;
+use App\Models\Team;
 use Illuminate\Support\Facades\Mail;
 class AdminController extends Controller
 {
@@ -17,7 +18,8 @@ class AdminController extends Controller
         $users = User::all();
         $schoolsAccepted = School::all()->where('accepted', 1);
         $schools = School::all()->where('accepted', 0);
-        return view('admin.index', compact('schools', "schoolsAccepted", 'users'));
+        $teams = Team::all();
+        return view('admin.index', compact('schools', "schoolsAccepted", 'users', 'teams'));
     }
 
     /**
@@ -43,7 +45,7 @@ class AdminController extends Controller
             ]);
 
             $accounts[] = [
-                'email' => $school->email, 
+                'email' => $school->email,
                 'password_plain' => $password_plain,
             ];
         }
