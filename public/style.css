@@ -699,13 +699,6 @@ h1 {
 
 /*spelregelknop*/
 .btn-spelregels {
-  position: absolute;
-  /* knop losmaken van de layout */
-  top: 250px;
-  /* omhoog/omlaag */
-  left: 120px;
-  /* links/rechts */
-
   padding: 10px 16px;
   background-color: #3e6a3e;
   color: #fff;
@@ -922,7 +915,7 @@ h1 {
 .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px; 
+  margin-bottom: 16px;
 }
 
 .form-group label {
