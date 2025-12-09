@@ -25,6 +25,11 @@ class TeamFactory extends Factory
             'referee'   => $this->faker->name(),
 
             'tournament_id' => null,
+
+            'sport'     => 'voetbal',
+            'group'     => $this->faker->randomElement([
+                'groep3/4', 'groep5/6', 'groep7/8', 'klas1_jongens', 'klas1_meiden'
+            ]),
         ];
     }
 }

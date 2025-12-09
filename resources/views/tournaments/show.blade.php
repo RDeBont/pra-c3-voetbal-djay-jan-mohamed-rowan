@@ -36,6 +36,12 @@
                         <th>Fase</th>
                         <td>{{ $fixture->type }}</td>
                         <td></td>
+                    </tr>
+                    <tr>
+                        <th>Veld</th>
+                        <td>{{ $fixture->field }}</td>
+                        <td></td>
+                    </tr>
         
                         
                 </tbody>

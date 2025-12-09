@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
         // -----------------------------
 
         $teams = Team::factory()
-            ->count(4)
+            ->count(40)
             ->create();
 
         // -----------------------------
