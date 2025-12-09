@@ -41,12 +41,30 @@
                         @php
                             $ok = true;
 
+                            // SPORT FILTER
                             if (request('sport') && strtolower($tournament->sport) !== request('sport')) {
                                 $ok = false;
                             }
-                            if (request('groep') && strtolower($tournament->group) !== request('groep')) {
-                                $ok = false;
+
+                            // GROEP FILTER (Groep 7 + 8 gecombineerd)
+                            if (request('groep')) {
+                                $filterGroep = request('groep');
+                                $groep = strtolower($tournament->group);
+
+                                if ($filterGroep === 'groep7') {
+                                    // Laat zowel groep7 als groep8 zien
+                                    if (!in_array($groep, ['groep7', 'groep8'])) {
+                                        $ok = false;
+                                    }
+                                } else {
+                                    // Normale match
+                                    if ($groep !== $filterGroep) {
+                                        $ok = false;
+                                    }
+                                }
                             }
+
+                            // GESLACHT FILTER
                             if (request('geslacht') && strtolower($tournament->gender) !== request('geslacht')) {
                                 $ok = false;
                             }
