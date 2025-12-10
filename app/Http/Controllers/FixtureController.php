@@ -6,6 +6,7 @@ use App\Models\Fixture;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Team;
+use App\Models\Scheidsrechter;
 
 class FixtureController extends Controller
 {
@@ -46,7 +47,9 @@ class FixtureController extends Controller
      */
     public function edit(Fixture $fixture)
     {
-        return view('tournaments.fixturesedit', compact('fixture'));
+        $scheidsrechters = Scheidsrechter::all();
+
+        return view('tournaments.fixturesedit', compact('fixture', 'scheidsrechters'));
     }
 
     /**
@@ -60,6 +63,8 @@ class FixtureController extends Controller
             'start_time' => 'required|date_format:H:i',
             'team_1_points' => 'nullable|integer|min:0|max:3',
             'team_2_points' => 'nullable|integer|min:0|max:3',
+            'field' => 'required|integer|min:1',
+            'scheidsrechter_id' => 'nullable|exists:scheidsrechters,id',
         ], [
             'team_1_score.required' => 'De score voor Team 1 is verplicht.',
             'team_1_score.integer' => 'De score voor Team 1 moet een geheel getal zijn.',
@@ -78,6 +83,10 @@ class FixtureController extends Controller
             'team_2_points.integer' => 'De punten voor Team 2 moeten een geheel getal zijn.',
             'team_2_points.min' => 'De punten voor Team 2 mogen niet negatief zijn.',
             'team_2_points.max' => 'De punten voor Team 2 mogen niet hoger zijn dan 3.',
+            'field.required' => 'Het veldnummer is verplicht.',
+            'field.integer' => 'Het veldnummer moet een geheel getal zijn.',
+            'field.min' => 'Het veldnummer moet minimaal 1 zijn.',
+            'scheidsrechter_id.exists' => 'De geselecteerde scheidsrechter bestaat niet.',
         ]);
 
 

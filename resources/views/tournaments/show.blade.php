@@ -59,6 +59,10 @@
                             <td>{{ $fixture->team1->pool }}</td>
                             <td></td>
                         </tr>
+                        <tr>
+                            <th>Scheidsrechter</th>
+                            <td>{{ $fixture->scheidsrechter ? $fixture->scheidsrechter->name : 'Niet toegewezen' }}</td>
+                            <td></td>
                     </tbody>
                 </table>
                 @auth

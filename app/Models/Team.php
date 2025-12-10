@@ -16,7 +16,6 @@ class Team extends Model
     'sport', 
     'group', 
     'teamsort', 
-    'referee',
     'pool',
     'tournament_id'];
 
