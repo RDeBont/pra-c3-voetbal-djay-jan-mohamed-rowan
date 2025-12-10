@@ -239,9 +239,14 @@ class TournamentController extends Controller
      */
     public function destroy($id)
     {
+
+        Team::where('tournament_id', $id)->update([
+        'tournament_id' => null
+        ]);
+
         $tournament = Tournament::findOrFail($id);
         $tournament->delete();
-
+       
         return redirect()->route('tournaments.index')->with('success', 'Toernooi succesvol verwijderd.');
     }
 
