@@ -14,6 +14,10 @@
                 <input type="text" name="name" id="name" class="signupform-control" required>
             </div>
 
+            <div class="signupform-group">
+                <label for="teamsPerPool">Aantal teams per poule:</label>
+                <input type="number" name="teamsPerPool" id="teamsPerPool" class="signupform-control" min="2" required>
+            </div>
 
             <div class="signupform-group">
                 <label for="school_level">Schoolniveau:</label>
