@@ -62,5 +62,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('tournaments', TournamentController::class)->only(['index', 'show']);
+Route::get('tournaments/{tournament}/standings', [TournamentController::class, 'standings'])->name('tournaments.standings');
 
 require __DIR__ . '/auth.php';

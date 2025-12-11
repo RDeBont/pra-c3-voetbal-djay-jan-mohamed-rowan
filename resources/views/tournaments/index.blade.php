@@ -49,7 +49,7 @@
                 <tbody>
                     @php $found = false; @endphp
 
-                    @foreach ($tournaments as $tournament)
+                    @forelse ($tournaments as $tournament)
                         @php
                             $ok = true;
 
@@ -85,12 +85,11 @@
                                         Bekijk details
                                     </a>
                                 </td>
-
                                 @auth
                                     @if(auth()->user()->is_admin)
                                         <td>
                                             <form method="POST" action="{{ route('tournaments.destroy', $tournament->id) }}"
-                                                  onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
+                                                onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn-fixture delete">Verwijder</button>

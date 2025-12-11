@@ -66,6 +66,9 @@ class TournamentController extends Controller
         ->get()
         ->shuffle();
 
+
+
+
     // Bepaal aantal velden op basis van sport en groep
     if ($data['sport'] === 'lijnbal') {
     $fields = 4;
@@ -99,15 +102,6 @@ class TournamentController extends Controller
         return redirect()->back()->withErrors(['team' => 'Er zijn niet genoeg teams beschikbaar voor dit toernooi.'])->withInput();
     }
 
-    // Maak toernooi
-    $tournament = Tournament::create([
-        'name' => $data['name'],
-        'date' => now()->toDateString(),
-        'fields_amount' =>  $fields,
-        'game_length_minutes' => 10,
-        'amount_teams_pool' => $teamsPerPool,
-        'archived' => false,
-    ]);
 
 
     // Teams groeperen per school
@@ -137,9 +131,21 @@ class TournamentController extends Controller
     }
 
     
+
+    // Maak toernooi
+    $tournament = Tournament::create([
+        'name' => $data['name'],
+        'date' => now()->toDateString(),
+        'fields_amount' =>  $fields,
+        'game_length_minutes' => 10,
+        'amount_teams_pool' => $teamsPerPool,
+        'archived' => false,
+    ]);
+
+
+    
     // Alle teams in een enkele collectie
     $teams = collect($poules)->flatten();
-
 
 
     // Teams toewijzen aan poules
@@ -165,6 +171,16 @@ class TournamentController extends Controller
         // Iedereen speelt tegen elkaar in de poule
         for ($i = 0; $i < count($poolTeamsList); $i++) {
             for ($j = $i + 1; $j < count($poolTeamsList); $j++) {
+
+                // Bepaal scheidsrechter die niet van een van de teams is
+                $team1School = $poolTeamsList[$i]->school_id;
+                $team2School = $poolTeamsList[$j]->school_id;
+
+                $eligibleReferees = Scheidsrechter::where('school_id', '!=', $team1School)
+                    ->where('school_id', '!=', $team2School)
+                    ->inRandomOrder()
+                    ->first();
+
                 Fixture::create([
                     'team_1_id' => $poolTeamsList[$i]->id,
                     'team_2_id' => $poolTeamsList[$j]->id,
@@ -174,6 +190,7 @@ class TournamentController extends Controller
                     'start_time' => $startTime,
                     'type' => 'pool',
                     'tournament_id' => $tournament->id,
+                    'scheidsrechter_id' => $eligibleReferees ? $eligibleReferees->id : null,
                 ]);
             }
         }
@@ -188,11 +205,12 @@ class TournamentController extends Controller
     public function show(Tournament $tournament)
     {
         $tournament = Tournament::with(['fixtures.team1', 'fixtures.team2'])
-            ->find($tournament->id);
+            ->findOrFail($tournament->id);
 
         $fixtures = $tournament->fixtures;
+        
 
-        return view('tournaments.show', compact('tournament', 'fixtures'));
+        return view('tournaments.show', compact('tournament', 'fixtures'));;
 
 
     }
@@ -221,9 +239,14 @@ class TournamentController extends Controller
      */
     public function destroy($id)
     {
+
+        Team::where('tournament_id', $id)->update([
+        'tournament_id' => null
+        ]);
+
         $tournament = Tournament::findOrFail($id);
         $tournament->delete();
-
+       
         return redirect()->route('tournaments.index')->with('success', 'Toernooi succesvol verwijderd.');
     }
 
@@ -240,5 +263,16 @@ class TournamentController extends Controller
             'users' => $users,
             'scheidsrechters' => $scheidsrechters,
         ];
+    }
+
+    public function standings(Tournament $tournament)
+    {
+        $teams = Team::where('tournament_id', $tournament->id)
+            ->orderByDesc('poulePoints')
+            ->get();
+
+        $stand = $teams->groupBy('pool')->sortkeys();
+
+        return view('tournaments.standings', compact('tournament', 'teams', 'stand'));
     }
 }

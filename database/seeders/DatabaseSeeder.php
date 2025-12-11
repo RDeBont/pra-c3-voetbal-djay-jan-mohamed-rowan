@@ -8,6 +8,7 @@ use App\Models\School;
 use App\Models\Team;
 use App\Models\Fixture;
 use App\Models\User;
+use App\Models\Scheidsrechter;
 class DatabaseSeeder extends Seeder
 {
     public function run()
@@ -44,6 +45,11 @@ class DatabaseSeeder extends Seeder
 
         $teams = Team::factory()
             ->count(40)
+            ->create();
+
+
+        $scheidsrechters = Scheidsrechter::factory()
+            ->count(15)
             ->create();
 
         // -----------------------------

@@ -20,6 +20,7 @@ class Fixture extends Model
         'start_time',
         'type',
         'tournament_id',
+        'scheidsrechter_id',
        
     ];
 
@@ -36,6 +37,10 @@ class Fixture extends Model
     public function tournament(): BelongsTo
     {
         return $this->belongsTo(Tournament::class, 'tournament_id');
+    }
+    public function scheidsrechter(): BelongsTo
+    {
+        return $this->belongsTo(Scheidsrechter::class, 'scheidsrechter_id');
     }
 }
 

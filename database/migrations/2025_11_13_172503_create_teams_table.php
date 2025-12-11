@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
             $table->foreignId('school_id')->constrained('schools')->onDelete('cascade');
-            $table->string('referee')->nullable();
             $table->string('name');
             $table->string('sport')->nullable();
             $table->string('group')->nullable();
             $table->string('teamsort')->nullable();
             $table->integer('pool')->nullable();
-            $table->foreignId('tournament_id')->nullable()->constrained('tournaments')->onDelete('cascade');
+            $table->integer('poulePoints')->default(0);
+            $table->foreignId('tournament_id')->nullable()->constrained('tournaments');
             $table->timestamps();
         });
     }
