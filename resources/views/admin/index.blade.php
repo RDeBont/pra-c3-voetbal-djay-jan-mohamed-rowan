@@ -25,9 +25,10 @@
                     <p>Email: {{ $school->email }}</p>
                     <p>Type school: {{ $school->typeSchool }}</p>
                     <p>Address: {{ $school->address }}</p>
-                    <form method="POST" action="{{ route('admin.schools.accept', $school->id) }}" style="display:inline">
+                    <form method="POST" action="{{ route('admin.schools.accept', $school->id) }}" style="display:inline"
+                        class="accept-form">
                         @csrf
-                        <button type="submit">Accepteer</button>
+                        <button type="submit" class="accept-btn" data-cooldown="15000">Accepteer</button>
                     </form>
                     <form method="POST" action="{{ route('admin.schools.reject', $school->id) }}" style="display:inline">
                         @csrf
@@ -188,4 +189,60 @@
         </div>
 
     </main>
+
+    <script>
+        //chagpt 
+        //dit zorgt ervoor dat de accepteer knop een cooldown krijgt van 15 seconden want als je snel meerdere,
+        // scholen accepteerd dan wordt er geen mail gestuurd
+        document.addEventListener('DOMContentLoaded', function () {
+            const acceptForms = document.querySelectorAll('.accept-form');
+            const cooldownMs = 15000; 
+            const storageKey = 'lastSchoolAcceptTime';
+
+            function checkCooldown() {
+                const lastSubmitTime = localStorage.getItem(storageKey);
+                if (!lastSubmitTime) return 0;
+                
+                const now = Date.now();
+                const timeSinceLastSubmit = now - parseInt(lastSubmitTime);
+                return timeSinceLastSubmit < cooldownMs ? cooldownMs - timeSinceLastSubmit : 0;
+            }
+
+            function updateButtonStates() {
+                const remainingMs = checkCooldown();
+                acceptForms.forEach(form => {
+                    const btn = form.querySelector('.accept-btn');
+                    if (remainingMs > 0) {
+                        btn.disabled = true;
+                        const seconds = Math.ceil(remainingMs / 1000);
+                        btn.textContent = `Wacht ${seconds}s...`;
+                    } else {
+                        btn.disabled = false;
+                        btn.textContent = 'Accepteer';
+                    }
+                });
+            }
+
+            setInterval(updateButtonStates, 100);
+            updateButtonStates(); 
+
+            acceptForms.forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    const remainingMs = checkCooldown();
+                    if (remainingMs > 0) {
+                        e.preventDefault();
+                        const remainingSeconds = Math.ceil(remainingMs / 1000);
+                        alert(`Wacht alstublieft ${remainingSeconds} seconden voordat u een school accepteert.`);
+                        return false;
+                    }
+                    localStorage.setItem(storageKey, Date.now().toString());
+                    const submitBtn = form.querySelector('.accept-btn');
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.textContent = 'Verwerken...';
+                    }
+                });
+            });
+        });
+    </script>
 </x-base-layout>
