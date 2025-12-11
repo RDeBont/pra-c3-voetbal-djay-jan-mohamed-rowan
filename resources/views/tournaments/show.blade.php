@@ -1,6 +1,8 @@
 <x-base-layout>
     <main class="toernooi-detail-page">
+
         <h1>{{ $tournament->name }}</h1>
+        <a class="btn-goback" href="../tournaments">Ga Terug</a>
         <div class="wn">
             <h2>Alle Wedstrijden</h2>
         </div>
@@ -10,7 +12,6 @@
             <label for="pool-filter" style="font-weight: bold; margin-right: 10px; ">Filter op Poule:</label>
             <select id="pool-filter" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
                 <option value="">Alle Poules</option>
-                //chatgpt
                 @php
                     $pools = collect($fixtures)->map(fn($f) => $f->team1->pool)->unique()->sort();
                 @endphp
@@ -18,12 +19,12 @@
                     <option value="{{ $pool }}">Poule {{ $pool }}</option>
                 @endforeach
             </select>
-            <a href="{{ route('tournaments.standings', $tournament) }}" class="btn-goback" style="margin-left: 20px;">Stand</a>
-        
+            <a href="{{ route('tournaments.standings', $tournament) }}" class="btn-goback"
+                style="margin-left: 20px;">Stand</a>
+
         </div>
 
         @foreach ($fixtures as $fixture)
-
             <!-- WRAPPER die tabel + knop bevat -->
             <div class="fixture-wrapper" data-fixture-pool="{{ $fixture->team1->pool }}" style="margin-bottom: 20px;">
 
@@ -61,12 +62,13 @@
                         </tr>
                         <tr>
                             <th>Scheidsrechter</th>
-                            <td>{{ $fixture->scheidsrechter ? $fixture->scheidsrechter->name : 'Niet toegewezen' }}</td>
+                            <td>{{ $fixture->scheidsrechter ? $fixture->scheidsrechter->name : 'Niet toegewezen' }}
+                            </td>
                             <td></td>
                     </tbody>
                 </table>
                 @auth
-                    @if(auth()->user()->is_admin)
+                    @if (auth()->user()->is_admin)
                         <div class="fixture-buttons">
                             <a href="{{ route('fixtures.edit', $fixture->id) }}" class="btn-fixture edit">
                                 Aanpassen
@@ -89,15 +91,15 @@
 
     <script>
         //chatgpt
-        document.getElementById('pool-filter').addEventListener('change', function () {
+        document.getElementById('pool-filter').addEventListener('change', function() {
             const selectedPool = this.value;
             const fixtures = document.querySelectorAll('.fixture-wrapper');
 
             fixtures.forEach(wrapper => {
                 const fixturePool = wrapper.getAttribute('data-fixture-pool');
-                wrapper.style.display = (selectedPool === '' || fixturePool === selectedPool)
-                    ? 'block'
-                    : 'none';
+                wrapper.style.display = (selectedPool === '' || fixturePool === selectedPool) ?
+                    'block' :
+                    'none';
             });
         });
     </script>
