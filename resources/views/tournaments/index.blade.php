@@ -1,5 +1,7 @@
 <x-base-layout>
     <main class="toernooien-page">
+        <a class="btn-goback" href="/">Ga Terug</a>
+
         <h1>Toernooien</h1>
         <a href="{{ url('/spelregels') }}" class="btn-spelregels">Spelregels</a>
 
@@ -13,7 +15,7 @@
                         <th>Details</th>
 
                         @auth
-                            @if(auth()->user()->is_admin)
+                            @if (auth()->user()->is_admin)
                                 <th>Acties</th>
                             @endif
                         @endauth
@@ -31,10 +33,10 @@
                             </td>
 
                             @auth
-                                @if(auth()->user()->is_admin)
+                                @if (auth()->user()->is_admin)
                                     <td>
                                         <form method="POST" action="{{ route('tournaments.destroy', $tournament->id) }}"
-                                              onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
+                                            onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn-fixture delete">Verwijder</button>

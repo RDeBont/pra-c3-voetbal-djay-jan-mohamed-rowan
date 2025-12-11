@@ -52,7 +52,7 @@ class UserController extends Controller
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
             'is_admin' => $validatedData['is_admin'],
-            'school_id' => $validatedData['school_id'] ?? null, 
+            'school_id' => $validatedData['school_id'] ?? null,
         ]);
         return redirect()->route('admin.index')->with('success', 'Gebruiker succesvol aangemaakt!');
 
