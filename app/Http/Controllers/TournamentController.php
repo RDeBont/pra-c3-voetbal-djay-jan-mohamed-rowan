@@ -30,13 +30,13 @@ class TournamentController extends Controller
 
     public function store(StoreTournamentRequest $request)
     {
-        // Validatie
         $data = $request->validate([
             'name' => 'required|string',
             'sport' => 'required|in:voetbal,lijnbal',
             'group' => 'required|in:groep3/4,groep5/6,groep7/8,klas1_jongens,klas1_meiden',
             'date' => 'required|date',
             'startTime' => 'required|date_format:H:i',
+            'teamsPerPool' => 'required|integer|min:2',
         ], [
             'name.required' => 'De naam van het toernooi is verplicht.',
             'name.string' => 'De naam van het toernooi moet een geldige tekst zijn.',
@@ -47,21 +47,19 @@ class TournamentController extends Controller
             'date.required' => 'Datum van het toernooi is verplicht.',
             'startTime.required' => 'Starttijd van het toernooi is verplicht.',
             'startTime.date_format' => 'Starttijd moet het formaat HH:MM hebben.',
+            'teamsPerPool.required' => 'Aantal teams per poule is verplicht.',
         ]);
 
-        // Check of toernooi al bestaat
         if (Tournament::where('name', $data['name'])->exists()) {
             return redirect()->back()->withErrors(['name' => 'Er bestaat al een toernooi met deze naam.'])->withInput();
         }
 
-        // Ophalen van teams
         $teams = Team::where('sport', $data['sport'])
             ->where('group', $data['group'])
             ->whereNull('tournament_id')
             ->get()
             ->shuffle();
 
-        // Instellingen per sport/groep
         $gameSettings = [
             'voetbal' => [
                 'groep3/4' => ['fields' => 4, 'length' => 15, 'pause' => 5],
@@ -76,27 +74,28 @@ class TournamentController extends Controller
                 'groep7/8' => ['fields' => 4, 'length' => 10, 'pause' => 2],
                 'klas1_meiden' => ['fields' => 4, 'length' => 12, 'pause' => 0],
                 'klas1_jongens' => ['fields' => 4, 'length' => 12, 'pause' => 0],
-            ]
+            ],
         ];
 
         $settings = $gameSettings[$data['sport']][$data['group']];
         $fields = $settings['fields'];
         $playTime = $settings['length'];
         $pause = $settings['pause'];
-
-        // Controleer genoeg teams
-        $teamsPerPool = 4;
+        $teamsPerPool = $data['teamsPerPool'];
         $teamCount = $teams->count();
+
         if ($teamCount < $teamsPerPool) {
             return redirect()->back()->withErrors(['team' => 'Niet genoeg teams beschikbaar.'])->withInput();
         }
 
-        // Teams groeperen per school
+        if ($teamCount % $teamsPerPool === 1) {
+            return redirect()->back()->withErrors(['team' => 'Er blijft 1 team over. Pas het aantal teams per poule aan of voeg teams toe.'])->withInput();
+        }
+
         $teamsBySchool = $teams->groupBy('school_id');
         $pouleCount = (int) ceil($teamCount / $teamsPerPool);
         $poules = array_fill(0, $pouleCount, []);
 
-        // Round-robin verdeling over poules
         $index = 0;
         foreach ($teamsBySchool as $schoolTeams) {
             if (count($schoolTeams) > $pouleCount) {
@@ -109,7 +108,6 @@ class TournamentController extends Controller
             }
         }
 
-        // Maak toernooi
         $tournament = Tournament::create([
             'name' => $data['name'],
             'date' => $data['date'],
@@ -119,8 +117,8 @@ class TournamentController extends Controller
             'archived' => false,
         ]);
 
-        // Teams toewijzen aan poules
         $teams = collect($poules)->flatten();
+
         foreach ($teams->values() as $index => $team) {
             $poolNumber = (int) floor($index / $teamsPerPool) + 1;
             $team->update([
@@ -129,25 +127,31 @@ class TournamentController extends Controller
             ]);
         }
 
-        // Carbon starttijd
+        // Starttijd en veldtijden
         $startTime = Carbon::createFromFormat('H:i', $data['startTime']);
         $fieldTimes = [];
         for ($f = 1; $f <= $fields; $f++) {
             $fieldTimes[$f] = $startTime->copy();
         }
 
-        // Wedstrijden plannen per poule
         $teamsByPool = $teams->groupBy('pool');
         foreach ($teamsByPool as $poolTeams) {
             $poolTeamsList = $poolTeams->values()->all();
-
             for ($i = 0; $i < count($poolTeamsList); $i++) {
                 for ($j = $i + 1; $j < count($poolTeamsList); $j++) {
-                    // Kies veld met vroegste beschikbare tijd
-                    $field = array_keys($fieldTimes, min($fieldTimes))[0];
-                    $start = $fieldTimes[$field]->copy();
+                    // Veld met vroegste tijd kiezen
+                    $earliestField = null;
+                    $earliestTime = null;
+                    foreach ($fieldTimes as $f => $time) {
+                        if (is_null($earliestTime) || $time->lt($earliestTime)) {
+                            $earliestTime = $time;
+                            $earliestField = $f;
+                        }
+                    }
+                    $field = $earliestField;
+                    $start = $earliestTime->copy();
 
-                    // Scheidsrechter kiezen
+                    // Scheidsrechter
                     $team1School = $poolTeamsList[$i]->school_id;
                     $team2School = $poolTeamsList[$j]->school_id;
                     $eligibleReferee = Scheidsrechter::where('school_id', '!=', $team1School)
@@ -155,7 +159,6 @@ class TournamentController extends Controller
                         ->inRandomOrder()
                         ->first();
 
-                    // Fixture aanmaken
                     Fixture::create([
                         'team_1_id' => $poolTeamsList[$i]->id,
                         'team_2_id' => $poolTeamsList[$j]->id,
@@ -169,7 +172,6 @@ class TournamentController extends Controller
                         'scheidsrechter_id' => $eligibleReferee ? $eligibleReferee->id : null,
                     ]);
 
-                    // Update veldtijd: speeltijd + pauze
                     $fieldTimes[$field]->addMinutes($playTime + $pause);
                 }
             }
@@ -186,14 +188,14 @@ class TournamentController extends Controller
         return view('tournaments.show', compact('tournament', 'fixtures'));
     }
 
-    public function edit(Tournament $tournament) {
-
-        
+    public function edit(Tournament $tournament)
+    {
+        //
     }
 
-    public function update(UpdateTournamentRequest $request, Tournament $tournament) {
-
-
+    public function update(UpdateTournamentRequest $request, Tournament $tournament)
+    {
+        //
     }
 
     public function destroy($id)
@@ -206,16 +208,11 @@ class TournamentController extends Controller
 
     public function getAllData()
     {
-        $schools = School::all();
-        $teams = Team::all();
-        $users = User::all();
-        $scheidsrechters = Scheidsrechter::all();
-
         return [
-            'schools' => $schools,
-            'teams' => $teams,
-            'users' => $users,
-            'scheidsrechters' => $scheidsrechters,
+            'schools' => School::all(),
+            'teams' => Team::all(),
+            'users' => User::all(),
+            'scheidsrechters' => Scheidsrechter::all(),
         ];
     }
 

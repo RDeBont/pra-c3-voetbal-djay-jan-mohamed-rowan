@@ -6,7 +6,7 @@
     <section class="hero">
       <h1>Schrijf je school nu in!</h1>
       <p>Doe mee aan spannende schooltoernooien en laat je team schitteren!</p>
-      <a href="{{ url('tournaments') }}" class="btn-tournaments">Toernooien</a>
+      <a href="{{'tournaments'}}" class="btn-tournaments">Toernooien</a>
     </section>
     <section class="welcome">
       <h2>Welkom bij de Stichting Paastoernooien Bergen op Zoom!</h2>

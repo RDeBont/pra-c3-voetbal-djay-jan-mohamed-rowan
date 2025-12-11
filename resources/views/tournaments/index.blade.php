@@ -1,6 +1,6 @@
 <x-base-layout>
     <main class="toernooien-page">
-        <a class="btn-goback" href="/">Ga Terug</a>
+
 
         <h1>Toernooien</h1>
         <a href="{{ url('/spelregels') }}" class="btn-spelregels">Spelregels</a>
