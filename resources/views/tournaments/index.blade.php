@@ -2,35 +2,6 @@
     <main class="toernooien-page">
         <h1>Toernooien</h1>
 
-        <form class="filter-form" method="GET" action="{{ route('tournaments.index') }}">
-            <label for="sport">Sportsoort:</label>
-            <select id="sport" name="sport">
-                <option value="">-- Alles --</option>
-                <option value="voetbal" {{ request('sport') == 'voetbal' ? 'selected' : '' }}>Voetbal</option>
-                <option value="lijnbal" {{ request('sport') == 'lijnbal' ? 'selected' : '' }}>LijnBal</option>
-            </select>
-
-            <label for="groep">Groep:</label>
-            <select id="groep" name="groep">
-                <option value="">-- Alles --</option>
-                <option value="groep3_4" {{ request('groep') == 'groep3_4' ? 'selected' : '' }}>Groep 3/4</option>
-                <option value="groep5_6" {{ request('groep') == 'groep5_6' ? 'selected' : '' }}>Groep 5/6</option>
-                <option value="groep7" {{ request('groep') == 'groep7' ? 'selected' : '' }}>Groep 7/8</option>
-                <option value="klas1_jongens" {{ request('groep') == 'klas1_jongens' ? 'selected' : '' }}>Klas 1 (Jongens)</option>
-                <option value="klas1_meiden" {{ request('groep') == 'klas1_meiden' ? 'selected' : '' }}>Klas 1 (Meiden)</option>
-            </select>
-
-            <label for="geslacht">Geslacht:</label>
-            <select id="geslacht" name="geslacht">
-                <option value="">-- Alles --</option>
-                <option value="jongens" {{ request('geslacht') == 'jongens' ? 'selected' : '' }}>Jongens</option>
-                <option value="meisjes" {{ request('geslacht') == 'meisjes' ? 'selected' : '' }}>Meisjes</option>
-            </select>
-
-            <button type="submit">Filter</button>
-            <a href="{{ url('/spelregels') }}" class="btn-spelregels">Spelregels</a>
-        </form>
-
         <section class="toernooi-lijst">
             <table class="toernooi-tabel">
                 <thead>
@@ -47,65 +18,33 @@
                 </thead>
 
                 <tbody>
-                    @php $found = false; @endphp
-
                     @forelse ($tournaments as $tournament)
-                        @php
-                            $ok = true;
+                        <tr>
+                            <td>{{ $tournament->name }}</td>
+                            <td>
+                                <a href="{{ route('tournaments.show', $tournament->id) }}" class="btn-details">
+                                    Bekijk details
+                                </a>
+                            </td>
 
-                            // SPORT
-                            if (request('sport') && strtolower($tournament->sport) !== request('sport')) {
-                                $ok = false;
-                            }
-
-                            // GROEP
-                            if (request('groep')) {
-                                $filter = request('groep');
-                                $groep = strtolower($tournament->group);
-
-                                if ($filter === 'groep7' && !in_array($groep, ['groep7', 'groep8'])) $ok = false;
-                                if ($filter === 'groep3_4' && !in_array($groep, ['groep3', 'groep4'])) $ok = false;
-                                if ($filter === 'groep5_6' && !in_array($groep, ['groep5', 'groep6'])) $ok = false;
-                                if ($filter === 'klas1_jongens' && $groep !== 'klas1_jongens') $ok = false;
-                                if ($filter === 'klas1_meiden' && $groep !== 'klas1_meiden') $ok = false;
-                            }
-
-                            // GESLACHT
-                            if (request('geslacht') && strtolower($tournament->gender) !== request('geslacht')) {
-                                $ok = false;
-                            }
-                        @endphp
-
-                        @if ($ok)
-                            @php $found = true; @endphp
-                            <tr>
-                                <td>{{ $tournament->name }}</td>
-                                <td>
-                                    <a href="{{ route('tournaments.show', $tournament->id) }}" class="btn-details">
-                                        Bekijk details
-                                    </a>
-                                </td>
-                                @auth
-                                    @if(auth()->user()->is_admin)
-                                        <td>
-                                            <form method="POST" action="{{ route('tournaments.destroy', $tournament->id) }}"
-                                                onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn-fixture delete">Verwijder</button>
-                                            </form>
-                                        </td>
-                                    @endif
-                                @endauth
-                            </tr>
-                        @endif
-                    @endforeach
-
-                    @unless($found)
+                            @auth
+                                @if(auth()->user()->is_admin)
+                                    <td>
+                                        <form method="POST" action="{{ route('tournaments.destroy', $tournament->id) }}"
+                                              onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn-fixture delete">Verwijder</button>
+                                        </form>
+                                    </td>
+                                @endif
+                            @endauth
+                        </tr>
+                    @empty
                         <tr>
                             <td colspan="3">Geen toernooien gevonden.</td>
                         </tr>
-                    @endunless
+                    @endforelse
                 </tbody>
             </table>
         </section>

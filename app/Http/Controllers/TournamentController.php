@@ -276,3 +276,27 @@ class TournamentController extends Controller
         return view('tournaments.standings', compact('tournament', 'teams', 'stand'));
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
