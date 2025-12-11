@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Fixture;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Tournament;
+use App\Models\Team;
 
 class FixtureController extends Controller
 {
@@ -19,9 +21,9 @@ class FixtureController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
     }
 
     /**
@@ -79,8 +81,17 @@ class FixtureController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Fixture $fixture)
+    public function destroy($id)
     {
-        //
+        $fixture = Fixture::findOrFail($id);
+        $tournamentId = $fixture->tournament_id; 
+
+        $fixture->delete();
+
+        return redirect()
+            ->route('tournaments.show', $tournamentId)
+            ->with('success', 'Wedstrijd succesvol verwijderd.');
     }
+
+
 }

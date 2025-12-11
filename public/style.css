@@ -470,7 +470,7 @@ h1 {
   cursor: pointer;
 }
 
-.btn-edit{
+.btn-edit {
   margin-top: 10px;
   background-color: white;
   color: #548350;
@@ -831,28 +831,77 @@ h1 {
   text-align: center;
 }
 
-.edit-button-wrapper {
-  text-align: center;
-  margin: 20px 0 40px 0;
+
+
+/* Fixtures pagina */
+.fixture-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+  justify-content: center;
 }
 
+.fixture-buttons form {
+  display: inline;
+}
 
-.edit-button {
-  background-color: #3e6a3e;
+.btn-fixture {
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 4px;
   color: white;
   text-decoration: none;
-  padding: 8px 14px;
-  border-radius: 4px;
-  font-size: 14px;
-  border: 1px solid #3e6a3e;
-  display: inline-block;
+  border: 1px solid transparent;
+  cursor: pointer;
 }
 
-.edit-button:hover {
+.btn-fixture.edit {
+  background-color: #3e6a3e;
+  border-color: #3e6a3e;
+}
+
+.btn-fixture.edit:hover {
   background-color: #2f512f;
-  ;
   border-color: #2f512f;
 }
+
+.btn-fixture.delete {
+  background-color: #8b2e2e;
+  border-color: #8b2e2e;
+}
+
+.btn-fixture.delete:hover {
+  background-color: #6b2323;
+  border-color: #6b2323;
+}
+
+.btn-fixture.create {
+  background-color: #2e5d8b;
+  border-color: #2e5d8b;
+}
+
+.btn-fixture.create:hover {
+  background-color: #234867;
+  border-color: #234867;
+}
+
+.btn-new-fixture {
+  background-color: #2e5d8b;
+  color: white;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: 1px solid #2e5d8b;
+  font-size: 15px;
+  display: inline-block;
+  font-weight: 500;
+}
+
+.btn-new-fixture:hover {
+  background-color: #234867;
+  border-color: #234867;
+}
+
 
 /* Globale alert bubble */
 .alert-bubble {
@@ -888,7 +937,7 @@ h1 {
   background-color: #f8f9fa;
   border-radius: 8px;
   font-family: sans-serif;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .fixture-edit h1 {
@@ -969,7 +1018,7 @@ h1 {
 
 .site-footer {
   background-color: #f5f3f3de;
-color: #333;
+  color: #333;
   margin-top: 40px;
   padding: 20px 0;
   font-family: sans-serif;
@@ -1001,7 +1050,7 @@ color: #333;
 
 .footer-bottom {
   text-align: center;
-  border-top: 1px solid rgba(255,255,255,0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
   margin-top: 20px;
   padding-top: 10px;
   font-size: 0.95rem;
@@ -1030,10 +1079,12 @@ color: #333;
 
 
 .footer-bottom {
-  border-bottom: 1px solid #ccc; /* streep onder de algemene info */
+  border-bottom: 1px solid #ccc;
+  /* streep onder de algemene info */
   text-align: center;
   padding: 10px 0;
-  margin-bottom: 20px; /* ruimte tussen streep en de kopjes */
+  margin-bottom: 20px;
+  /* ruimte tussen streep en de kopjes */
   font-size: 0.95rem;
   color: #333;
 }

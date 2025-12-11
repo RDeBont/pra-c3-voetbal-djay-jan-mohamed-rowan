@@ -13,11 +13,9 @@
             <label for="groep">Groep:</label>
             <select id="groep" name="groep">
                 <option value="">-- Alles --</option>
-
                 <option value="groep3_4" {{ request('groep') == 'groep3_4' ? 'selected' : '' }}>Groep 3/4</option>
                 <option value="groep5_6" {{ request('groep') == 'groep5_6' ? 'selected' : '' }}>Groep 5/6</option>
                 <option value="groep7" {{ request('groep') == 'groep7' ? 'selected' : '' }}>Groep 7/8</option>
-
                 <option value="klas1_jongens" {{ request('groep') == 'klas1_jongens' ? 'selected' : '' }}>Klas 1 (Jongens)</option>
                 <option value="klas1_meiden" {{ request('groep') == 'klas1_meiden' ? 'selected' : '' }}>Klas 1 (Meiden)</option>
             </select>
@@ -33,70 +31,53 @@
             <a href="{{ url('/spelregels') }}" class="btn-spelregels">Spelregels</a>
         </form>
 
-
         <section class="toernooi-lijst">
             <table class="toernooi-tabel">
                 <thead>
                     <tr>
                         <th>Naam Tournament</th>
                         <th>Details</th>
+
+                        @auth
+                            @if(auth()->user()->is_admin)
+                                <th>Acties</th>
+                            @endif
+                        @endauth
                     </tr>
                 </thead>
-                <tbody>
 
-                    @forelse ($tournaments as $tournament)
+                <tbody>
+                    @php $found = false; @endphp
+
+                    @foreach ($tournaments as $tournament)
                         @php
                             $ok = true;
 
-                            // SPORT FILTER
+                            // SPORT
                             if (request('sport') && strtolower($tournament->sport) !== request('sport')) {
                                 $ok = false;
                             }
 
-                            // GROEP FILTER – inclusief combinatie Groep 7/8
+                            // GROEP
                             if (request('groep')) {
                                 $filter = request('groep');
                                 $groep = strtolower($tournament->group);
 
-                                // Groep 7/8 = groep7 + groep8 tonen
-                                if ($filter === 'groep7') {
-                                    if (!in_array($groep, ['groep7', 'groep8'])) {
-                                        $ok = false;
-                                    }
-                                }
-                                // groep3/4
-                                else if ($filter === 'groep3_4') {
-                                    if (!in_array($groep, ['groep3', 'groep4'])) {
-                                        $ok = false;
-                                    }
-                                }
-                                // groep5/6
-                                else if ($filter === 'groep5_6') {
-                                    if (!in_array($groep, ['groep5', 'groep6'])) {
-                                        $ok = false;
-                                    }
-                                }
-                                // klas 1 jongens
-                                else if ($filter === 'klas1_jongens') {
-                                    if ($groep !== 'klas1_jongens') {
-                                        $ok = false;
-                                    }
-                                }
-                                // klas 1 meiden
-                                else if ($filter === 'klas1_meiden') {
-                                    if ($groep !== 'klas1_meiden') {
-                                        $ok = false;
-                                    }
-                                }
+                                if ($filter === 'groep7' && !in_array($groep, ['groep7', 'groep8'])) $ok = false;
+                                if ($filter === 'groep3_4' && !in_array($groep, ['groep3', 'groep4'])) $ok = false;
+                                if ($filter === 'groep5_6' && !in_array($groep, ['groep5', 'groep6'])) $ok = false;
+                                if ($filter === 'klas1_jongens' && $groep !== 'klas1_jongens') $ok = false;
+                                if ($filter === 'klas1_meiden' && $groep !== 'klas1_meiden') $ok = false;
                             }
 
-                            // GESLACHT FILTER
+                            // GESLACHT
                             if (request('geslacht') && strtolower($tournament->gender) !== request('geslacht')) {
                                 $ok = false;
                             }
                         @endphp
 
                         @if ($ok)
+                            @php $found = true; @endphp
                             <tr>
                                 <td>{{ $tournament->name }}</td>
                                 <td>
@@ -104,15 +85,28 @@
                                         Bekijk details
                                     </a>
                                 </td>
+
+                                @auth
+                                    @if(auth()->user()->is_admin)
+                                        <td>
+                                            <form method="POST" action="{{ route('tournaments.destroy', $tournament->id) }}"
+                                                  onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn-fixture delete">Verwijder</button>
+                                            </form>
+                                        </td>
+                                    @endif
+                                @endauth
                             </tr>
                         @endif
+                    @endforeach
 
-                    @empty
+                    @unless($found)
                         <tr>
-                            <td colspan="2">Geen toernooien gevonden.</td>
+                            <td colspan="3">Geen toernooien gevonden.</td>
                         </tr>
-                    @endforelse
-
+                    @endunless
                 </tbody>
             </table>
         </section>

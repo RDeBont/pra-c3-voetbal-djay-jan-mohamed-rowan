@@ -31,7 +31,7 @@ class TournamentController extends Controller
     {
         $all = $this->getAllData();
         return view('tournaments.createTournament', compact('all'));
-        
+
     }
 
     /**
@@ -188,7 +188,7 @@ class TournamentController extends Controller
     public function show(Tournament $tournament)
     {
         $tournament = Tournament::with(['fixtures.team1', 'fixtures.team2'])
-        ->find($tournament->id);
+            ->find($tournament->id);
 
         $fixtures = $tournament->fixtures;
 
@@ -219,23 +219,26 @@ class TournamentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tournament $tournament)
+    public function destroy($id)
     {
-        //
+        $tournament = Tournament::findOrFail($id);
+        $tournament->delete();
+
+        return redirect()->route('tournaments.index')->with('success', 'Toernooi succesvol verwijderd.');
     }
 
     public function getAllData()
-{
-    $schools = School::all();
-    $teams = Team::all();
-    $users = User::all();
-    $scheidsrechters = Scheidsrechter::all();
+    {
+        $schools = School::all();
+        $teams = Team::all();
+        $users = User::all();
+        $scheidsrechters = Scheidsrechter::all();
 
-    return [
-        'schools' => $schools,
-        'teams' => $teams,
-        'users' => $users,
-        'scheidsrechters' => $scheidsrechters,
-    ];
-}
+        return [
+            'schools' => $schools,
+            'teams' => $teams,
+            'users' => $users,
+            'scheidsrechters' => $scheidsrechters,
+        ];
+    }
 }

@@ -58,6 +58,22 @@
                     </tr>
                 </tbody>
             </table>
+            @auth
+                @if(auth()->user()->is_admin)
+                    <div class="fixture-buttons">
+                        <a href="{{ route('fixtures.edit', $fixture->id) }}" class="btn-fixture edit">
+                            Aanpassen
+                        </a>
+
+                        <form method="POST" action="{{ route('fixtures.destroy', $fixture->id) }}"
+                            onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn-fixture delete">Verwijderen</button>
+                        </form>
+                    </div>
+                @endif
+            @endauth
 
             @if (Auth::check() && Auth::user()->is_admin)
             <div class="edit-button-wrapper">
@@ -86,3 +102,5 @@
         });
     </script>
 </x-base-layout>
+
+
