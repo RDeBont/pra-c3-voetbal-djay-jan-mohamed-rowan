@@ -13,6 +13,15 @@
                 <label for="name">Toernooinaam:</label>
                 <input type="text" name="name" id="name" class="signupform-control" required>
             </div>
+            <div class="signupform-group">
+                <label for="date">Datum Toernooi:</label>
+                <input type="date" name="date" id="date" class="signupform-control" required>
+            </div>
+
+            <div class="signupform-group">
+                <label for="startTime">Startijd:</label>
+                <input type="text" id="startTime" name="startTime" class="signupform-control" required>
+            </div>
 
 
             <div class="signupform-group">
@@ -53,6 +62,12 @@
 
 
     <script>
+        flatpickr("#startTime", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true
+        })
         //Chatgpt
         const groupSelect = document.getElementById('group');
         const schoolLevelSelect = document.getElementById('school_level');

@@ -48,7 +48,7 @@
                         <tr>
                             <th>StartTijd</th>
                             <td>{{ $fixture->start_time }}</td>
-                            <td></td>
+                            <td>{{ $fixture->end_time }}</td>
                         </tr>
                         <tr>
                             <th>Veld</th>

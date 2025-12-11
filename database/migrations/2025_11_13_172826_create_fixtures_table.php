@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('team_2_score')->default(0);
             $table->integer('field');
             $table->time('start_time');
+            $table->time('end_time')->nullable();
             $table->string('type');
             $table->foreignId('tournament_id')->constrained('tournaments')->onDelete('cascade');
             $table->timestamps();
