@@ -10,6 +10,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TournamentCreateController;
 use App\Http\Controllers\inschrijfController;
 use App\Http\Controllers\FixtureController;
+
 Route::get('/', function () {
     return view('index');
 });
@@ -46,20 +47,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('admin', AdminController::class);
+
+    // 🔐 Admin-only routes
+    Route::middleware('admin')->group(function () {
+        Route::resource('admin', AdminController::class);
+        Route::post('admin/schools/{id}/accept', [AdminController::class, 'accept'])->name('admin.schools.accept');
+        Route::post('admin/schools/{id}/reject', [AdminController::class, 'reject'])->name('admin.schools.reject');
+    });
+
+    // Other authenticated routes
     Route::delete('/tournaments/{id}', [TournamentController::class, 'destroy']);
-    Route::post('admin/schools/{id}/accept', [AdminController::class, 'accept'])->name('admin.schools.accept');
-    Route::post('admin/schools/{id}/reject', [AdminController::class, 'reject'])->name('admin.schools.reject');
     Route::resource('fixtures', FixtureController::class);
-    Route::resource('team', teamController::class);
+    Route::resource('team', TeamController::class);
     Route::resource('users', UserController::class);
-    Route::resource('tournaments', TournamentController::class)->except(['index', 'show']);
-    Route::resource('fixtures', FixtureController::class);
-    Route::resource('fixtures', FixtureController::class)->middleware('auth');
     Route::resource('tournaments', TournamentController::class);
-
-
 });
+
 
 Route::resource('tournaments', TournamentController::class)->only(['index', 'show']);
 Route::get('tournaments/{tournament}/standings', [TournamentController::class, 'standings'])->name('tournaments.standings');
