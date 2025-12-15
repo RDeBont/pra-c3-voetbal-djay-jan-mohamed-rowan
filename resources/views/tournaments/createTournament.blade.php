@@ -94,7 +94,7 @@
                     { value: "klas1_meiden", label: "1e klas Meiden" }
                 ],
                 lijnbal: [
-                    { value: "klas1_meiden_lijnbal", label: "1e klas Lijnbal Meiden" }
+                    { value: "klas1_meiden", label: "1e klas Lijnbal Meiden" }
                 ]
             }
         };
