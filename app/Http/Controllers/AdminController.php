@@ -14,7 +14,6 @@ class AdminController extends Controller
      */
     public function index()
     {
-
         $users = User::all();
         $schoolsAccepted = School::all()->where('accepted', 1);
         $schools = School::all()->where('accepted', 0);

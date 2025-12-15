@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('creator_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('email')->unique();
+            $table->string('phonenumber')->nullable();
             $table->string('address');
             $table->string('typeSchool');
             $table->integer('accepted')->default(0);

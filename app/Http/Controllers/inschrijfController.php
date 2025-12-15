@@ -33,6 +33,7 @@ class inschrijfController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:schools,email',
             'address' => 'required|string|max:255',
+            'phonenumber' => 'required|string|max:20',
             'typeSchool' => 'required|string|in:basisschool,middelbare school',
             
         ],[
@@ -40,6 +41,10 @@ class inschrijfController extends Controller
             'email.required' => 'Het e-mailadres is verplicht.',
             'email.email' => 'Vul een geldig e-mailadres in.',
             'email.unique' => 'Dit e-mailadres is al in gebruik.',
+            'telefoonnummer.required' => 'Het telefoonnummer is verplicht.',
+            'telefoonnummer.string' => 'Vul een geldig telefoonnummer in.',
+            'telefoonnummer.max' => 'Het telefoonnummer mag niet langer zijn dan 20 tekens.',
+            'telefoonnummer.unique' => 'Dit telefoonnummer is al in gebruik.',
             'address.required' => 'Het adres is verplicht.',
             'typeSchool.required' => 'Het type school is verplicht.',
             'typeSchool.in' => 'Ongeldig type school geselecteerd.',

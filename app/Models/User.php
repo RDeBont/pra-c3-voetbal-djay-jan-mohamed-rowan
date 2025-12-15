@@ -18,7 +18,6 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
-        'phonenumber',
         'school_id',
     ];
 
@@ -35,4 +34,5 @@ class User extends Authenticatable
     {
         return $this->belongsTo(School::class, 'school_id');
     }
+    
 }

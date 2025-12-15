@@ -19,7 +19,6 @@ class AdminUserSeeder extends Seeder
             'password' => Hash::make('admin1'),
             'is_admin' => true,
             'email' => 'admin@exempel.com',
-            'phonenumber' => '0612345678',
 
         ]);
 
@@ -28,7 +27,6 @@ class AdminUserSeeder extends Seeder
             'password' => Hash::make('school1'),
             'is_admin' => false,
             'email' => 'school@exempel.com',
-            'phonenumber' => '0612345678',
 
         ]);
     }

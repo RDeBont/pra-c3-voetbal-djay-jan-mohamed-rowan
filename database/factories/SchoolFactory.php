@@ -19,6 +19,7 @@ class SchoolFactory extends Factory
             'creator_id' => User::inRandomOrder()->first()->id
                             ?? User::factory()->create()->id,
             'email'      => $this->faker->unique()->safeEmail,
+            'phonenumber'      => $this->faker->unique()->phoneNumber,
             'address'    => $this->faker->address,
             'typeSchool' => $this->faker->randomElement(['basisschool', 'middelbare school ',]),
             'accepted'   => 0,

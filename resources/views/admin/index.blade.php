@@ -38,6 +38,7 @@
                     <p>Email: {{ $school->email }}</p>
                     <p>Type school: {{ $school->typeSchool }}</p>
                     <p>Address: {{ $school->address }}</p>
+                    <p>Telefoonnummer: {{ $school->phonenumber }}</p>
                     <form method="POST" action="{{ route('admin.schools.accept', $school->id) }}" style="display:inline"
                         class="accept-form">
                         @csrf
@@ -82,6 +83,7 @@
                         <p>Email: {{ $s->email }}</p>
                         <p>Type school: {{ $s->typeSchool }}</p>
                         <p>Address: {{ $s->address }}</p>
+                        <p>Telefoonnummer: {{ $s->phonenumber }}</p>
 
                         <form method="POST" action="{{ route('admin.schools.reject', $s->id) }}"
                             style="display:inline">
@@ -121,6 +123,8 @@
 
                     <h3>User: {{ $user->name }}</h3>
                     <p>Email: {{ $user->email }}</p>
+                    <p>Telefoonnummer: {{ $user->school?->phone }}</p>
+
 
                     <p>Rol:
                         @if ($user->is_admin == 1)
@@ -161,6 +165,7 @@
             @foreach ($teams as $team)
                 <div class="userCard">
                     <h3>Team: {{ $team->name }}</h3>
+                    <p>School: {{ $team->school->name }}</p>
                     <form method="POST" action="{{ route('team.destroy', $team->id) }}" style="display:inline"
                         onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
                         @csrf
