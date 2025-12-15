@@ -28,6 +28,13 @@
                     placeholder="Bijv. contact@school.nl" value="{{ old('email') }}" required>
             </div>
 
+            <!-- Telefoonnummer -->
+            <div class="signupform-group">
+                <label for="phonenumber">Telefoonnummer</label>
+                <input type="text" name="phonenumber" id="phonenumber" class="signupform-control"
+                    placeholder="Bijv. 0612345678" value="{{ old('phonenumber') }}" required>
+            </div>
+
 
             <!-- School Type -->
             <div class="signupform-group">
