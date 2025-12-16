@@ -18,6 +18,7 @@ class Fixture extends Model
         'team_2_score',
         'field',
         'start_time',
+        'end_time',
         'type',
         'tournament_id',
         'scheidsrechter_id',

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('email');
             $table->string('password');
             $table->boolean('is_admin')->default(false);
-            $table->string('phonenumber')->nullable();
             $table->timestamps();
         });
     }

@@ -16,10 +16,12 @@ class School extends Model
         'name',
         'creator_id',
         'email',
+        'phonenumber',
         'address',
         'typeSchool',
         'accepted',
     ];
+
 
     public function creator(): BelongsTo
     {

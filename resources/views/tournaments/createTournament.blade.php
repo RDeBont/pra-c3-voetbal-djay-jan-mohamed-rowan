@@ -17,7 +17,20 @@
                 <label for="name">Toernooinaam:</label>
                 <input type="text" name="name" id="name" class="signupform-control" required>
             </div>
+            <div class="signupform-group">
+                <label for="date">Datum Toernooi:</label>
+                <input type="date" name="date" id="date" class="signupform-control" required>
+            </div>
 
+            <div class="signupform-group">
+                <label for="startTime">Startijd:</label>
+                <input type="text" id="startTime" name="startTime" class="signupform-control" required>
+            </div>
+
+            <div class="signupform-group">
+                <label for="teamsPerPool">Aantal teams per poule:</label>
+                <input type="number" name="teamsPerPool" id="teamsPerPool" class="signupform-control" min="2" required>
+            </div>
 
             <div class="signupform-group">
                 <label for="school_level">Schoolniveau:</label>
@@ -57,6 +70,12 @@
 
 
     <script>
+        flatpickr("#startTime", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true
+        })
         //Chatgpt
         const groupSelect = document.getElementById('group');
         const schoolLevelSelect = document.getElementById('school_level');
@@ -79,7 +98,7 @@
                     { value: "klas1_meiden", label: "1e klas Meiden" }
                 ],
                 lijnbal: [
-                    { value: "klas1_meiden_lijnbal", label: "1e klas Lijnbal Meiden" }
+                    { value: "klas1_meiden", label: "1e klas Lijnbal Meiden" }
                 ]
             }
         };

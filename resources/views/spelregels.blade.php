@@ -3,7 +3,9 @@
         <div class="top-buttons">
             <a class="btn-goback" href="/">Ga Terug</a>
         </div>
+
         <h1>Spelregels</h1>
+        <a href="{{ url('tournaments') }}" style="display: flex; justify-content: center;" class="btn-spelregels">Ga terug</a>
 
         <!-- Algemene uitgangspunten -->
         <section>
