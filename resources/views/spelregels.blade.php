@@ -254,8 +254,43 @@
                     de
                     omgeving en de kleedkamers schoon en controleer de kleedkamers bij vertrek.</li>
                 <li>De toernooileiding beslist in gevallen waarin het reglement niet voorziet.</li>
-                <li>Bij wedstrijden met gelijke shirtkleuren zijn gekleurde hesjes beschikbaar bij de wedstrijdleiding.</li>
+                <li>Bij wedstrijden met gelijke shirtkleuren zijn gekleurde hesjes beschikbaar bij de wedstrijdleiding.
+                </li>
             </ol>
+            <h2>Reglementen Paasvoetbal Voortgezet Onderwijs</h2>
+            <ol>
+                <li>De wedstrijden worden gespeeld volgens de reglementen en bepalingen van de KNVB en staan onder
+                    leiding van KNVB-scheidsrechters.</li>
+                <li>De spelers in de C-klasse zijn ingeschreven bij de betreffende school en zitten in de eerste klas.
+                </li>
+                <li>
+                    Niet wisselen van team; wanneer een school zich heeft ingeschreven met meer dan één team, mogen
+                    spelers niet worden overgeheveld van de ene naar de andere ploeg. Dat is evenmin toegestaan wanneer
+                    de andere teams van de school zijn uitgeschakeld.
+                </li>
+                <li>
+                    Ongerechtige spelers; Komt een elftal met ongerechtige spelers uit, dan wordt de wedstrijd ongeldig
+                    verklaard en heeft de tegenpartij met 2-0 gewonnen.
+                </li>
+                <li>
+                    Gelijke stand in de poule; wanneer twee ploegen gelijk zijn geëindigd in hun poule moet een van de
+                    volgende criteria – in de hier onderstaande volgorde – uitkomst bieden:
+                    <ol type="a">
+                        <li>Het doelsaldo. Is dat gelijk, dan geldt:</li>
+                        <li>Het aantal doelpunten dat de ploegen hebben gemaakt.</li>
+                        <li>Is dat ook gelijk, dan geldt het onderlinge resultaat.</li>
+                        <li>Leveren deze criteria nog geen winnaar op, dan volgt de beslissing tijdens een
+                            strafschoppenserie waarin beide teams drie strafschoppen nemen.</li>
+                    </ol>
+                </li>
+                <li>Poulewedstrijden duren 20 minuten, kruisfinales 30 minuten.</li>
+                <li>Zorg ervoor dat uw school tijdens elke wedstrijd een grensrechter heeft! (De grensrechter is 16 jaar
+                    of ouder)</li>
+                <li>Toon je sportiviteit door jouw aanwezigheid tijdens de prijsuitreiking.</li>
+                <li>Bij de wedstrijdleiding zijn gekleurde hesjes verkrijgbaar, indien twee ploegen dezelfde kleur
+                    shirtjes hebben. De leiding kan die ophalen en weer terug inleveren.</li>
+            </ol>
+
         </section>
 
 
