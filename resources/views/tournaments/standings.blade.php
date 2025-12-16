@@ -12,6 +12,7 @@
                         <tr>
                             <th style="text-align:left; padding: 8px; border-bottom: 2px solid;">Team</th>
                             <th style="text-align:center; padding: 8px; border-bottom: 2px solid;">Punten</th>
+                            <th style="text-align:center; padding: 8px; border-bottom: 2px solid;">Doelsaldo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -19,6 +20,7 @@
                             <tr>
                                 <td style="padding: 8px; border-bottom: 1px solid;">{{ $team->name }}</td>
                                 <td style="text-align:center; padding: 8px; border-bottom: 1px solid;">{{ $team->poulePoints }}</td>
+                                <td style="text-align:center; padding: 8px; border-bottom: 1px solid;">{{ $team->pouleGoals }}</td>
                             </tr>
                         @endforeach
                     </tbody>

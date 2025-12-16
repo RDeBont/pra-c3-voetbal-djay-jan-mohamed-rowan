@@ -254,6 +254,7 @@
                     de
                     omgeving en de kleedkamers schoon en controleer de kleedkamers bij vertrek.</li>
                 <li>De toernooileiding beslist in gevallen waarin het reglement niet voorziet.</li>
+                <li>Bij wedstrijden met gelijke shirtkleuren zijn gekleurde hesjes beschikbaar bij de wedstrijdleiding.</li>
             </ol>
         </section>
 
@@ -440,6 +441,4 @@
 
 
     </main>
-
-
 </x-base-layout>

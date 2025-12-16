@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('teamsort')->nullable();
             $table->integer('pool')->nullable();
             $table->integer('poulePoints')->default(0);
+            $table->integer('pouleGoals')->default(0);  
             $table->foreignId('tournament_id')->nullable()->constrained('tournaments');
             $table->timestamps();
         });

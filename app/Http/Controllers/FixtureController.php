@@ -90,9 +90,26 @@ class FixtureController extends Controller
         ]);
 
 
+       // oude scores opslaan
+        $oldTeam1Score = $fixture->team_1_score;
+        $oldTeam2Score = $fixture->team_2_score;
+
+        // fixture updaten
         $fixture->update($validatedData);
+
         $team1 = Team::find($fixture->team_1_id);
         $team2 = Team::find($fixture->team_2_id);
+
+        // oud doelsaldo verwijderen
+        $team1->pouleGoals -= ($oldTeam1Score - $oldTeam2Score);
+        $team2->pouleGoals -= ($oldTeam2Score - $oldTeam1Score);
+
+        // nieuw doelsaldo toevoegen
+        $team1->pouleGoals += ($validatedData['team_1_score'] - $validatedData['team_2_score']);
+        $team2->pouleGoals += ($validatedData['team_2_score'] - $validatedData['team_1_score']);
+
+        $team1->save();
+        $team2->save();
 
         if (isset($validatedData['team_1_points'])) {
             $team1->poulePoints = $validatedData['team_1_points'];
