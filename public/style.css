@@ -737,6 +737,13 @@ h1 {
     margin-bottom: 50px;
 }
 
+.spelregels-page h1 {
+    color: #3e6a3e;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #3e6a3e;
+    padding-bottom: 5px;
+}
+
 .spelregels-page h2 {
     color: #3e6a3e;
     margin-bottom: 20px;
