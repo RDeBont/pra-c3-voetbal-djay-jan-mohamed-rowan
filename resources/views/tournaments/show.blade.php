@@ -2,6 +2,9 @@
     <main class="toernooi-detail-page">
 
         <h1>{{ $tournament->name }}</h1>
+        <div class="top-buttons">
+            <a class="btn-goback" href="/">Ga Terug</a>
+        </div>
 
         <div class="wn">
 
@@ -11,7 +14,7 @@
 
         <!-- Pool Filter -->
         <div style="margin-bottom: 20px; display: flex; justify-content: center;">
-            <label for="pool-filter" style="font-weight: bold; margin-right: 10px; ">Filter op Poule:</label>
+            <label for="pool-filter" style="font-weight: bold; margin-right: 0.2rem; margin-top: 0.55rem">Filter op Poule:</label>
             <select id="pool-filter" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
                 <option value="">Alle Poules</option>
                 @php
