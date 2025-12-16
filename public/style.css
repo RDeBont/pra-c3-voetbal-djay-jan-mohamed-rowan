@@ -698,15 +698,7 @@ h1 {
 
 
 /*spelregelknop*/
-.btn-spelregels {
-    padding: 10px 16px;
-    background-color: #3e6a3e;
-    color: #fff;
-    font-weight: 500;
-    text-decoration: none;
-    border-radius: 60px;
-    transition: background 0.2s ease, transform 0.1s ease;
-}
+
 
 
 /* hover: kleur en lichte beweging */
@@ -1089,16 +1081,28 @@ h1 {
     color: #333;
 }
 
-.btn-goback {
-    margin-left: 43.2rem;
+.top-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+
+.btn-goback,
+.btn-spelregels {
     padding: 10px 16px;
-    background-color: #3e6a3e;
     color: #fff;
     font-weight: 500;
     text-decoration: none;
     border-radius: 60px;
     text-align: center;
+    background-color: #3e6a3e;
+    display: inline-block;
 }
+
 
 .btn-gobackshow {
     margin-left: 44.5rem;
@@ -1134,19 +1138,71 @@ h1 {
 
 
 @media (max-width: 768px) {
-    .nav-container{
+
+    /* Navbar Responsiveness */
+    .nav-container {
         width: 100%;
         text-align: center;
         flex-direction: column;
         align-items: center;
     }
-    .homepage{
+
+    /* Einde Navbar Responsiveness */
+
+    /* Homepage Responsiveness */
+    .hero {
+        font-size: medium;
         width: 100%;
     }
-    .welcome{
+
+    .homepage {
+        width: 100%;
+    }
+
+    .welcome {
+        text-align: center;
+        font-size: larger;
+    }
+
+    /* Einde Homepage Responsiveness */
+
+    /* Toernooi Responsiveness */
+.toernooien-page {
+        padding: 1.5rem 1rem;
+    }
+
+    /* Stack buttons nicely on small screens */
+    .top-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Make the table scrollable and a bit smaller on phones */
+    .toernooi-lijst {
+        overflow-x: auto;
+    }
+
+    .toernooi-tabel {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    .toernooi-tabel th,
+    .toernooi-tabel td {
+        padding: 0.5rem;
+    }
+
+    /* Einde Toernooi Responsiveness */
+
+    /* Footer Responsiveness */
+    .footer-col {
         text-align: center;
     }
-    .welcome p{
+
+    .footer-col p {
         font-size: large;
     }
+
+    /* Einde Footer Responsiveness */
+
 }

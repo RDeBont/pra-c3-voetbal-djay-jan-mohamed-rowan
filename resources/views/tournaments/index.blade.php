@@ -1,14 +1,16 @@
 <x-base-layout>
     <main class="toernooien-page">
-        <a class="btn-goback" href="/">Ga Terug</a>
+
+        <div class="top-buttons">
+            <a class="btn-goback" href="/">Ga Terug</a>
+            <a href="{{ url('/spelregels') }}" class="btn-spelregels">Spelregels</a>
+        </div>
 
         <h1>Toernooien</h1>
-        <a href="{{ url('/spelregels') }}" class="btn-spelregels">Spelregels</a>
-
 
         <section class="toernooi-lijst">
             <table class="toernooi-tabel">
-                
+
                 <thead>
                     <tr>
                         <th>Naam Tournament</th>
@@ -51,6 +53,7 @@
                         </tr>
                     @endforelse
                 </tbody>
+
             </table>
         </section>
 
