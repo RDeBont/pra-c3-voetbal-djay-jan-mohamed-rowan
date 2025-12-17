@@ -10,6 +10,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TournamentCreateController;
 use App\Http\Controllers\inschrijfController;
 use App\Http\Controllers\FixtureController;
+use App\Http\Controllers\ScheidsrechterController;
 
 Route::get('/', function () {
     return view('index');
@@ -61,6 +62,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('team', TeamController::class);
     Route::resource('users', UserController::class);
     Route::resource('tournaments', TournamentController::class);
+    Route::resource('scheidsrechters', ScheidsrechterController::class);
+
 });
 
 

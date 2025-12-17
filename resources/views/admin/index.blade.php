@@ -45,8 +45,7 @@
                         <button type="submit" class="accept-btn" data-cooldown="15000">Accepteer</button>
                     </form>
 
-                    <form method="POST" action="{{ route('admin.schools.reject', $school->id) }}"
-                        style="display:inline">
+                    <form method="POST" action="{{ route('admin.schools.reject', $school->id) }}" style="display:inline">
                         @csrf
                         <button type="submit">Weiger</button>
                     </form>
@@ -85,8 +84,7 @@
                         <p>Address: {{ $s->address }}</p>
                         <p>Telefoonnummer: {{ $s->phonenumber }}</p>
 
-                        <form method="POST" action="{{ route('admin.schools.reject', $s->id) }}"
-                            style="display:inline">
+                        <form method="POST" action="{{ route('admin.schools.reject', $s->id) }}" style="display:inline">
                             @csrf
                             <button type="submit">Weiger</button>
                         </form>
@@ -236,6 +234,25 @@
             </form>
         </div>
 
+        <div class="tInfoContainer">
+            <h2>Sheidsrechter aanmaak</h2>
+        </div>
+
+
+
+        <div class="infoContainer">
+            <form action="{{ route('scheidsrechters.store') }}" method="POST" class="create-user-form">
+                @csrf
+                <div class="form-group">
+                    <label for="name">Naam:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <button type="submit" class="btn-create-user">Maak Scheidsrechter aan</button>
+            </form>
     </main>
 
     <script>

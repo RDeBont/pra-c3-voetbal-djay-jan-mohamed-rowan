@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Scheidsrechter;
 use App\Http\Requests\StoreScheidsrechterRequest;
 use App\Http\Requests\UpdateScheidsrechterRequest;
+use Illuminate\Http\Request;
 
 class ScheidsrechterController extends Controller
 {
@@ -27,11 +28,19 @@ class ScheidsrechterController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreScheidsrechterRequest $request)
-    {
-        //
-    }
 
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:scheidsrechters,email',
+        ]);
+
+        Scheidsrechter::create($validated);
+
+        return redirect()->route('admin.index')->with('success', 'Scheidsrechter succesvol aangemaakt!');
+    }
     /**
      * Display the specified resource.
      */
