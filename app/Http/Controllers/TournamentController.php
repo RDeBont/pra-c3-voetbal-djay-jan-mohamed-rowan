@@ -30,7 +30,7 @@ class TournamentController extends Controller
 
     public function store(StoreTournamentRequest $request)
     {
-        //VALIDATIE 
+        //VALIDATIE
         $data = $request->validate([
             'name' => 'required|string',
             'date' => 'required|date',
@@ -49,7 +49,6 @@ class TournamentController extends Controller
 
         // INSTELLINGEN
         // Spelinstellingen per sport en leeftijdsgroep
-
         $gameSettings = [
             'voetbal' => [
                 'groep3/4' => ['fields' => 4, 'length' => 15, 'pause' => 5],
@@ -67,7 +66,7 @@ class TournamentController extends Controller
             ]
         ];
 
-        // TEAMS OPHALEN 
+        // TEAMS OPHALEN
         // Haal alle beschikbare teams op die nog geen toernooi hebben
         $teams = Team::where('sport', $data['sport'])
             ->where('group', $data['group'])
@@ -139,7 +138,7 @@ class TournamentController extends Controller
             ]);
         }
 
-        //FIXTURES VERZAMELEN 
+        //FIXTURES VERZAMELEN
         // Groepeer teams per poule
         $teamsByPool = $teams->groupBy('pool');
         $fixturesToCreate = [];
@@ -164,14 +163,15 @@ class TournamentController extends Controller
 
         $slotLength = $gameLength + $pause;
         $busyTeams = [];
+        $busyRefs  = []; // <-- belangrijk: referees ook "busy" bijhouden
 
-        // Plan wedstrijden in tijdsloten zonder teamconflicten
+        // Plan wedstrijden in tijdsloten zonder team/ref-conflicten
         while (count($fixturesToCreate) > 0) {
             $scheduledThisSlot = 0;
             $fieldNumber = 1;
 
             // Probeer maximaal het aantal beschikbare velden te vullen
-            for ($i = 0; $i < count($fixturesToCreate) && $fieldNumber <= $fields; ) {
+            for ($i = 0; $i < count($fixturesToCreate) && $fieldNumber <= $fields;) {
                 $fixture = $fixturesToCreate[$i];
                 $team1 = $fixture['team1'];
                 $team2 = $fixture['team2'];
@@ -186,11 +186,21 @@ class TournamentController extends Controller
                     continue;
                 }
 
-                // Kies een scheidsrechter van een andere school
-                $ref = Scheidsrechter::where('school_id', '!=', $team1->school_id)
+                // Kies een scheidsrechter van een andere school die NU vrij is
+                $refCandidates = Scheidsrechter::where('school_id', '!=', $team1->school_id)
                     ->where('school_id', '!=', $team2->school_id)
-                    ->inRandomOrder()
-                    ->first();
+                    ->get()
+                    ->shuffle();
+
+                $ref = $refCandidates->first(function ($r) use ($busyRefs, $currentTime) {
+                    return !isset($busyRefs[$r->id]) || !$busyRefs[$r->id]->gt($currentTime);
+                });
+
+                if (!$ref) {
+                    // Geen ref vrij voor deze wedstrijd op dit tijdstip -> probeer volgende fixture
+                    $i++;
+                    continue;
+                }
 
                 $endTime = (clone $currentTime)->addMinutes($gameLength);
 
@@ -204,13 +214,14 @@ class TournamentController extends Controller
                     'end_time' => $endTime->format('H:i'),
                     'type' => 'pool',
                     'tournament_id' => $tournament->id,
-                    'scheidsrechter_id' => $ref?->id,
+                    'scheidsrechter_id' => $ref->id,
                 ]);
 
-                // Markeer teams als bezet tot na pauze
+                // Markeer teams + referee als bezet tot na pauze
                 $busyUntil = (clone $endTime)->addMinutes($pause);
                 $busyTeams[$team1->id] = $busyUntil;
                 $busyTeams[$team2->id] = $busyUntil;
+                $busyRefs[$ref->id]    = $busyUntil;
 
                 // Verwijder geplande wedstrijd uit de lijst
                 array_splice($fixturesToCreate, $i, 1);
@@ -220,10 +231,13 @@ class TournamentController extends Controller
             }
 
             if ($scheduledThisSlot === 0) {
-                // Geen wedstrijd mogelijk: ga naar eerstvolgende moment dat een team vrij is
+                // Geen wedstrijd mogelijk: ga naar eerstvolgende moment dat een team/ref vrij is
                 $earliest = null;
+
                 foreach ($fixturesToCreate as $fixture) {
-                    foreach ([$fixture['team1']->id, $fixture['team2']->id] as $tid) {
+                    $tids = [$fixture['team1']->id, $fixture['team2']->id];
+
+                    foreach ($tids as $tid) {
                         if (isset($busyTeams[$tid]) && $busyTeams[$tid]->gt($currentTime)) {
                             if ($earliest === null || $busyTeams[$tid]->lt($earliest)) {
                                 $earliest = $busyTeams[$tid];
@@ -232,23 +246,31 @@ class TournamentController extends Controller
                     }
                 }
 
+                // (optioneel maar slim) ook referees meenemen in "earliest"
+                foreach ($busyRefs as $refBusyUntil) {
+                    if ($refBusyUntil->gt($currentTime)) {
+                        if ($earliest === null || $refBusyUntil->lt($earliest)) {
+                            $earliest = $refBusyUntil;
+                        }
+                    }
+                }
+
                 if ($earliest !== null) {
                     $currentTime = $earliest->copy();
                 } else {
                     // Fallback: ga naar het volgende volledige tijdslot
-
                     $currentTime->addMinutes($slotLength);
                 }
             } else {
                 // Ga door naar het volgende tijdslot
                 $currentTime->addMinutes($slotLength);
             }
-
         }
 
         return redirect()->route('admin.index')
             ->with('success', 'Toernooi succesvol aangemaakt!');
     }
+
 
     /**
      * Display the specified resource.
@@ -262,10 +284,7 @@ class TournamentController extends Controller
         $fixtures = $tournament->fixtures;
 
 
-        return view('tournaments.show', compact('tournament', 'fixtures'));
-        ;
-
-
+        return view('tournaments.show', compact('tournament', 'fixtures'));;
     }
 
 
@@ -331,27 +350,3 @@ class TournamentController extends Controller
         return view('tournaments.standings', compact('tournament', 'teams', 'stand'));
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
