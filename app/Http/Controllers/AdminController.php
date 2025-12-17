@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Mail\SchoolAccepted;
 use App\Models\Team;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Scheidsrechter;
 class AdminController extends Controller
 {
     /**
@@ -18,7 +19,8 @@ class AdminController extends Controller
         $schoolsAccepted = School::all()->where('accepted', 1);
         $schools = School::all()->where('accepted', 0);
         $teams = Team::all();
-        return view('admin.index', compact('schools', "schoolsAccepted", 'users', 'teams',));
+        $scheidsrechters = Scheidsrechter::all();
+        return view('admin.index', compact('schools', "schoolsAccepted", 'users', 'teams', 'scheidsrechters'));
     }
 
     /**

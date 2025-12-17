@@ -58,6 +58,7 @@ Route::middleware('auth')->group(function () {
 
     // Other authenticated routes
     Route::delete('/tournaments/{id}', [TournamentController::class, 'destroy']);
+    Route::delete('/scheidsrechters/{id}', [ScheidsrechterController::class, 'destroy']);
     Route::resource('fixtures', FixtureController::class);
     Route::resource('team', TeamController::class);
     Route::resource('users', UserController::class);

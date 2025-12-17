@@ -77,8 +77,12 @@ class ScheidsrechterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Scheidsrechter $scheidsrechter)
+    public function destroy($id)
     {
-        //
+        $scheidsrechter = Scheidsrechter::findOrFail($id);
+        $scheidsrechter->delete();
+
+        return redirect()->back()->with('success', 'Scheidsrechter succesvol verwijderd!');
+
     }
 }
