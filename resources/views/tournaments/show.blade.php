@@ -3,8 +3,9 @@
 
         <h1>{{ $tournament->name }}</h1>
         <div class="top-buttons">
-            <a class="btn-goback" href="/">Ga Terug</a>
+                <a href="{{ url('tournaments') }}" style="display: flex; justify-content: center;" class="btn-goback">Ga Terug</a>
         </div>
+
 
         <div class="wn">
 

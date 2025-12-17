@@ -180,6 +180,28 @@
         </div>
 
         <div class="blackLine"></div>
+        
+        <div class="tInfoContainer">
+            <h2>Alle Scheidsrechters</h2>
+        </div>
+
+        <div class="infoContainer">
+            @foreach ($scheidsrechters as $scheidsrechter)
+                <div class="userCard">
+                    <h3>Scheidsrechter: {{ $scheidsrechter->name }}</h3>
+                    <p>School: {{ $scheidsrechter->school ? $scheidsrechter->school->name : 'Geen school toegewezen' }}</p>
+                    <h4>Email: {{ $scheidsrechter->email }}</h4>
+                    <form method="POST" action="{{ route('scheidsrechters.destroy', $scheidsrechter->id) }}" style="display:inline"
+                        onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Verwijder</button>
+                    </form>
+                </div>
+            @endforeach
+
+        </div>
+        <div class="blackLine"></div>
 
         <div class="tInfoContainer">
             <h2>Account aanmaak</h2>

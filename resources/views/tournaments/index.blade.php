@@ -2,7 +2,6 @@
     <main class="toernooien-page">
 
         <div class="top-buttons">
-            <a class="btn-goback" href="/">Ga Terug</a>
             <a href="{{ url('/spelregels') }}" class="btn-spelregels">Spelregels</a>
         </div>
 
