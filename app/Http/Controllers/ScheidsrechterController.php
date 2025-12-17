@@ -35,6 +35,15 @@ class ScheidsrechterController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:scheidsrechters,email',
+            'school_id' => 'required|exists:schools,id',
+            [
+                'name.required' => 'De naam van de scheidsrechter is verplicht.',
+                'email.required' => 'Het e-mailadres is verplicht.',
+                'email.email' => 'Vul een geldig e-mailadres in.',
+                'email.unique' => 'Dit e-mailadres is al in gebruik.',
+                'school_id.required' => 'De school is verplicht.',
+                'school_id.exists' => 'Geselecteerde school bestaat niet.',
+            ]
         ]);
 
         Scheidsrechter::create($validated);

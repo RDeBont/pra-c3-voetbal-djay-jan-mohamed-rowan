@@ -214,6 +214,7 @@
                     <div class="form-group">
                         <label for="is_admin">Rol:</label>
                         <select id="is_admin" name="is_admin" required>
+                            <option value="">-- Selecteer een rol --</option>
                             <option value="1">Admin</option>
                             <option value="0">School</option>
                         </select>
@@ -223,6 +224,7 @@
                 <div class="form-group">
                     <label for="school_id">School: (mag leeg blijven)</label>
                     <select id="school_id" name="school_id">
+                        <option value="">-- Selecteer een school --</option>
                         <option value=""></option>
                         @foreach ($schools as $s)
                             <option value="{{ $s->id }}">{{ $s->name }}</option>
@@ -239,7 +241,6 @@
         </div>
 
 
-
         <div class="infoContainer">
             <form action="{{ route('scheidsrechters.store') }}" method="POST" class="create-user-form">
                 @csrf
@@ -250,6 +251,15 @@
                 <div class="form-group">
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="school_id">School:</label>
+                    <select id="school_id" name="school_id" required>
+                        <option value="">-- Selecteer een school --</option>
+                        @foreach ($schoolsAccepted as $sa)
+                            <option value="{{ $sa->id }}">{{ $sa->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <button type="submit" class="btn-create-user">Maak Scheidsrechter aan</button>
             </form>

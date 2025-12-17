@@ -18,7 +18,7 @@ class AdminController extends Controller
         $schoolsAccepted = School::all()->where('accepted', 1);
         $schools = School::all()->where('accepted', 0);
         $teams = Team::all();
-        return view('admin.index', compact('schools', "schoolsAccepted", 'users', 'teams'));
+        return view('admin.index', compact('schools', "schoolsAccepted", 'users', 'teams',));
     }
 
     /**
