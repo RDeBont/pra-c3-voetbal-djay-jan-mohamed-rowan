@@ -79,7 +79,7 @@
         </ul>
         <p>Wachtwoord vergeten? Neem contact met ons op via de website, stuur ons een mail via <strong>paastoernooienboz@outlook.com</strong> of bel <strong>06-14605997</strong>.</p>
         <div class="footer">
-            <p>Met vriendelijke groet,<br>Organisatie</p>
+            <p>Met vriendelijke groet,<br>De Organisatie</p>
         </div>
     </div>
 </body>
