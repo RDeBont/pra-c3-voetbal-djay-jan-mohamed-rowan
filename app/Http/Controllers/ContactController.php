@@ -14,9 +14,14 @@ class ContactController extends Controller
             'naam' => 'required|string|max:255',
             'email' => 'required|email',
             'bericht' => 'required|string',
+        ], [
+            'naam.required' => 'Vul alstublieft uw naam in.',
+            'email.required' => 'Vul alstublieft uw e-mailadres in.',
+            'email.email' => 'Vul een geldig e-mailadres in.',
+            'bericht.required' => 'Vul alstublieft uw bericht in.',
         ]);
 
-        Mail::to('info@jouwsite.nl')->send(new ContactBericht($request->all()));
+        Mail::to('paastoernooienboz@outlook.com')->send(new ContactBericht($request->all()));
 
         return redirect()->route('contact')->with('success', 'Je bericht is verzonden!');
     }

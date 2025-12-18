@@ -407,6 +407,7 @@ class TournamentController extends Controller
     {
         $teams = Team::where('tournament_id', $tournament->id)
             ->orderByDesc('poulePoints')
+            ->orderByDesc('pouleGoals')
             ->get();
 
         $stand = $teams->groupBy('pool')->sortkeys();
