@@ -1257,3 +1257,18 @@ h1 {
     /* Einde Footer Responsiveness */
 
 }
+
+
+.custom-text {
+    position: absolute;   /* hiermee kan je top/left gebruiken */
+    top: 285px;            /* afstand vanaf bovenkant van de pagina of container */
+    left: 50px;           /* afstand vanaf linkerkant */
+    background-color: #dad9d6;
+    border: 1px solid #0d0d0c;
+    padding: 10px;
+    border-radius: 15px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 10;          /* zodat het boven de andere elementen ligt */
+}
+

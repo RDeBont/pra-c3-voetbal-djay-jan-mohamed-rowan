@@ -81,3 +81,8 @@ Route::get('tournaments/{tournament}/standings', [TournamentController::class, '
 Route::get('tournaments/{tournament}/knockouts', [TournamentController::class, 'showKnockouts'])->name('tournaments.knockouts');
 
 require __DIR__ . '/auth.php';
+
+Route::post('/tournaments/{tournament}/advance-knockouts', [TournamentController::class, 'advanceKnockoutRound'])
+    ->name('tournaments.advanceKnockouts');
+
+  Route::delete('/fixtures/{fixture}', [FixtureController::class, 'destroy'])->name('fixtures.destroy');

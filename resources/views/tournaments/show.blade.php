@@ -23,32 +23,27 @@
                           style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
                         @csrf
 
-                        <!-- Genereer knop -->
+                        <!-- Knop om input te tonen -->
                         <button type="button" id="generateBtn" class="btn btn-primary">
                             Genereer Knockouts
                         </button>
 
-                        <!-- Bekijk knockouts -->
-                        <a href="{{ route('tournaments.knockouts', $tournament) }}"
-                           class="btn btn-primary">
+                        <!-- Link om bestaande knockouts te bekijken -->
+                        <a href="{{ route('tournaments.knockouts', $tournament) }}" class="btn btn-primary">
                             Bekijk Knockouts
                         </a>
 
-                        <!-- Verborgen input -->
-                        <div class="teams-input"
-                             style="display: none; flex-direction: column; align-items: center; gap: 10px; margin-top: 10px;">
+                        <!-- Verborgen input voor aantal teams per poule -->
+                        <div class="teams-input" style="display: none; flex-direction: column; align-items: center; gap: 10px; margin-top: 10px;">
                             <label for="teamsPerPool" style="font-weight: bold;">
                                 Aantal teams per poule dat doorgaat:
                             </label>
 
-                            <input type="number"
-                                   id="teamsPerPool"
-                                   name="teamsPerPool"
-                                   min="1"
-                                   required
+                            <input type="number" id="teamsPerPool" name="teamsPerPool" min="1" required
                                    style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
 
-                            <button type="submit" class="btn btn-primary">
+                            <!-- Submit knop voor het form -->
+                            <button type="submit" class="btn btn-success">
                                 Start Knockouts
                             </button>
                         </div>
@@ -68,7 +63,7 @@
                 <option value="">Alle Poules</option>
                 @php
                     $pools = collect($fixtures)
-                        ->map(fn($f) => $f->team1->pool)
+                        ->map(fn($f) => $f->team1?->pool)
                         ->filter()
                         ->unique()
                         ->sort(fn($a, $b) => $a <=> $b);
@@ -82,44 +77,45 @@
             </a>
         </div>
 
+        <!-- Wedstrijden -->
         @foreach ($fixtures as $fixture)
-            <div class="fixture-wrapper" data-fixture-pool="{{ $fixture->team1->pool }}" style="margin-bottom: 20px;">
+            <div class="fixture-wrapper" data-fixture-pool="{{ $fixture->team1?->pool ?? '-' }}" style="margin-bottom: 20px;">
 
                 <table class="toernooi-tabel" style="margin-bottom: 10px;">
                     <tbody>
                         <tr>
                             <th>Team 1:</th>
-                            <td>{{ $fixture->team1->name }}</td>
-                            <td>{{ $fixture->team_1_id }}</td>
+                            <td>{{ $fixture->team1?->name ?? 'Bye' }}</td>
+                            <td>{{ $fixture->team_1_id ?? '-' }}</td>
                         </tr>
                         <tr>
                             <th>Score:</th>
-                            <td>{{ $fixture->team_1_score }} - {{ $fixture->team_2_score }}</td>
+                            <td>{{ $fixture->team_1_score ?? '-' }} - {{ $fixture->team_2_score ?? '-' }}</td>
                             <td></td>
                         </tr>
                         <tr>
                             <th>Team 2:</th>
-                            <td>{{ $fixture->team2->name }}</td>
-                            <td>{{ $fixture->team_2_id }}</td>
+                            <td>{{ $fixture->team2?->name ?? 'Bye' }}</td>
+                            <td>{{ $fixture->team_2_id ?? '-' }}</td>
                         </tr>
                         <tr>
                             <th>StartTijd</th>
-                            <td>{{ $fixture->start_time }}</td>
-                            <td>{{ $fixture->end_time }}</td>
+                            <td>{{ $fixture->start_time ?? '-' }}</td>
+                            <td>{{ $fixture->end_time ?? '-' }}</td>
                         </tr>
                         <tr>
                             <th>Veld</th>
-                            <td>{{ $fixture->field }}</td>
+                            <td>{{ $fixture->field ?? '-' }}</td>
                             <td></td>
                         </tr>
                         <tr>
                             <th>Poule</th>
-                            <td>{{ $fixture->team1->pool }}</td>
+                            <td>{{ $fixture->team1?->pool ?? '-' }}</td>
                             <td></td>
                         </tr>
                         <tr>
                             <th>Scheidsrechter</th>
-                            <td>{{ $fixture->scheidsrechter ? $fixture->scheidsrechter->name : 'Niet toegewezen' }}</td>
+                            <td>{{ $fixture->scheidsrechter?->name ?? 'Niet toegewezen' }}</td>
                             <td></td>
                         </tr>
                     </tbody>
@@ -128,9 +124,11 @@
                 @auth
                     @if(auth()->user()->is_admin)
                         <div class="fixture-buttons">
-                            <a href="{{ route('fixtures.edit', $fixture->id) }}" class="btn-fixture edit">
-                                Aanpassen
-                            </a>
+                            @if($fixture->team1 || $fixture->team2)
+                                <a href="{{ route('fixtures.edit', $fixture->id) }}" class="btn-fixture edit">
+                                    Aanpassen
+                                </a>
+                            @endif
 
                             <form method="POST" action="{{ route('fixtures.destroy', $fixture->id) }}"
                                   onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?');">
@@ -145,12 +143,10 @@
             </div>
         @endforeach
 
-
-
-        
     </main>
 
     <script>
+        // Toon input bij klikken op "Genereer Knockouts"
         const generateBtn = document.getElementById('generateBtn');
         const teamsInput = document.querySelector('.teams-input');
 
@@ -159,6 +155,7 @@
             generateBtn.style.display = 'none';
         });
 
+        // Pool filter
         document.getElementById('pool-filter').addEventListener('change', function () {
             const selectedPool = this.value;
             document.querySelectorAll('.fixture-wrapper').forEach(wrapper => {
