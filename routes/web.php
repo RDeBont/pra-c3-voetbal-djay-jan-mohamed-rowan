@@ -44,45 +44,64 @@ Route::get('/dashboard', function () {
     return view('index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Authenticated routes
+// ================= AUTH =================
 Route::middleware('auth')->group(function () {
 
-    // Profile routes
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Admin-only routes
+    // Admin
     Route::middleware('admin')->group(function () {
-        Route::resource('admin', AdminController::class);
-        Route::post('admin/schools/{id}/accept', [AdminController::class, 'accept'])->name('admin.schools.accept');
-        Route::post('admin/schools/{id}/reject', [AdminController::class, 'reject'])->name('admin.schools.reject');
 
-        // Knockouts genereren (admin-only)
-        Route::post('/tournaments/{tournament}/generate-knockouts', [TournamentController::class, 'generateKnockouts'])
-            ->name('tournaments.generateKnockouts');
+        Route::resource('admin', AdminController::class);
+
+        Route::post('admin/schools/{id}/accept', [AdminController::class, 'accept'])
+            ->name('admin.schools.accept');
+
+        Route::post('admin/schools/{id}/reject', [AdminController::class, 'reject'])
+            ->name('admin.schools.reject');
+
+        // Admin: Tournament routes
+        Route::get('/tournaments/create', [TournamentController::class, 'create'])->name('tournaments.create');
+        Route::post('/tournaments', [TournamentController::class, 'store'])->name('tournaments.store');
+        Route::delete('/tournaments/{tournament}', [TournamentController::class, 'destroy'])->name('tournaments.destroy');
+
+        // Knockouts genereren
+        Route::post(
+            '/tournaments/{tournament}/generate-knockouts',
+            [TournamentController::class, 'generateKnockouts']
+        )->name('tournaments.generateKnockouts');
+
+        // Knockouts doorzetten
+        Route::post(
+            '/tournaments/{tournament}/advance-knockouts',
+            [TournamentController::class, 'advanceKnockoutRound']
+        )->name('tournaments.advanceKnockouts');
     });
 
-    // Other authenticated routes
-    Route::delete('/tournaments/{id}', [TournamentController::class, 'destroy'])->name('tournaments.destroy');
-    Route::delete('/scheidsrechters/{id}', [ScheidsrechterController::class, 'destroy']);
     Route::resource('fixtures', FixtureController::class);
-    Route::resource('team', TeamController::class);
     Route::resource('users', UserController::class);
-    Route::resource('tournaments', TournamentController::class);
     Route::resource('scheidsrechters', ScheidsrechterController::class);
 });
 
-// Public routes voor tournaments
+// =============== PUBLIC TOURNAMENTS ===============
 Route::resource('tournaments', TournamentController::class)->only(['index', 'show']);
-Route::get('tournaments/{tournament}/standings', [TournamentController::class, 'standings'])->name('tournaments.standings');
 
-// Knockouts bekijken (publiek)
-Route::get('tournaments/{tournament}/knockouts', [TournamentController::class, 'showKnockouts'])->name('tournaments.knockouts');
+Route::get(
+    '/tournaments/{tournament}/standings',
+    [TournamentController::class, 'standings']
+)->name('tournaments.standings');
 
-require __DIR__ . '/auth.php';
+Route::get(
+    '/tournaments/{tournament}/knockouts',
+    [TournamentController::class, 'showKnockouts']
+)->name('tournaments.knockouts');
 
-Route::post('/tournaments/{tournament}/advance-knockouts', [TournamentController::class, 'advanceKnockoutRound'])
-    ->name('tournaments.advanceKnockouts');
+Route::get(
+    '/tournaments/{tournament}/knockouts/public',
+    [TournamentController::class, 'showKnockoutsPublic']
+)->name('tournaments.knockouts.public');
 
-  Route::delete('/fixtures/{fixture}', [FixtureController::class, 'destroy'])->name('fixtures.destroy');
+require __DIR__.'/auth.php';
