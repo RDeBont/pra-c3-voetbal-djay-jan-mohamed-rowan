@@ -11,7 +11,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Requests\StoreTournamentRequest;
-use App\Http\Requests\UpdateTournamentRequest;
 
 class TournamentController extends Controller
 {
@@ -56,7 +55,7 @@ class TournamentController extends Controller
                 'groep7/8' => ['fields' => 4, 'length' => 10, 'pause' => 2],
                 'klas1_meiden' => ['fields' => 4, 'length' => 12, 'pause' => 0],
                 'klas1_jongens' => ['fields' => 4, 'length' => 12, 'pause' => 0],
-            ]
+            ],
         ];
 
         $teams = Team::where('sport', $data['sport'])
@@ -68,12 +67,8 @@ class TournamentController extends Controller
         $teamsPerPool = $data['teamsPerPool'];
         $teamCount = $teams->count();
 
-        if ($teamCount < $teamsPerPool) {
-            return redirect()->back()->withErrors(['team' => 'Niet genoeg teams beschikbaar.'])->withInput();
-        }
-
-        if ($teamCount % $teamsPerPool === 1) {
-            return redirect()->back()->withErrors(['team' => 'Er blijft 1 team over dat alleen in een poule zou zitten.'])->withInput();
+        if ($teamCount < $teamsPerPool || $teamCount % $teamsPerPool === 1) {
+            return redirect()->back()->withErrors(['team' => 'Onjuiste teamverdeling.'])->withInput();
         }
 
         $teamsBySchool = $teams->groupBy('school_id');
@@ -85,21 +80,20 @@ class TournamentController extends Controller
             if ($schoolTeams->count() > $pouleCount) {
                 return redirect()->back()->withErrors(['team' => 'Te veel teams van dezelfde school.'])->withInput();
             }
-
             foreach ($schoolTeams as $team) {
                 $poules[$index % $pouleCount][] = $team;
                 $index++;
             }
         }
 
-        $fields = $gameSettings[$data['sport']][$data['group']]['fields'];
+        $settings = $gameSettings[$data['sport']][$data['group']];
 
         $tournament = Tournament::create([
             'name' => $data['name'],
             'date' => $data['date'],
             'start_time' => $data['startTime'],
-            'fields_amount' => $fields,
-            'game_length_minutes' => $gameSettings[$data['sport']][$data['group']]['length'],
+            'fields_amount' => $settings['fields'],
+            'game_length_minutes' => $settings['length'],
             'amount_teams_pool' => $teamsPerPool,
             'archived' => false,
         ]);
@@ -112,11 +106,10 @@ class TournamentController extends Controller
             ]);
         }
 
-        // Pool-wedstrijden plannen
         $teamsByPool = $teams->groupBy('pool');
         $fixturesToCreate = [];
 
-        foreach ($teamsByPool as $pool => $poolTeams) {
+        foreach ($teamsByPool as $poolTeams) {
             $poolTeams = $poolTeams->values();
             for ($i = 0; $i < $poolTeams->count(); $i++) {
                 for ($j = $i + 1; $j < $poolTeams->count(); $j++) {
@@ -129,56 +122,62 @@ class TournamentController extends Controller
         }
 
         $currentTime = Carbon::createFromFormat('H:i', $data['startTime']);
-        $gameLength = $gameSettings[$data['sport']][$data['group']]['length'];
-        $pause = $gameSettings[$data['sport']][$data['group']]['pause'];
-        $slotLength = $gameLength + $pause;
+        $slotLength = $settings['length'] + $settings['pause'];
         $busyTeams = [];
+        $busyRefs = [];
 
         while (count($fixturesToCreate) > 0) {
-            $scheduledThisSlot = 0;
-            $fieldNumber = 1;
+            $scheduled = 0;
+            $field = 1;
 
-            for ($i = 0; $i < count($fixturesToCreate) && $fieldNumber <= $fields;) {
+            for ($i = 0; $i < count($fixturesToCreate) && $field <= $settings['fields'];) {
                 $fixture = $fixturesToCreate[$i];
                 $team1 = $fixture['team1'];
                 $team2 = $fixture['team2'];
 
-                $team1Busy = isset($busyTeams[$team1->id]) && $busyTeams[$team1->id]->gt($currentTime);
-                $team2Busy = isset($busyTeams[$team2->id]) && $busyTeams[$team2->id]->gt($currentTime);
-
-                if ($team1Busy || $team2Busy) {
+                if (
+                    (isset($busyTeams[$team1->id]) && $busyTeams[$team1->id]->gt($currentTime)) ||
+                    (isset($busyTeams[$team2->id]) && $busyTeams[$team2->id]->gt($currentTime))
+                ) {
                     $i++;
                     continue;
                 }
 
                 $ref = Scheidsrechter::where('school_id', '!=', $team1->school_id)
                     ->where('school_id', '!=', $team2->school_id)
-                    ->inRandomOrder()
-                    ->first();
+                    ->get()
+                    ->shuffle()
+                    ->first(fn($r) => !isset($busyRefs[$r->id]) || !$busyRefs[$r->id]->gt($currentTime));
 
-                $endTime = (clone $currentTime)->addMinutes($gameLength);
+                if (!$ref) {
+                    $i++;
+                    continue;
+                }
+
+                $endTime = (clone $currentTime)->addMinutes($settings['length']);
 
                 Fixture::create([
                     'team_1_id' => $team1->id,
                     'team_2_id' => $team2->id,
                     'team_1_score' => 0,
                     'team_2_score' => 0,
-                    'field' => $fieldNumber,
+                    'field' => $field,
                     'start_time' => $currentTime->format('H:i'),
                     'end_time' => $endTime->format('H:i'),
                     'type' => 'pool',
                     'tournament_id' => $tournament->id,
-                    'scheidsrechter_id' => $ref?->id,
+                    'scheidsrechter_id' => $ref->id,
                     'round' => null,
                 ]);
 
-                $busyUntil = (clone $endTime)->addMinutes($pause);
+                $busyUntil = (clone $endTime)->addMinutes($settings['pause']);
                 $busyTeams[$team1->id] = $busyUntil;
                 $busyTeams[$team2->id] = $busyUntil;
+                $busyRefs[$ref->id] = $busyUntil;
 
                 array_splice($fixturesToCreate, $i, 1);
-                $scheduledThisSlot++;
-                $fieldNumber++;
+                $scheduled++;
+                $field++;
             }
 
             $currentTime->addMinutes($slotLength);
@@ -189,12 +188,8 @@ class TournamentController extends Controller
 
     public function show(Tournament $tournament)
     {
-        $tournament = Tournament::with(['fixtures.team1', 'fixtures.team2', 'fixtures.scheidsrechter'])
-            ->findOrFail($tournament->id);
-
-        $fixtures = $tournament->fixtures;
-
-        return view('tournaments.show', compact('tournament', 'fixtures'));
+        $tournament->load(['fixtures.team1', 'fixtures.team2', 'fixtures.scheidsrechter']);
+        return view('tournaments.show', compact('tournament'));
     }
 
     public function showKnockouts(Tournament $tournament)
@@ -210,96 +205,39 @@ class TournamentController extends Controller
 
     public function generateKnockouts(Tournament $tournament)
     {
-        if(Fixture::where('tournament_id', $tournament->id)->where('type', 'knockout')->exists()){
-            return redirect()->route('tournaments.knockouts', $tournament->id)
-                             ->with('info', 'Knockouts zijn al gegenereerd.');
+        if (Fixture::where('tournament_id', $tournament->id)->where('type', 'knockout')->exists()) {
+            return redirect()->back()->with('info', 'Knockouts bestaan al.');
         }
 
-        $teamsByPool = Team::where('tournament_id', $tournament->id)
+        $teams = Team::where('tournament_id', $tournament->id)
             ->orderByDesc('poulePoints')
             ->get()
-            ->groupBy('pool');
+            ->groupBy('pool')
+            ->flatMap(fn($g) => $g->take(2))
+            ->shuffle()
+            ->values();
 
-        $qualifiedTeams = collect();
-        foreach ($teamsByPool as $teams) {
-            $qualifiedTeams = $qualifiedTeams->concat($teams->take(2));
-        }
+        $round = $this->getRoundName($teams->count());
 
-        $qualifiedTeams = $qualifiedTeams->shuffle()->values();
-
-        $roundName = $this->getRoundName($qualifiedTeams->count());
-        for ($i = 0; $i < $qualifiedTeams->count(); $i += 2) {
-            if (isset($qualifiedTeams[$i+1])) {
-                Fixture::create([
-                    'team_1_id' => $qualifiedTeams[$i]->id,
-                    'team_2_id' => $qualifiedTeams[$i+1]->id,
-                    'team_1_score' => 0,
-                    'team_2_score' => 0,
-                    'field' => 1,
-                    'start_time' => null,
-                    'end_time' => null,
-                    'type' => 'knockout',
-                    'tournament_id' => $tournament->id,
-                    'scheidsrechter_id' => null,
-                    'round' => $roundName,
-                ]);
-            }
-        }
-
-        return redirect()->route('tournaments.knockouts', $tournament->id)
-                         ->with('success', 'Eerste ronde knockouts succesvol aangemaakt!');
-    }
-
-    public function advanceKnockoutRound(Tournament $tournament)
-{
-    $rounds = Fixture::where('tournament_id', $tournament->id)
-                    ->where('type', 'knockout')
-                    ->get()
-                    ->groupBy('round');
-
-    $lastRoundFixtures = $rounds->last();
-
-    if ($lastRoundFixtures->contains(fn($f) => $f->team_1_score === 0 && $f->team_2_score === 0)) {
-        return redirect()->back()->with('info', 'Niet alle wedstrijden in de laatste ronde zijn klaar.');
-    }
-
-    $winners = $lastRoundFixtures->map(function($fixture) {
-        if ($fixture->team_1_score > $fixture->team_2_score) return $fixture->team_1_id;
-        if ($fixture->team_2_score > $fixture->team_1_score) return $fixture->team_2_id;
-        return null;
-    })->filter()->values();
-
-    if ($winners->count() < 2) {
-        return redirect()->back()->with('info', 'Niet genoeg winnaars om de volgende ronde te maken.');
-    }
-
-    $roundName = $this->getRoundName($winners->count());
-
-    for ($i = 0; $i < $winners->count(); $i += 2) {
-        if (isset($winners[$i+1])) {
+        for ($i = 0; $i < $teams->count(); $i += 2) {
             Fixture::create([
-                'team_1_id' => $winners[$i],
-                'team_2_id' => $winners[$i+1],
+                'team_1_id' => $teams[$i]->id,
+                'team_2_id' => $teams[$i + 1]->id,
                 'team_1_score' => 0,
                 'team_2_score' => 0,
                 'field' => 1,
-                'start_time' => null,
-                'end_time' => null,
                 'type' => 'knockout',
                 'tournament_id' => $tournament->id,
-                'scheidsrechter_id' => null,
-                'round' => $roundName,
+                'round' => $round,
             ]);
         }
+
+        return redirect()->back()->with('success', 'Knockouts aangemaakt!');
     }
 
-    return redirect()->back()->with('success', 'Winnaars zijn doorgestroomd naar de volgende ronde!');
-}
-
-
-    private function getRoundName($teamCount)
+    private function getRoundName($count)
     {
-        return match($teamCount) {
+        return match ($count) {
             2 => 'Finale',
             4 => 'Halve Finale',
             8 => 'Kwartfinale',
@@ -308,7 +246,7 @@ class TournamentController extends Controller
         };
     }
 
-    public function getAllData()
+    private function getAllData()
     {
         return [
             'schools' => School::all(),
@@ -316,14 +254,5 @@ class TournamentController extends Controller
             'users' => User::all(),
             'scheidsrechters' => Scheidsrechter::all(),
         ];
-    }
-
-    public function standings(Tournament $tournament)
-    {
-        $teams = Team::where('tournament_id', $tournament->id)
-            ->orderByDesc('poulePoints')
-            ->get();
-        $stand = $teams->groupBy('pool')->sortKeys();
-        return view('tournaments.standings', compact('tournament', 'teams', 'stand'));
     }
 }

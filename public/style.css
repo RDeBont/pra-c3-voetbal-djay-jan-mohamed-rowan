@@ -73,7 +73,7 @@ body {
 
 .nav-mid a,
 .nav-right a {
-    color: #333;
+    color: #000;
     text-decoration: none;
     font-weight: 500;
     font-size: 1rem;
@@ -86,6 +86,7 @@ body {
 }
 
 .nav-right {
+    color: #000;
     list-style: none;
     display: flex;
     gap: 20px;
@@ -147,7 +148,7 @@ body {
 /* Inschrijven knop */
 .btn-tournaments {
     display: inline-block;
-    background-color: #548350;
+    background-color: #3e6a3e;
     color: white;
     font-size: 1rem;
     font-weight: 600;
@@ -185,7 +186,6 @@ body {
 /* Pagina-opmaak */
 .toernooien-page {
     padding: 60px 20px;
-    background: url(https://www.fotobehang.com/media/catalog/product/cache/5b18b93ddbe5d6592c6b175f41d24454/w/0/w03234-small.jpg);
     font-family: sans-serif;
 }
 
@@ -318,12 +318,10 @@ h1 {
     margin: 0 auto;
     width: 50%;
     padding: 10px 16px;
-    color: #fff;
     font-weight: 500;
     text-decoration: none;
     border-radius: 60px;
     text-align: center;
-    background-color: #2f512f2f;
 }
 
 
@@ -331,9 +329,6 @@ h1 {
 
 /* ---------- Wrapper ---------- */
 .signupform-wrapper {
-    background: url(https://images.unsplash.com/photo-1740560051533-3acef26ace95?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNvbnRhY3QlMjB1c3xlbnwwfHwwfHx8MA%3D%3D);
-    background-repeat: no-repeat;
-    background-size: cover;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -343,16 +338,7 @@ h1 {
 }
 
 /* ---------- Titel ---------- */
-.ins {
-    border-radius: 20px;
-    color: #ffffffdf;
-    width: 30%;
-    font-size: 2.2rem;
-    background: #548350db;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    text-align: center;
-}
+
 
 /* ---------- Formulier ---------- */
 .signupform {
@@ -379,7 +365,7 @@ h1 {
 /* ---------- Labels ---------- */
 .signupform-group label {
     font-weight: 600;
-    color: #548350;
+    color: #333;
 }
 
 /* ---------- Inputs & Select ---------- */
@@ -402,7 +388,7 @@ h1 {
 
 /* ---------- Knop ---------- */
 .signupform-btn {
-    background-color: #548350;
+    background-color: #3e6a3e;
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -759,7 +745,7 @@ h1 {
 
 /* active: klik feedback */
 .btn-spelregels:active {
-    background-color: #16324a;
+    background-color: #254225;
     transform: translateY(0);
 }
 
@@ -784,7 +770,6 @@ h1 {
 .spelregels-page h1 {
     color: #3e6a3e;
     margin-bottom: 20px;
-    border-bottom: 2px solid #3e6a3e;
     padding-bottom: 5px;
 }
 
@@ -827,7 +812,7 @@ h1 {
     border-radius: 6px;
     background-color: #f7fafc;
     font-size: 14px;
-    color: #1f3b5b;
+    color: #333;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 

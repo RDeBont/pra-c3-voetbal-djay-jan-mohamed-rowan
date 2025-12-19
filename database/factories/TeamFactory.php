@@ -25,7 +25,7 @@ class TeamFactory extends Factory
 
             'tournament_id' => null,
 
-            'sport'     => 'voetbal',
+            'sport'     => $this->faker->randomElement(['voetbal', 'lijnbal']),
             'group'     => $this->faker->randomElement([
                  'groep5/6', 'groep7/8',
             ]),
