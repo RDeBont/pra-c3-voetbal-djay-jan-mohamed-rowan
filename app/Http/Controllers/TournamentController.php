@@ -13,6 +13,8 @@ use Carbon\Carbon;
 use App\Http\Requests\StoreTournamentRequest;
 use App\Http\Requests\UpdateTournamentRequest;
 
+
+
 class TournamentController extends Controller
 {
     public function index()
@@ -36,7 +38,7 @@ class TournamentController extends Controller
             'group' => 'required|in:groep3/4,groep5/6,groep7/8,klas1_jongens,klas1_meiden',
             'startTime' => 'required|date_format:H:i',
             'teamsPerPool' => 'required|integer|min:2',
-            'qualified_per_pool' => 'required|integer|min:1',
+            'qualified_per_pool' => 'nullable|integer|min:1',
         ]);
 
         if (Tournament::where('name', $data['name'])->exists()) {
@@ -102,7 +104,7 @@ class TournamentController extends Controller
             'fields_amount' => $fields,
             'game_length_minutes' => $gameSettings[$data['sport']][$data['group']]['length'],
             'amount_teams_pool' => $teamsPerPool,
-            'qualified_per_pool' => $data['qualified_per_pool'],
+            'qualified_per_pool' => $data['qualified_per_pool'] ?? null,
             'archived' => false,
         ]);
 
@@ -301,6 +303,12 @@ class TournamentController extends Controller
 
     public function generateKnockouts(Tournament $tournament)
     {
+        if (!$tournament->qualified_per_pool) {
+    return redirect()->back()->withErrors([
+        'qualified_per_pool' => 'Aantal teams gekwalificeerd per poule is nog niet ingesteld.'
+    ]);
+}
+
         if (Fixture::where('tournament_id', $tournament->id)->where('type', 'knockout')->exists()) {
             return redirect()->back()->with('info', 'Knockouts zijn al gegenereerd.');
         }
