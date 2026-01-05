@@ -10,6 +10,7 @@ use App\Http\Controllers\InschrijfController;
 use App\Http\Controllers\FixtureController;
 use App\Http\Controllers\ScheidsrechterController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\deleteAllController;
 
 // Homepage
 Route::get('/', function () {
@@ -57,10 +58,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('admin', AdminController::class);
         Route::post('admin/schools/{id}/accept', [AdminController::class, 'accept'])->name('admin.schools.accept');
         Route::post('admin/schools/{id}/reject', [AdminController::class, 'reject'])->name('admin.schools.reject');
-
-        // Knockouts genereren (admin-only)
-        Route::post('/tournaments/{tournament}/generate-knockouts', [TournamentController::class, 'generateKnockouts'])
-            ->name('tournaments.generateKnockouts');
+        Route::post('/delete-all', [deleteAllController::class, 'destroy'])->name('deleteAll.destroy');
     });
 
     // Other authenticated routes
@@ -76,8 +74,5 @@ Route::middleware('auth')->group(function () {
 // Public routes voor tournaments
 Route::resource('tournaments', TournamentController::class)->only(['index', 'show']);
 Route::get('tournaments/{tournament}/standings', [TournamentController::class, 'standings'])->name('tournaments.standings');
-
-// Knockouts bekijken (publiek)
-Route::get('tournaments/{tournament}/knockouts', [TournamentController::class, 'showKnockouts'])->name('tournaments.knockouts');
 
 require __DIR__ . '/auth.php';

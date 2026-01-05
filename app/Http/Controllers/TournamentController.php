@@ -329,63 +329,6 @@ class TournamentController extends Controller
     }
 
 
-    public function showKnockouts(Tournament $tournament)
-    {
-        // Laad alle knockout-wedstrijden van dit toernooi
-        $knockouts = Fixture::where('tournament_id', $tournament->id)
-            ->where('type', 'knockout') // Als je dit veld gebruikt om knockouts te onderscheiden
-            ->with(['team1', 'team2'])
-            ->get();
-
-        return view('tournaments.knockouts', compact('tournament', 'knockouts'));
-    }
-
-
-    public function generateKnockouts(Tournament $tournament)
-    {
-        // Check of knockouts al bestaan
-        if (Fixture::where('tournament_id', $tournament->id)->where('type', 'knockout')->exists()) {
-            return redirect()->route('tournaments.knockouts', $tournament->id)
-                ->with('info', 'Knockouts zijn al gegenereerd.');
-        }
-
-        // Voorbeeld: de eerste 4 teams per poule naar knockout ronde
-        $teams = Team::where('tournament_id', $tournament->id)
-            ->orderBy('pool')
-            ->orderByDesc('poulePoints') // hoogste punten eerst
-            ->get();
-
-        $knockoutFixtures = [];
-
-        // Simpel: per 2 teams 1 wedstrijd
-        for ($i = 0; $i < $teams->count(); $i += 2) {
-            if (isset($teams[$i + 1])) {
-                $knockoutFixtures[] = [
-                    'team_1_id' => $teams[$i]->id,
-                    'team_2_id' => $teams[$i + 1]->id,
-                    'team_1_score' => 0,
-                    'team_2_score' => 0,
-                    'field' => 1, // kan je dynamisch maken
-                    'start_time' => now()->format('H:i'),
-                    'end_time' => now()->addMinutes($tournament->game_length_minutes)->format('H:i'),
-                    'type' => 'knockout',
-                    'tournament_id' => $tournament->id,
-                    'scheidsrechter_id' => null,
-                ];
-            }
-        }
-
-        // Opslaan in DB
-        foreach ($knockoutFixtures as $kf) {
-            Fixture::create($kf);
-        }
-
-        return redirect()->route('tournaments.knockouts', $tournament->id)
-            ->with('success', 'Knockouts succesvol gestart!');
-    }
-
-
-
 
 
     public function getAllData()

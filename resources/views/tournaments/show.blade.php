@@ -10,52 +10,6 @@
             </a>
         </div>
 
-        <!-- Admin Knockout Knoppen -->
-        @auth
-            @if(auth()->user()->is_admin)
-                <div class="knockout-container"
-                     style="margin-bottom: 20px; display: flex; justify-content: center; flex-direction: column; align-items: center;">
-
-                    <form id="knockoutForm"
-                          action="{{ route('tournaments.generateKnockouts', $tournament->id) }}"
-                          method="POST"
-                          class="knockout-form"
-                          style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                        @csrf
-
-                        <!-- Genereer knop -->
-                        <button type="button" id="generateBtn" class="btn btn-primary">
-                            Genereer Knockouts
-                        </button>
-
-                        <!-- Bekijk knockouts -->
-                        <a href="{{ route('tournaments.knockouts', $tournament) }}"
-                           class="btn btn-primary">
-                            Bekijk Knockouts
-                        </a>
-
-                        <!-- Verborgen input -->
-                        <div class="teams-input"
-                             style="display: none; flex-direction: column; align-items: center; gap: 10px; margin-top: 10px;">
-                            <label for="teamsPerPool" style="font-weight: bold;">
-                                Aantal teams per poule dat doorgaat:
-                            </label>
-
-                            <input type="number"
-                                   id="teamsPerPool"
-                                   name="teamsPerPool"
-                                   min="1"
-                                   required
-                                   style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
-
-                            <button type="submit" class="btn btn-primary">
-                                Start Knockouts
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            @endif
-        @endauth
 
         <div class="wn">
             <h2>Alle Wedstrijden</h2>
@@ -151,14 +105,8 @@
     </main>
 
     <script>
-        const generateBtn = document.getElementById('generateBtn');
-        const teamsInput = document.querySelector('.teams-input');
 
-        generateBtn.addEventListener('click', () => {
-            teamsInput.style.display = 'flex';
-            generateBtn.style.display = 'none';
-        });
-
+        // Knockout Form Script
         document.getElementById('pool-filter').addEventListener('change', function () {
             const selectedPool = this.value;
             document.querySelectorAll('.fixture-wrapper').forEach(wrapper => {

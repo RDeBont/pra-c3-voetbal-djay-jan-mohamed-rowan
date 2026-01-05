@@ -4,11 +4,24 @@
 
 
         <div class="tInfoContainer">
+            <h1>Welkom,  {{ auth()->user()->name }}!</h1>
             <h2>Admin Panel</h2>
             <p>Hier kunt u wedstrijden beheren en aanmaken.</p>
+           
+            
         </div>
         <div class="butten">
             <a href="{{ route('tournaments.create') }}">Maak toernooi</a>
+            @if (Auth::user()->is_admin)
+            <button type="button" id="deleteAllBtn"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                Verwijder alles in de database
+            </button>
+
+            <form id="deleteAllForm" method="POST" action="{{ route('deleteAll.destroy') }}">
+                @csrf
+            </form>
+        @endif
         </div>
 
 
@@ -288,6 +301,28 @@
     </main>
 
     <script>
+
+        //chatgpt, dit zorgt ervoor dat de delete all knop een prompt geeft om DELETE in te typen voordat die alles verwijderd
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteBtn = document.getElementById('deleteAllBtn');
+            const deleteForm = document.getElementById('deleteAllForm');
+
+            if (!deleteBtn || !deleteForm) return;
+
+            deleteBtn.addEventListener('click', function () {
+                const confirmation = prompt(
+                    "DIT VERWIJDERT ALLE DATA\n\nTyp DELETE om te bevestigen:"
+                );
+
+                if (confirmation !== "DELETE") {
+                    alert("Actie geannuleerd.");
+                    return;
+                }
+
+                deleteForm.submit(); 
+            });
+        });
+
         //chagpt
         //dit zorgt ervoor dat de accepteer knop een cooldown krijgt van 15 seconden want als je snel meerdere,
         // scholen accepteerd dan wordt er geen mail gestuurd
